@@ -1,0 +1,733 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+/* ─── Tailwind v4 Theme Tokens ────────────────────────────────────────────── */
+@theme {
+  --color-primary:    rgb(139 92 246);
+  --color-card:       rgba(12, 0, 24, 0.85);
+  --color-foreground: rgb(255 255 255);
+  --color-border:     rgba(139, 92, 246, 0.25);
+  --color-background: rgb(8 0 15);
+}
+
+/* ─── Amazon Ember Font Faces ─────────────────────────────────────────────── */
+
+@font-face {
+  font-family: 'Amazon Ember Display';
+  src: url('/fonts/AmazonEmberDisplay_Bd.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Amazon Ember Display';
+  src: url('/fonts/AmazonEmberDisplay_BdIt.ttf') format('truetype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Amazon Ember Display';
+  src: url('/fonts/AmazonEmberDisplay_Rg.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Amazon Ember Display';
+  src: url('/fonts/AmazonEmberDisplay_RgIt.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Amazon Ember';
+  src: url('/fonts/AmazonEmber_Bd.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Amazon Ember Mono';
+  src: url('/fonts/AmazonEmberMono_Bd.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ─── CSS Custom Properties ───────────────────────────────────────────────── */
+:root {
+  --font-display:  'Amazon Ember Display', sans-serif;
+  --font-body:     'Amazon Ember', sans-serif;
+  --font-mono:     'Amazon Ember Mono', monospace;
+
+  /* shadcn-compatible tokens used by limelight-nav */
+  --background:   8 0 15;
+  --foreground:   255 255 255;
+  --card:         rgba(12, 0, 24, 0.85);
+  --primary:      139 92 246;
+  --border:       rgba(139, 92, 246, 0.25);
+}
+
+/* ─── Base Reset ──────────────────────────────────────────────────────────── */
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html {
+    scroll-behavior: smooth;
+    /* prevent horizontal overflow on mobile */
+    overflow-x: hidden;
+  }
+
+  body {
+    background-color: #08000f;
+    color: #ffffff;
+    font-family: var(--font-body);
+    font-weight: 700;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    /* Space for limelight bottom nav on mobile/tablet */
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  /* Default heading font */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    font-weight: 700;
+  }
+}
+
+/* ─── Utility Classes ─────────────────────────────────────────────────────── */
+@layer utilities {
+
+  /* Font role helpers */
+  .font-display-bold        { font-family: var(--font-display); font-weight: 700; font-style: normal; }
+  .font-display-bold-italic { font-family: var(--font-display); font-weight: 700; font-style: italic; }
+  .font-display-regular     { font-family: var(--font-display); font-weight: 400; font-style: normal; }
+  .font-display-italic      { font-family: var(--font-display); font-weight: 400; font-style: italic; }
+  .font-body-bold           { font-family: var(--font-body);    font-weight: 700; }
+  .font-mono-bold           { font-family: var(--font-mono);    font-weight: 700; }
+
+  /* ── Glow effects ── */
+  .glow-purple {
+    text-shadow: 0 0 24px rgba(168,85,247,0.9), 0 0 48px rgba(168,85,247,0.4);
+  }
+  .glow-white {
+    text-shadow: 0 0 20px rgba(255,255,255,0.6), 0 0 40px rgba(255,255,255,0.2);
+  }
+  .glow-box {
+    box-shadow: 0 0 30px rgba(139,92,246,0.25), inset 0 0 30px rgba(139,92,246,0.04);
+  }
+  .glow-box-hover:hover {
+    box-shadow: 0 0 44px rgba(139,92,246,0.5), inset 0 0 30px rgba(139,92,246,0.1);
+    transform: translateY(-2px);
+  }
+  .glow-box-white:hover {
+    box-shadow: 0 0 32px rgba(255,255,255,0.12), inset 0 0 20px rgba(255,255,255,0.04);
+    transform: translateY(-2px);
+  }
+
+  /* ── Gradient text ── */
+  .purple-gradient-text {
+    background: linear-gradient(135deg, #d8b4fe, #a855f7, #7c3aed);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .white-gradient-text {
+    background: linear-gradient(135deg, #ffffff, #e2e8f0, #cbd5e1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .mixed-gradient-text {
+    background: linear-gradient(135deg, #ffffff 0%, #d8b4fe 50%, #7c3aed 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* ── Card backgrounds ── */
+  .card-bg {
+    background: linear-gradient(135deg, rgba(88,28,135,0.18), rgba(12,0,24,0.85));
+    border: 1px solid rgba(139,92,246,0.22);
+  }
+  /* White-tinted card for light sections */
+  .card-bg-white {
+    background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+    border: 1px solid rgba(255,255,255,0.12);
+  }
+  /* Pure black card */
+  .card-bg-black {
+    background: linear-gradient(135deg, rgba(0,0,0,0.7), rgba(10,0,20,0.9));
+    border: 1px solid rgba(139,92,246,0.3);
+  }
+
+  /* ── Section backgrounds ── */
+  .section-dark   { background-color: #08000f; }
+  .section-black  { background-color: #000000; }
+  .section-purple { background: linear-gradient(135deg, #0d0020 0%, #1a0035 50%, #0d0020 100%); }
+
+  /* ── Thin divider line ── */
+  .section-divider {
+    background: linear-gradient(90deg, transparent, rgba(139,92,246,0.55), transparent);
+    height: 1px;
+  }
+  .section-divider-white {
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    height: 1px;
+  }
+
+  /* ── Spotlight animation ── */
+  @keyframes spotlight {
+    0%   { opacity: 0; transform: translate(-72%, -62%) scale(0.5); }
+    100% { opacity: 1; transform: translate(-50%, -40%) scale(1);   }
+  }
+  .animate-spotlight {
+    animation: spotlight 2s ease 0.75s 1 forwards;
+  }
+}
+
+/* ─── Bluetooth Key Button ────────────────────────────────────────────────── */
+
+/* Keyframes */
+@keyframes bt-led-blink {
+  0%,100%     { opacity: 1; }
+  30%,60%     { background: #a855f7; box-shadow: 0 0 8px 4px rgba(168,85,247,0.9), 0 6px 20px 8px rgba(139,92,246,0.5); }
+  60.1%,65%   { background: #6d28d9; box-shadow: 0 0 4px 2px rgba(109,40,217,0.4); }
+  65.1%,70%   { background: #a855f7; box-shadow: 0 0 8px 4px rgba(168,85,247,0.9), 0 6px 20px 8px rgba(139,92,246,0.5); }
+  70.1%,100%  { background: #3b0764; box-shadow: 0 0 4px 2px rgba(59,7,100,0.5); }
+}
+@keyframes bt-edge-pulse {
+  0%,100%  { opacity: 0.85; }
+  50%      { opacity: 1; }
+}
+@keyframes bt-press {
+  0%   { transform: translateY(0) scale(1); }
+  40%  { transform: translateY(4px) scale(0.985); }
+  100% { transform: translateY(0) scale(1); }
+}
+@keyframes bt-symbol-path {
+  0%   { stroke-dashoffset: -650; }
+  50%  { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: 650; }
+}
+@keyframes bt-symbol-circle {
+  0%   { opacity: 0; }
+  50%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* Wrapper — extra bottom padding for LED glow clearance */
+.bt-key-wrapper {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 32px;
+}
+
+@media (max-width: 480px) {
+  .bt-key-wrapper {
+    padding-bottom: 20px;
+  }
+  .bt-button {
+    padding: 8px 16px;
+  }
+  .bt-inner-face {
+    padding: 6px 14px;
+  }
+  .bt-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+  }
+}
+
+/* Hide checkbox */
+.bt-wrap input[type="checkbox"] {
+  display: none;
+}
+
+/* Outer label */
+.bt-wrap {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ── Outer shell — the raised surround ── */
+.bt-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* size is driven by content — padding only */
+  width: auto;
+  height: auto;
+  border-radius: 20px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 10px 22px;
+
+  /* Dark neumorphic outer shell */
+  background: linear-gradient(150deg, #2e2e2e 0%, #1c1c1c 55%, #161616 100%);
+  box-shadow:
+    inset 1px 1px 0px rgba(255,255,255,0.09),
+    inset -1px -1px 0px rgba(0,0,0,0.7),
+    0 0 0 1px rgba(255,255,255,0.05),
+    0 10px 40px rgba(0,0,0,0.85),
+    0 18px 50px -6px rgba(120,40,220,0.3);
+
+  transition: box-shadow 0.15s, transform 0.12s;
+}
+
+.bt-button:active,
+.bt-wrap input:checked ~ .bt-button {
+  animation: bt-press 0.2s ease forwards;
+  box-shadow:
+    inset 1px 1px 0px rgba(255,255,255,0.06),
+    inset -1px -1px 0px rgba(0,0,0,0.8),
+    0 0 0 1px rgba(255,255,255,0.04),
+    0 5px 20px rgba(0,0,0,0.9),
+    0 20px 60px -4px rgba(120,40,220,0.5);
+}
+
+/* ── Recessed inner face ── */
+.bt-inner-face {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  padding: 8px 18px;
+
+  /* Slightly darker recessed surface */
+  background: linear-gradient(155deg, #252525 0%, #2a2a2a 60%, #232323 100%);
+  box-shadow:
+    inset 0 3px 8px rgba(0,0,0,0.75),
+    inset 0 1px 3px rgba(0,0,0,0.5),
+    inset 0 -1px 2px rgba(255,255,255,0.03),
+    inset 0 0 0 1px rgba(0,0,0,0.6);
+}
+
+/* ── Label text ── */
+.bt-label {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(180,160,210,0.75);
+  white-space: nowrap;
+  transition: color 0.2s;
+}
+
+/* ── Bottom edge glow strip — purple ── */
+.bt-edge-glow {
+  position: absolute;
+  bottom: 0;
+  left: 10%;
+  right: 10%;
+  height: 2px;
+  border-radius: 0 0 20px 20px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(120,40,220,0.5) 15%,
+    rgba(160,80,255,0.85) 35%,
+    rgba(190,120,255,1) 50%,
+    rgba(160,80,255,0.85) 65%,
+    rgba(120,40,220,0.5) 85%,
+    transparent 100%
+  );
+  box-shadow:
+    0 0 10px 3px rgba(140,60,240,0.65),
+    0 0 28px 8px rgba(100,30,200,0.35),
+    0 0 50px 14px rgba(80,20,180,0.18);
+  opacity: 0.85;
+  transition: opacity 0.2s;
+}
+
+/* ── LED dot below the key — purple ── */
+.bt-led {
+  position: absolute;
+  bottom: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  /* Bright violet core */
+  background: #c084fc;
+  box-shadow:
+    0 0 4px 2px rgba(192,132,252,1),
+    0 0 12px 6px rgba(147,51,234,0.8),
+    0 0 30px 14px rgba(109,40,217,0.5),
+    0 0 55px 22px rgba(88,28,135,0.28);
+  transition: background 0.2s, box-shadow 0.2s;
+  z-index: 10;
+}
+
+/* ── Ripple bg ── */
+.bt-bg {
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.bt-shine-1 {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%) scale(0);
+  background: rgba(139,92,246,0.8);
+}
+
+/* ── Outer glow halo behind the whole key — purple ── */
+.bt-bg-glow {
+  position: absolute;
+  inset: -8px;
+  border-radius: 28px;
+  background: radial-gradient(ellipse at 50% 100%, rgba(109,40,217,0.3) 0%, transparent 60%);
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+/* ══════════════════════════════════════════════
+   CHECKED / ACTIVE STATE
+══════════════════════════════════════════════ */
+.bt-wrap input:checked ~ .bt-button .bt-label {
+  color: rgba(220,190,255,0.95);
+}
+
+.bt-wrap input:checked ~ .bt-button .bt-edge-glow {
+  opacity: 1;
+  animation: bt-edge-pulse 1.5s ease-in-out infinite;
+}
+
+.bt-wrap input:checked ~ .bt-led {
+  background: #a855f7;
+  box-shadow:
+    0 0 6px 3px rgba(168,85,247,1),
+    0 0 16px 8px rgba(139,92,246,0.8),
+    0 0 40px 18px rgba(109,40,217,0.5),
+    0 0 70px 28px rgba(88,28,135,0.28);
+  animation: bt-led-blink 2s ease forwards;
+}
+
+.bt-wrap input:checked ~ .bt-bg .bt-shine-1 {
+  animation: bg 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.bt-wrap input:checked ~ .bt-bg-glow {
+  opacity: 1;
+}
+
+/* ── Primary variant — same look, slightly stronger purple glow ── */
+.bt-wrap--primary .bt-button {
+  box-shadow:
+    inset 1px 1px 0px rgba(255,255,255,0.10),
+    inset -1px -1px 0px rgba(0,0,0,0.7),
+    0 0 0 1px rgba(255,255,255,0.06),
+    0 10px 40px rgba(0,0,0,0.85),
+    0 18px 60px -4px rgba(130,50,240,0.5);
+}
+
+.bt-wrap--primary .bt-edge-glow {
+  opacity: 1;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(140,50,240,0.6) 15%,
+    rgba(180,90,255,0.95) 35%,
+    rgba(210,140,255,1) 50%,
+    rgba(180,90,255,0.95) 65%,
+    rgba(140,50,240,0.6) 85%,
+    transparent 100%
+  );
+  box-shadow:
+    0 0 14px 5px rgba(160,70,255,0.8),
+    0 0 36px 12px rgba(120,40,220,0.45),
+    0 0 60px 18px rgba(90,20,180,0.22);
+}
+
+.bt-wrap--primary .bt-led {
+  background: #d8b4fe;
+  box-shadow:
+    0 0 4px 2px rgba(216,180,254,1),
+    0 0 14px 7px rgba(168,85,247,0.9),
+    0 0 36px 16px rgba(139,92,246,0.6),
+    0 0 65px 26px rgba(109,40,217,0.32);
+}
+
+.bt-wrap--primary .bt-label {
+  color: rgba(220,190,255,0.9);
+}
+
+.bt-wrap--primary .bt-bg-glow {
+  opacity: 1;
+}
+
+@keyframes ledTurnOff {
+  30%, 60%    { background-color: #a855f7; box-shadow: 0 -10px 35px 17px rgba(168,85,247,0.6), inset 0 1px 2px 0px white, 0 0 0px 3px rgb(0 0 0 / 60%), 0 0 2px 4px rgba(120,60,180,0.3); }
+  60.1%, 65%  { background-color: black;   box-shadow: 0 -10px 35px 17px transparent, inset 0 1px 2px 0px transparent, 0 0 0px 3px rgb(0 0 0 / 10%), 0 0 2px 4px transparent; }
+  65.1%, 70%  { background-color: #a855f7; box-shadow: 0 -10px 35px 17px rgba(168,85,247,0.6), inset 0 1px 2px 0px white, 0 0 0px 3px rgb(0 0 0 / 60%), 0 0 2px 4px rgba(120,60,180,0.3); }
+  70.1%, 100% { background-color: black;   box-shadow: 0 -10px 35px 17px transparent, inset 0 1px 2px 0px transparent, 0 0 0px 3px rgb(0 0 0 / 10%), 0 0 2px 4px transparent; }
+}
+@keyframes reflexLedTurnOff {
+  30%, 60%    { box-shadow: inset 0 1px 1px rgba(255,255,255,0.4), inset 0 -6px 1px -4px #6b21a8, inset 0 -15px 6px -8px #2e1065; }
+  60.1%, 65%  { box-shadow: inset 0 1px 1px rgba(255,255,255,0.4), inset 0 -6px 1px -4px rgba(255,255,255,0.1), inset 0 -15px 6px -8px rgba(255,255,255,0.1); }
+  65.1%, 70%  { box-shadow: inset 0 1px 1px rgb(255 255 255 / 40%), inset 0 -6px 1px -4px #6b21a8, inset 0 -15px 6px -8px #2e1065; }
+  70.1%, 100% { box-shadow: inset 0 1px 1px rgba(255,255,255,0.4), inset 0 -6px 1px -4px rgba(255,255,255,0.1), inset 0 -15px 6px -8px rgba(255,255,255,0.1); }
+}
+@keyframes reflexLedBlurTurnOff {
+  30%, 60%    { background: #a855f7; }
+  60.1%, 65%  { background: transparent; }
+  65.1%, 70%  { background: #a855f7; }
+  70.1%, 100% { background: transparent; }
+}
+@keyframes bgBeforeTurnOff {
+  30%, 60%    { box-shadow: inset 0 -2px 0px -1px rgba(200,150,255,0.3), inset 0 0 5px 1px black, inset 0 0 0 1px black; }
+  60.1%, 65%  { box-shadow: inset 0 -2px 0px -1px rgba(160,160,160,0.3), inset 0 0 5px 1px black, inset 0 0 0 1px black; }
+  65.1%, 70%  { box-shadow: inset 0 -2px 0px -1px rgba(200,150,255,0.3), inset 0 0 5px 1px black, inset 0 0 0 1px black; }
+  70.1%, 100% { box-shadow: inset 0 -2px 0px -1px rgba(160,160,160,0.3), inset 0 0 5px 1px black, inset 0 0 0 1px black; }
+}
+@keyframes bg {
+  0%       { transform: translateY(0) scale(0); }
+  12%      { transform: translateY(0) scale(25); }
+  60%,100% { transform: translateY(-280px) scale(20, 18); }
+}
+@keyframes symbolPath {
+  0%   { stroke-dashoffset: -650; }
+  50%  { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: 650; }
+}
+@keyframes symbolPath2 {
+  0%   { stroke-dashoffset: -650; }
+  50%  { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: 650; }
+}
+@keyframes symbolCircle {
+  0%   { opacity: 0; }
+  50%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* ── Wrapper ── */
+.bluetooth-key-wrapper {
+  display: inline-flex;
+}
+
+/* ── Hide the real checkbox ── */
+.wrap input[type="checkbox"] {
+  display: none;
+}
+
+/* ── Outer label shell ── */
+.wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ── The button pill ── */
+.wrap .button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 140px;
+  height: 52px;
+  padding: 0 28px;
+  border-radius: 999px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  overflow: hidden;
+  background: linear-gradient(180deg, #1a0030 0%, #0d0018 100%);
+  box-shadow:
+    0 0 0 1px rgba(139,92,246,0.45),
+    0 2px 8px rgba(0,0,0,0.6),
+    inset 0 1px 0 rgba(255,255,255,0.08);
+  transition: box-shadow 0.2s, transform 0.1s;
+}
+
+.wrap .button:active {
+  transform: scale(0.97);
+}
+
+/* ── Corner accent ── */
+.wrap .corner {
+  position: absolute;
+  top: 6px;
+  right: 10px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(139,92,246,0.5);
+  box-shadow: 0 0 6px 2px rgba(139,92,246,0.4);
+}
+
+/* ── Inner label text ── */
+.wrap .inner {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wrap .bt-label {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(200,170,255,0.9);
+  white-space: nowrap;
+  transition: color 0.2s;
+}
+
+/* ── LED indicator ── */
+.wrap .led {
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: black;
+  box-shadow:
+    0 -10px 35px 17px transparent,
+    inset 0 1px 2px 0px transparent,
+    0 0 0px 3px rgb(0 0 0 / 10%),
+    0 0 2px 4px transparent;
+  transition: background-color 0.2s, box-shadow 0.2s;
+  z-index: 10;
+}
+
+/* ── Background ripple ── */
+.wrap .bg {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.wrap .bg .shine-1,
+.wrap .bg .shine-2 {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.wrap .bg .shine-1 {
+  width: 12px;
+  height: 12px;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%) scale(0);
+  background: rgba(139,92,246,0.9);
+}
+
+.wrap .bg .shine-2 {
+  width: 8px;
+  height: 8px;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%) scale(0);
+  background: rgba(168,85,247,0.6);
+}
+
+/* ── Glow halo behind button ── */
+.wrap .bg-glow {
+  position: absolute;
+  inset: -4px;
+  border-radius: 999px;
+  background: radial-gradient(ellipse at 50% 100%, rgba(139,92,246,0.35) 0%, transparent 70%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+/* ══════════════════════════════════════════════
+   CHECKED / ACTIVE STATE
+══════════════════════════════════════════════ */
+.wrap input:checked ~ .button {
+  box-shadow:
+    0 0 0 1px rgba(168,85,247,0.7),
+    0 0 20px rgba(139,92,246,0.5),
+    0 2px 8px rgba(0,0,0,0.6),
+    inset 0 1px 0 rgba(255,255,255,0.12);
+  background: linear-gradient(180deg, #2d0060 0%, #1a0035 100%);
+}
+
+.wrap input:checked ~ .button .bt-label {
+  color: #ffffff;
+}
+
+.wrap input:checked ~ .button .corner {
+  background: #a855f7;
+  box-shadow: 0 0 10px 4px rgba(168,85,247,0.7);
+}
+
+.wrap input:checked ~ .led {
+  background-color: #a855f7;
+  box-shadow:
+    0 -10px 35px 17px rgba(168,85,247,0.6),
+    inset 0 1px 2px 0px white,
+    0 0 0px 3px rgb(0 0 0 / 60%),
+    0 0 2px 4px rgba(120,60,180,0.3);
+  animation: ledTurnOff 2s ease forwards;
+}
+
+.wrap input:checked ~ .bg .shine-1 {
+  animation: bg 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.wrap input:checked ~ .bg-glow {
+  opacity: 1;
+  animation: bgGlow 1.8s ease forwards;
+}
+
+/* ── Primary variant (filled purple) ── */
+.wrap--primary .button {
+  background: linear-gradient(180deg, #7c3aed 0%, #5b21b6 100%);
+  box-shadow:
+    0 0 0 1px rgba(139,92,246,0.6),
+    0 0 24px rgba(139,92,246,0.45),
+    0 2px 8px rgba(0,0,0,0.5),
+    inset 0 1px 0 rgba(255,255,255,0.15);
+}
+
+.wrap--primary .bt-label {
+  color: #ffffff;
+}
+
+.wrap--primary input:checked ~ .button {
+  background: linear-gradient(180deg, #9333ea 0%, #7c3aed 100%);
+  box-shadow:
+    0 0 0 1px rgba(168,85,247,0.8),
+    0 0 32px rgba(139,92,246,0.65),
+    0 2px 8px rgba(0,0,0,0.5),
+    inset 0 1px 0 rgba(255,255,255,0.2);
+}

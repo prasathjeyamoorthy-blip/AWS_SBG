@@ -1,0 +1,74 @@
+/* ── Card Canvas (outer wrapper) ── */
+.card-canvas {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 12px;
+  border-radius: 18px;
+  background-color: #0d0d0d;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.09) 1px, transparent 1px);
+  background-size: 16px 16px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgba(255, 255, 255, 0.6) !important;
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.6);
+}
+
+.card-backdrop {
+  position: absolute;
+  inset: 0;
+  border-radius: 18px;
+  pointer-events: none;
+}
+
+/* ── Canvas corner dots ── */
+.canvas-dot {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.7);
+  z-index: 5;
+}
+.canvas-dot-tl { top: -3px;    left: -3px;   }
+.canvas-dot-tr { top: -3px;    right: -3px;  }
+.canvas-dot-bl { bottom: -3px; left: -3px;   }
+.canvas-dot-br { bottom: -3px; right: -3px;  }
+
+/* ── Glow Card (inner dark card) ── */
+.glow-card {
+  position: relative;
+  border-radius: 12px;
+  width: 100%;
+  overflow: visible;
+}
+
+/* ── Inner card corner dots ── */
+.border-element {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.45);
+  pointer-events: none;
+  z-index: 10;
+}
+.border-top    { top: -2px;    left: -2px;  }
+.border-right  { top: -2px;    right: -2px; }
+.border-left   { bottom: -2px; left: -2px;  }
+.border-bottom { bottom: -2px; right: -2px; }
+
+/* ── Card content (dark inner surface) ── */
+.card-content {
+  position: relative;
+  z-index: 2;
+  border-radius: 12px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgba(255, 255, 255, 0.18) !important;
+  background: #1c1c1c;
+  color: #ffffff;
+  overflow: hidden;
+}
