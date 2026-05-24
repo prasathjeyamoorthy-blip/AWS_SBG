@@ -37,22 +37,22 @@ export default function Navbar() {
     <>
       {/* ── DESKTOP (lg+): Logo | LimelightNav | JoinNowButton ── */}
       <header
-        className={`fixed top-0 left-0 right-0 z-50 hidden lg:flex items-center justify-between h-14 px-6 xl:px-10 transition-all duration-300 ${
+        className={`fixed top-0 left-0 right-0 z-50 hidden lg:flex items-center justify-between h-14 px-4 xl:px-10 transition-all duration-300 ${
           scrolled
             ? 'bg-black/85 backdrop-blur-md border-b border-purple-900/40 shadow-lg shadow-purple-950/30'
             : 'bg-black/60 backdrop-blur-sm border-b border-purple-900/20'
         }`}
       >
         {/* Logo */}
-        <div className="flex items-center gap-2.5 flex-shrink-0 min-w-[120px]">
-          <img src="/aws-sbg-icon.png" alt="AWS SBG" className="w-8 h-8 object-contain" />
-          <span className="text-white text-xs tracking-[0.2em] uppercase font-display-bold whitespace-nowrap">
+        <div className="flex items-center gap-2 flex-shrink-0 min-w-[100px]">
+          <img src="/aws-sbg-icon.png" alt="AWS SBG" className="w-7 h-7 xl:w-8 xl:h-8 object-contain" />
+          <span className="text-white text-xs tracking-[0.15em] xl:tracking-[0.2em] uppercase font-display-bold whitespace-nowrap">
             AWS SBG
           </span>
         </div>
 
         {/* Limelight nav — text mode, centered */}
-        <div className="flex-1 flex justify-center">
+        <div className="flex-1 flex justify-center min-w-0 overflow-hidden">
           <LimelightNav
             items={desktopItems}
             defaultActiveIndex={0}
@@ -63,7 +63,7 @@ export default function Navbar() {
         </div>
 
         {/* CTA */}
-        <div className="flex-shrink-0 min-w-[120px] flex justify-end">
+        <div className="flex-shrink-0 min-w-[100px] flex justify-end">
           <JoinNowButton href="#register" />
         </div>
       </header>

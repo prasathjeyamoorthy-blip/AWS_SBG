@@ -78,14 +78,23 @@ export default function RadialOrbitalTimeline({ timelineData }: RadialOrbitalTim
     });
   };
 
+  const rotationRef = useRef(rotationAngle);
+  useEffect(() => { rotationRef.current = rotationAngle; }, [rotationAngle]);
+
   useEffect(() => {
-    let rotationTimer: ReturnType<typeof setInterval>;
-    if (autoRotate) {
-      rotationTimer = setInterval(() => {
-        setRotationAngle((prev) => Number(((prev + 0.3) % 360).toFixed(3)));
-      }, 50);
-    }
-    return () => { if (rotationTimer) clearInterval(rotationTimer); };
+    if (!autoRotate) return;
+    let rafId: number;
+    let last = performance.now();
+    const tick = (now: number) => {
+      const delta = now - last;
+      last = now;
+      // ~0.3 deg per 50ms = 6 deg/s
+      rotationRef.current = (rotationRef.current + (delta / 50) * 0.3) % 360;
+      setRotationAngle(Number(rotationRef.current.toFixed(3)));
+      rafId = requestAnimationFrame(tick);
+    };
+    rafId = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(rafId);
   }, [autoRotate]);
 
   const calculateNodePosition = (index: number, total: number) => {

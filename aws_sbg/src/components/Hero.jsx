@@ -1,9 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { BluetoothKey } from './ui/bluetooth-key';
 import SectionBlurEdges from './ui/SectionBlurEdges';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-if (typeof window !== 'undefined') gsap.registerPlugin(ScrollTrigger);
 
 /* ─── Countdown ─────────────────────────────────────────────────────────── */
 const TARGET = new Date('2026-07-25T09:00:00');
@@ -23,13 +20,38 @@ function CountdownUnit({ value, label }) {
   );
 }
 
-/* ─── Stars ──────────────────────────────────────────────────────────────── */
+/* ─── Stars — drawn on canvas, zero DOM nodes ────────────────────────────── */
 const STARS = Array.from({ length: 100 }, (_, i) => ({
-  top: ((i * 37 + 13) % 100),
-  left: ((i * 61 + 7) % 100),
-  size: ((i * 17 + 3) % 2) + 1,
-  opacity: ((i * 23 + 5) % 6) / 10 + 0.1,
+  top:     ((i * 37 + 13) % 100) / 100,
+  left:    ((i * 61 + 7)  % 100) / 100,
+  size:    ((i * 17 + 3)  % 2) + 1,
+  opacity: ((i * 23 + 5)  % 6) / 10 + 0.1,
 }));
+
+function StarCanvas() {
+  const canvasRef = useRef(null);
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const draw = () => {
+      canvas.width  = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      STARS.forEach(s => {
+        ctx.beginPath();
+        ctx.arc(s.left * canvas.width, s.top * canvas.height, s.size / 2, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255,255,255,${s.opacity})`;
+        ctx.fill();
+      });
+    };
+    draw();
+    const ro = new ResizeObserver(draw);
+    ro.observe(canvas);
+    return () => ro.disconnect();
+  }, []);
+  return <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none" style={{ zIndex: 1 }} />;
+}
 
 /* ─── Hero ───────────────────────────────────────────────────────────────── */
 export default function Hero() {
@@ -43,20 +65,13 @@ export default function Hero() {
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
-    // slow playback speed
     video.playbackRate = 0.9;
+    // Use seeked+ended instead of timeupdate to avoid firing 30x/sec
     const handleTimeUpdate = () => {
-      if (video.currentTime >= 5) {
-        video.currentTime = 0;
-      }
+      if (video.currentTime >= 5) video.currentTime = 0;
     };
-    const handlePlay = () => { video.playbackRate = 0.9; };
-    video.addEventListener('timeupdate', handleTimeUpdate);
-    video.addEventListener('play', handlePlay);
-    return () => {
-      video.removeEventListener('timeupdate', handleTimeUpdate);
-      video.removeEventListener('play', handlePlay);
-    };
+    video.addEventListener('timeupdate', handleTimeUpdate, { passive: true });
+    return () => video.removeEventListener('timeupdate', handleTimeUpdate);
   }, []);
 
   /* countdown */
@@ -82,7 +97,7 @@ export default function Hero() {
     <section
       id="hero"
       ref={sectionRef}
-      className="relative min-h-screen flex flex-col items-center justify-center text-center px-4 sm:px-6 pt-16 sm:pt-20 pb-28 md:pb-0 overflow-hidden"
+      className="relative min-h-screen flex flex-col items-center justify-center text-center px-4 sm:px-6 pt-16 sm:pt-20 pb-36 sm:pb-32 md:pb-16 overflow-hidden"
       style={{
         background: 'radial-gradient(ellipse 90% 65% at 50% 30%, rgba(88,28,135,0.4) 0%, #08000f 68%)',
       }}
@@ -122,16 +137,8 @@ export default function Hero() {
         />
       </div>
 
-      {/* Stars */}
-      <div className="absolute inset-0 pointer-events-none z-[1]">
-        {STARS.map((s, i) => (
-          <div
-            key={i}
-            className="absolute rounded-full bg-white"
-            style={{ top: s.top + '%', left: s.left + '%', width: s.size, height: s.size, opacity: s.opacity }}
-          />
-        ))}
-      </div>
+      {/* Stars — single canvas instead of 100 divs */}
+      <StarCanvas />
 
       {/* Purple glow orb */}
       <div
@@ -140,19 +147,19 @@ export default function Hero() {
       />
 
       {/* ── Side stats — left column ── */}
-      <div className="absolute left-4 xl:left-8 top-1/2 -translate-y-1/2 z-10 flex-col gap-8 xl:gap-10 pointer-events-none select-none hidden lg:flex">
+      <div className="absolute left-4 xl:left-8 top-1/2 -translate-y-1/2 z-10 flex-col gap-8 xl:gap-10 pointer-events-none select-none hidden xl:flex">
         {/* Stat 1 */}
         <div className="flex flex-col leading-none items-start">
-          <span className="text-2xl xl:text-4xl 2xl:text-5xl font-display-bold tracking-tight" style={{ color: '#ffffff', textShadow: '0 0 30px rgba(255,255,255,0.15)' }}>ENDLESS</span>
-          <span className="text-2xl xl:text-4xl 2xl:text-5xl font-display-bold tracking-tight" style={{
+          <span className="text-xl xl:text-3xl 2xl:text-4xl font-display-bold tracking-tight" style={{ color: '#ffffff', textShadow: '0 0 30px rgba(255,255,255,0.15)' }}>ENDLESS</span>
+          <span className="text-xl xl:text-3xl 2xl:text-4xl font-display-bold tracking-tight" style={{
             color: 'transparent',
             WebkitTextStroke: '1.5px rgba(139,92,246,0.5)',
           }}>INNOVATION</span>
         </div>
         {/* Stat 2 */}
         <div className="flex flex-col leading-none items-start">
-          <span className="text-2xl xl:text-4xl 2xl:text-5xl font-display-bold tracking-tight" style={{ color: '#ffffff', textShadow: '0 0 30px rgba(255,255,255,0.15)', display: 'block' }}>GUARDIAN</span>
-          <span className="text-2xl xl:text-4xl 2xl:text-5xl font-display-bold tracking-tight" style={{
+          <span className="text-xl xl:text-3xl 2xl:text-4xl font-display-bold tracking-tight" style={{ color: '#ffffff', textShadow: '0 0 30px rgba(255,255,255,0.15)', display: 'block' }}>GUARDIAN</span>
+          <span className="text-xl xl:text-3xl 2xl:text-4xl font-display-bold tracking-tight" style={{
             color: 'transparent',
             WebkitTextStroke: '1.5px rgba(139,92,246,0.5)',
             display: 'block',
@@ -163,19 +170,19 @@ export default function Hero() {
       </div>
 
       {/* ── Side stats — right column ── */}
-      <div className="absolute right-4 xl:right-8 top-1/2 -translate-y-1/2 z-10 flex-col gap-8 xl:gap-10 pointer-events-none select-none items-end hidden lg:flex">
+      <div className="absolute right-4 xl:right-8 top-1/2 -translate-y-1/2 z-10 flex-col gap-8 xl:gap-10 pointer-events-none select-none items-end hidden xl:flex">
         {/* Stat 3 */}
         <div className="flex flex-col leading-none items-end">
-          <span className="text-2xl xl:text-4xl 2xl:text-5xl font-display-bold tracking-tight" style={{ color: '#ffffff', textShadow: '0 0 30px rgba(255,255,255,0.15)' }}>PIRATE TEAM</span>
-          <span className="text-2xl xl:text-4xl 2xl:text-5xl font-display-bold tracking-tight" style={{
+          <span className="text-xl xl:text-3xl 2xl:text-4xl font-display-bold tracking-tight" style={{ color: '#ffffff', textShadow: '0 0 30px rgba(255,255,255,0.15)' }}>PIRATE TEAM</span>
+          <span className="text-xl xl:text-3xl 2xl:text-4xl font-display-bold tracking-tight" style={{
             color: 'transparent',
             WebkitTextStroke: '1.5px rgba(139,92,246,0.5)',
           }}>BASED VOYAGE</span>
         </div>
         {/* Stat 4 */}
         <div className="flex flex-col leading-none items-end">
-          <span className="text-2xl xl:text-4xl 2xl:text-5xl font-display-bold tracking-tight" style={{ color: '#ffffff', textShadow: '0 0 30px rgba(255,255,255,0.15)' }}>OFFLINE</span>
-          <span className="text-2xl xl:text-4xl 2xl:text-5xl font-display-bold tracking-tight" style={{
+          <span className="text-xl xl:text-3xl 2xl:text-4xl font-display-bold tracking-tight" style={{ color: '#ffffff', textShadow: '0 0 30px rgba(255,255,255,0.15)' }}>OFFLINE</span>
+          <span className="text-xl xl:text-3xl 2xl:text-4xl font-display-bold tracking-tight" style={{
             color: 'transparent',
             WebkitTextStroke: '1.5px rgba(139,92,246,0.5)',
           }}>GRAND FINALE</span>
@@ -183,7 +190,7 @@ export default function Hero() {
       </div>
 
       {/* ── Hero content ── */}
-      <div className="relative z-10 max-w-5xl mx-auto pointer-events-none select-none w-full">
+      <div className="relative z-10 max-w-3xl xl:max-w-4xl mx-auto pointer-events-none select-none w-full px-2">
         <p className="text-purple-400 text-xs tracking-[0.35em] uppercase mb-5 font-mono-bold">
           Pirate Multiverse Hackathon
         </p>
@@ -202,8 +209,8 @@ export default function Hero() {
           An immersive pirate-themed hackathon where crews sail through dangerous seas of innovation, solve challenges, unlock Royal Guards, and battle for the Final Treasure.
           Build your crew, choose your route, survive the storms, and reach the Final Island.        </p>
 
-        {/* Floating stats — mobile only (shown below lg) */}
-        <div className="flex flex-wrap justify-center gap-2 sm:gap-4 mb-8 sm:mb-10 lg:hidden">
+        {/* Floating stats — shown below xl (where side stats are hidden) */}
+        <div className="flex flex-wrap justify-center gap-2 sm:gap-4 mb-8 sm:mb-10 xl:hidden">
           {[
             'Endless Innovation',
             'Guardian Mentors',
@@ -238,9 +245,9 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Quote — sits above bottom nav on mobile (pb-24), normal on desktop */}
-      <div className="absolute bottom-20 md:bottom-7 left-0 right-0 z-30 flex justify-center pointer-events-none px-6">
-        <p className="text-purple-200 text-base sm:text-lg md:text-xl lg:text-2xl font-display-italic text-center" style={{ textShadow: '0 0 12px rgba(216,180,254,0.5)' }}>
+      {/* Quote — sits above bottom nav on mobile, normal on desktop */}
+      <div className="absolute bottom-24 sm:bottom-20 md:bottom-7 left-0 right-0 z-30 flex justify-center pointer-events-none px-6">
+        <p className="text-purple-200 text-sm sm:text-base md:text-xl lg:text-2xl font-display-italic text-center" style={{ textShadow: '0 0 12px rgba(216,180,254,0.5)' }}>
           "Not all treasures are gold — some are innovation."
         </p>
       </div>

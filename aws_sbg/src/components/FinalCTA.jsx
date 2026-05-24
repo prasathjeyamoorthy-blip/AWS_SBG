@@ -56,7 +56,7 @@ export default function FinalCTA() {
         <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-4 mb-10">
           <a
             href="#"
-            className="px-8 sm:px-10 py-4 text-white text-sm rounded-full transition-all duration-300 font-body-bold tracking-widest uppercase text-center"
+            className="w-full sm:w-auto px-8 sm:px-10 py-4 text-white text-sm rounded-full transition-all duration-300 font-body-bold tracking-widest uppercase text-center"
             style={{
               background: 'linear-gradient(135deg, #7c3aed, #9333ea)',
               boxShadow: '0 0 40px rgba(139,92,246,0.5)',
@@ -66,14 +66,14 @@ export default function FinalCTA() {
           </a>
           <a
             href="#guardians"
-            className="px-8 sm:px-10 py-4 text-white text-sm rounded-full transition-all duration-300 font-body-bold tracking-widest uppercase text-center"
+            className="w-full sm:w-auto px-8 sm:px-10 py-4 text-white text-sm rounded-full transition-all duration-300 font-body-bold tracking-widest uppercase text-center"
             style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.2)' }}
           >
             Enter the Multiverse
           </a>
           <a
             href="#about"
-            className="px-8 sm:px-10 py-4 text-purple-300 text-sm rounded-full transition-all duration-300 font-body-bold tracking-widest uppercase text-center"
+            className="w-full sm:w-auto px-8 sm:px-10 py-4 text-purple-300 text-sm rounded-full transition-all duration-300 font-body-bold tracking-widest uppercase text-center"
             style={{ border: '1px solid rgba(139,92,246,0.4)' }}
           >
             Start the Adventure
