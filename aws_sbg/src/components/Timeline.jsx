@@ -146,12 +146,12 @@ export default function Timeline() {
           <div
             className="absolute top-0 bottom-0 w-px"
             style={{
-              left: '15px',
+              left: '11px',
               background: 'rgba(255, 255, 255, 0.25)',
             }}
           />
 
-          <div className="space-y-6 sm:space-y-8" style={{ paddingLeft: '44px' }}>
+          <div className="space-y-6 sm:space-y-8" style={{ paddingLeft: '36px' }}>
             {phases.map((phase, i) => (
               <div key={i} className="relative flex gap-4 sm:gap-6">
 
@@ -159,7 +159,7 @@ export default function Timeline() {
                 <div
                   className="absolute grid place-items-center rounded-full"
                   style={{
-                    left: '-36px',
+                    left: '-28px',
                     top: '50%',
                     transform: 'translateY(-50%)',
                     width: '22px',

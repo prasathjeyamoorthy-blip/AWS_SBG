@@ -22,9 +22,12 @@ const COLLAPSED_OFFSETS = [
   'top-[calc(1.5rem+3rem)]',
   'top-[calc(1.5rem+3.75rem)]',
   'top-[calc(1.5rem+4.5rem)]',
+  'top-[calc(1.5rem+5.25rem)]',
+  'top-[calc(1.5rem+6rem)]',
+  'top-[calc(1.5rem+6.75rem)]',
 ];
 
-/** Spread top offset when expanded — each card is ~auto height ~120px + 1rem gap */
+/** Spread top offset when expanded — each card ~130px + 1rem gap */
 const EXPANDED_OFFSETS = [
   'top-6',
   'top-[calc(1.5rem+130px+1rem)]',
@@ -33,6 +36,9 @@ const EXPANDED_OFFSETS = [
   'top-[calc(1.5rem+520px+4rem)]',
   'top-[calc(1.5rem+650px+5rem)]',
   'top-[calc(1.5rem+780px+6rem)]',
+  'top-[calc(1.5rem+910px+7rem)]',
+  'top-[calc(1.5rem+1040px+8rem)]',
+  'top-[calc(1.5rem+1170px+9rem)]',
 ];
 
 interface StackedFAQCardsProps {

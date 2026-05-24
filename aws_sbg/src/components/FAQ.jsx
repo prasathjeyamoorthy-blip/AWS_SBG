@@ -4,32 +4,44 @@ import { HelpCircle } from 'lucide-react';
 
 const faqs = [
   {
-    question: 'Who can participate?',
-    answer: 'Students, developers, designers, creators, innovators, and dreamers from all backgrounds are welcome.',
+    question: 'Is there a registration fee to participate?',
+    answer: 'No, participation is completely free.',
   },
   {
-    question: 'Can beginners join?',
-    answer: 'Yes. Every legendary pirate once sailed for the first time.',
+    question: 'What is the maximum size of a team?',
+    answer: 'Teams must consist of 3–4 members, and each team must include at least one female participant.',
   },
   {
-    question: 'Is this an online or offline event?',
-    answer: 'The voyage may include online phases, mentor sessions, and final presentations depending on the event structure.',
+    question: 'Can I change my team members or track after registration?',
+    answer: 'No, changes to team members or selected tracks are not allowed after registration.',
   },
   {
-    question: 'Can I participate solo?',
-    answer: 'Pirates are strongest with a crew, but solo registrations may also be allowed based on event rules.',
+    question: 'Is the certificate mandatory to participate in the final hackathon?',
+    answer: 'No, possessing a certificate is not mandatory for participation in the final hackathon.',
   },
   {
-    question: 'What technologies can we use?',
-    answer: 'Participants are free to use modern technologies including AI, web frameworks, cloud platforms, mobile apps, blockchain, automation, and more.',
+    question: 'Is the Grand Finale an in-person event or virtual?',
+    answer: 'The Grand Finale will be conducted offline at the Sri Manakula Vinayagar Engineering College campus.',
   },
   {
-    question: 'Will mentors guide teams?',
-    answer: 'Yes. Selected teams entering the Multiverse Alliance phase receive mentorship from Guardians of the Multiverse.',
+    question: 'Will AWS credits be provided?',
+    answer: 'No, AWS credits will not be provided.',
   },
   {
-    question: 'What should teams build?',
-    answer: 'Teams should create innovative solutions that solve meaningful problems or introduce impactful experiences.',
+    question: 'What are the system requirements for the Grand Finale?',
+    answer: 'The Top 10 shortlisted teams participating in the Grand Finale are required to bring their own laptops. Power supply junction boxes and Wi-Fi connectivity will be provided at the venue, but participants are advised to keep backup arrangements if needed.',
+  },
+  {
+    question: 'Will food be provided during the event?',
+    answer: 'Yes, refreshments and lunch will be provided for the Top 10 shortlisted teams during the Grand Finale.',
+  },
+  {
+    question: 'Will participants receive certificates?',
+    answer: 'Yes, all participants will receive an E-Certificate of participation.',
+  },
+  {
+    question: 'Will there be any swags for finalists?',
+    answer: 'Yes, the Top 10 shortlisted teams will receive exclusive event swags.',
   },
 ].map(item => ({ ...item, icon: <HelpCircle size={16} /> }));
 

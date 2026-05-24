@@ -14,10 +14,10 @@ export default function Footer() {
       }}
     >
       <div className="max-w-6xl mx-auto">
-        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-8 sm:gap-10 mb-10 sm:mb-12">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 sm:gap-10 mb-10 sm:mb-12">
 
           {/* Brand */}
-          <div className="col-span-2 sm:col-span-2 md:col-span-1">
+          <div className="col-span-2 md:col-span-1">
             <div className="flex items-center gap-2 mb-4">
               <img src="/aws-sbg-icon.png" alt="AWS SBG" className="w-8 h-8 object-contain" />
               <span className="text-white text-sm tracking-widest uppercase font-display-bold">

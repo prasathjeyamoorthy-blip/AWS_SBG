@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-import { SplineScene } from './ui/splite';
 import { BluetoothKey } from './ui/bluetooth-key';
 import SectionBlurEdges from './ui/SectionBlurEdges';
 import { gsap } from 'gsap';
@@ -26,10 +25,10 @@ function CountdownUnit({ value, label }) {
 
 /* ─── Stars ──────────────────────────────────────────────────────────────── */
 const STARS = Array.from({ length: 100 }, (_, i) => ({
-  top:     ((i * 37 + 13) % 100),
-  left:    ((i * 61 + 7)  % 100),
-  size:    ((i * 17 + 3)  % 2) + 1,
-  opacity: ((i * 23 + 5)  % 6) / 10 + 0.1,
+  top: ((i * 37 + 13) % 100),
+  left: ((i * 61 + 7) % 100),
+  size: ((i * 17 + 3) % 2) + 1,
+  opacity: ((i * 23 + 5) % 6) / 10 + 0.1,
 }));
 
 /* ─── Hero ───────────────────────────────────────────────────────────────── */
@@ -37,7 +36,28 @@ export default function Hero() {
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
   /* DOM refs */
-  const sectionRef   = useRef(null);
+  const sectionRef = useRef(null);
+  const videoRef = useRef(null);
+
+  /* loop first 5 seconds of video */
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    // slow playback speed
+    video.playbackRate = 0.9;
+    const handleTimeUpdate = () => {
+      if (video.currentTime >= 5) {
+        video.currentTime = 0;
+      }
+    };
+    const handlePlay = () => { video.playbackRate = 0.9; };
+    video.addEventListener('timeupdate', handleTimeUpdate);
+    video.addEventListener('play', handlePlay);
+    return () => {
+      video.removeEventListener('timeupdate', handleTimeUpdate);
+      video.removeEventListener('play', handlePlay);
+    };
+  }, []);
 
   /* countdown */
   useEffect(() => {
@@ -45,10 +65,10 @@ export default function Hero() {
       const diff = TARGET - Date.now();
       if (diff <= 0) { setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 }); return; }
       setTimeLeft({
-        days:    Math.floor(diff / 86400000),
-        hours:   Math.floor((diff % 86400000) / 3600000),
-        minutes: Math.floor((diff % 3600000)  / 60000),
-        seconds: Math.floor((diff % 60000)    / 1000),
+        days: Math.floor(diff / 86400000),
+        hours: Math.floor((diff % 86400000) / 3600000),
+        minutes: Math.floor((diff % 3600000) / 60000),
+        seconds: Math.floor((diff % 60000) / 1000),
       });
     };
     tick();
@@ -62,18 +82,34 @@ export default function Hero() {
     <section
       id="hero"
       ref={sectionRef}
-      className="relative min-h-screen flex flex-col items-center justify-center text-center px-4 sm:px-6 pt-16 sm:pt-20 overflow-hidden"
+      className="relative min-h-screen flex flex-col items-center justify-center text-center px-4 sm:px-6 pt-16 sm:pt-20 pb-28 md:pb-0 overflow-hidden"
       style={{
         background: 'radial-gradient(ellipse 90% 65% at 50% 30%, rgba(88,28,135,0.4) 0%, #08000f 68%)',
       }}
     >
-      {/* ── Spline robot — full-screen, pointer events ON so it tracks mouse ── */}
+      {/* ── Video background — full-screen, looping first 5s ── */}
       <div className="absolute inset-0 z-0">
-        <SplineScene
-          scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
-          className="w-full h-full"
+        <video
+          ref={videoRef}
+          src="/pirate_video.mp4"
+          autoPlay
+          muted
+          playsInline
+          preload="auto"
+          className="absolute inset-0 w-full h-full"
+          style={{
+            objectFit: 'cover',
+            objectPosition: 'center top',
+            transform: 'scale(1.15)',
+            transformOrigin: 'center top',
+            filter: 'contrast(1.1) saturate(1.3) brightness(1.05)',
+            imageRendering: 'high-quality',
+            WebkitBackfaceVisibility: 'hidden',
+            backfaceVisibility: 'hidden',
+            willChange: 'transform',
+          }}
         />
-        {/* Vignette — pointer-events-none so it never blocks Spline */}
+        {/* Vignette — pointer-events-none so it never blocks interaction */}
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
@@ -104,42 +140,45 @@ export default function Hero() {
       />
 
       {/* ── Side stats — left column ── */}
-      <div className="absolute left-8 top-1/2 -translate-y-1/2 z-10 flex-col gap-10 pointer-events-none select-none hidden lg:flex">
+      <div className="absolute left-4 xl:left-8 top-1/2 -translate-y-1/2 z-10 flex-col gap-8 xl:gap-10 pointer-events-none select-none hidden lg:flex">
         {/* Stat 1 */}
-        <div className="flex flex-col leading-none">
-          <span className="text-4xl xl:text-5xl font-display-bold tracking-tight" style={{ color: '#ffffff', textShadow: '0 0 30px rgba(255,255,255,0.15)' }}>48+ HOURS</span>
-          <span className="text-4xl xl:text-5xl font-display-bold tracking-tight" style={{
+        <div className="flex flex-col leading-none items-start">
+          <span className="text-2xl xl:text-4xl 2xl:text-5xl font-display-bold tracking-tight" style={{ color: '#ffffff', textShadow: '0 0 30px rgba(255,255,255,0.15)' }}>ENDLESS</span>
+          <span className="text-2xl xl:text-4xl 2xl:text-5xl font-display-bold tracking-tight" style={{
             color: 'transparent',
             WebkitTextStroke: '1.5px rgba(139,92,246,0.5)',
-          }}>OF INNOVATION</span>
+          }}>INNOVATION</span>
         </div>
         {/* Stat 2 */}
-        <div className="flex flex-col leading-none">
-          <span className="text-4xl xl:text-5xl font-display-bold tracking-tight" style={{ color: '#ffffff', textShadow: '0 0 30px rgba(255,255,255,0.15)' }}>MULTIVERSE</span>
-          <span className="text-4xl xl:text-5xl font-display-bold tracking-tight" style={{
+        <div className="flex flex-col leading-none items-start">
+          <span className="text-2xl xl:text-4xl 2xl:text-5xl font-display-bold tracking-tight" style={{ color: '#ffffff', textShadow: '0 0 30px rgba(255,255,255,0.15)', display: 'block' }}>GUARDIAN</span>
+          <span className="text-2xl xl:text-4xl 2xl:text-5xl font-display-bold tracking-tight" style={{
             color: 'transparent',
             WebkitTextStroke: '1.5px rgba(139,92,246,0.5)',
+            display: 'block',
+            textAlign: 'left',
+            marginLeft: 0,
           }}>MENTORS</span>
         </div>
       </div>
 
       {/* ── Side stats — right column ── */}
-      <div className="absolute right-8 top-1/2 -translate-y-1/2 z-10 flex-col gap-10 pointer-events-none select-none items-end hidden lg:flex">
+      <div className="absolute right-4 xl:right-8 top-1/2 -translate-y-1/2 z-10 flex-col gap-8 xl:gap-10 pointer-events-none select-none items-end hidden lg:flex">
         {/* Stat 3 */}
         <div className="flex flex-col leading-none items-end">
-          <span className="text-4xl xl:text-5xl font-display-bold tracking-tight" style={{ color: '#ffffff', textShadow: '0 0 30px rgba(255,255,255,0.15)' }}>PIRATE-THEMED</span>
-          <span className="text-4xl xl:text-5xl font-display-bold tracking-tight" style={{
+          <span className="text-2xl xl:text-4xl 2xl:text-5xl font-display-bold tracking-tight" style={{ color: '#ffffff', textShadow: '0 0 30px rgba(255,255,255,0.15)' }}>PIRATE TEAM</span>
+          <span className="text-2xl xl:text-4xl 2xl:text-5xl font-display-bold tracking-tight" style={{
             color: 'transparent',
             WebkitTextStroke: '1.5px rgba(139,92,246,0.5)',
-          }}>CHALLENGES</span>
+          }}>BASED VOYAGE</span>
         </div>
         {/* Stat 4 */}
         <div className="flex flex-col leading-none items-end">
-          <span className="text-4xl xl:text-5xl font-display-bold tracking-tight" style={{ color: '#ffffff', textShadow: '0 0 30px rgba(255,255,255,0.15)' }}>AI · WEB · CHAIN</span>
-          <span className="text-4xl xl:text-5xl font-display-bold tracking-tight" style={{
+          <span className="text-2xl xl:text-4xl 2xl:text-5xl font-display-bold tracking-tight" style={{ color: '#ffffff', textShadow: '0 0 30px rgba(255,255,255,0.15)' }}>OFFLINE</span>
+          <span className="text-2xl xl:text-4xl 2xl:text-5xl font-display-bold tracking-tight" style={{
             color: 'transparent',
             WebkitTextStroke: '1.5px rgba(139,92,246,0.5)',
-          }}>FUTURE TECH</span>
+          }}>GRAND FINALE</span>
         </div>
       </div>
 
@@ -156,21 +195,20 @@ export default function Hero() {
         </h1>
 
         <p className="text-purple-300 text-base sm:text-lg md:text-2xl mb-3 font-display-bold-italic">
-          Code the Seas. Conquer the Multiverse.
+          Code the Seas. Claim the Treasure.
         </p>
 
         <p className="text-gray-400 text-sm md:text-base leading-relaxed max-w-2xl mx-auto mb-8 sm:mb-10 font-body-bold px-2">
-          In a world where innovation is the ultimate treasure, pirates, builders, coders, dreamers,
-          and creators gather from every corner of the seas to embark on a legendary hackathon adventure.
-        </p>
+          An immersive pirate-themed hackathon where crews sail through dangerous seas of innovation, solve challenges, unlock Royal Guards, and battle for the Final Treasure.
+          Build your crew, choose your route, survive the storms, and reach the Final Island.        </p>
 
         {/* Floating stats — mobile only (shown below lg) */}
         <div className="flex flex-wrap justify-center gap-2 sm:gap-4 mb-8 sm:mb-10 lg:hidden">
           {[
-            '48+ Hours of Innovation',
-            'Multiverse Mentors',
-            'Pirate-Themed Challenges',
-            'AI · Web · Blockchain · Future Tech',
+            'Endless Innovation',
+            'Guardian Mentors',
+            'Pirate Team Based Voyage',
+            'Offline Grand Finale',
           ].map((text) => (
             <span
               key={text}
@@ -183,9 +221,9 @@ export default function Hero() {
 
         {/* Countdown */}
         <div className="flex items-center justify-center gap-2 sm:gap-3 md:gap-5 mb-10 sm:mb-12">
-          <CountdownUnit value={timeLeft.days}    label="Days"    />
+          <CountdownUnit value={timeLeft.days} label="Days" />
           <span className="text-purple-500 text-2xl sm:text-3xl font-mono-bold mb-6">:</span>
-          <CountdownUnit value={timeLeft.hours}   label="Hours"   />
+          <CountdownUnit value={timeLeft.hours} label="Hours" />
           <span className="text-purple-500 text-2xl sm:text-3xl font-mono-bold mb-6">:</span>
           <CountdownUnit value={timeLeft.minutes} label="Minutes" />
           <span className="text-purple-500 text-2xl sm:text-3xl font-mono-bold mb-6">:</span>
@@ -194,10 +232,17 @@ export default function Hero() {
 
         {/* CTA buttons */}
         <div className="relative flex flex-wrap justify-center gap-3 sm:gap-4 pointer-events-auto" style={{ zIndex: 30 }}>
-          <BluetoothKey label="Join the Voyage"      href="#register"  variant="primary" />
-          <BluetoothKey label="Explore the Timeline" href="#timeline"  variant="secondary" />
-          <BluetoothKey label="Meet the Guardians"   href="#guardians" variant="secondary" />
+          <BluetoothKey label="Register Your Crew" href="#register" variant="primary" />
+          <BluetoothKey label="Explore the Timeline" href="#timeline" variant="secondary" />
+          <BluetoothKey label="Meet the Guardians" href="#guardians" variant="secondary" />
         </div>
+      </div>
+
+      {/* Quote — sits above bottom nav on mobile (pb-24), normal on desktop */}
+      <div className="absolute bottom-20 md:bottom-7 left-0 right-0 z-30 flex justify-center pointer-events-none px-6">
+        <p className="text-purple-200 text-base sm:text-lg md:text-xl lg:text-2xl font-display-italic text-center" style={{ textShadow: '0 0 12px rgba(216,180,254,0.5)' }}>
+          "Not all treasures are gold — some are innovation."
+        </p>
       </div>
 
       <SectionBlurEdges variant="hero" />
