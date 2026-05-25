@@ -55,8 +55,8 @@ const STYLES = `
   30%       { transform: scale(1);   }
 }
 
-.animate-footer-breathe       { animation: footer-breathe 8s ease-in-out infinite alternate; }
-.animate-footer-scroll-marquee{ animation: footer-scroll-marquee 40s linear infinite; }
+.animate-footer-breathe       { animation: footer-breathe 8s ease-in-out infinite alternate; will-change: transform, opacity; }
+.animate-footer-scroll-marquee{ animation: footer-scroll-marquee 40s linear infinite; will-change: transform; }
 .animate-footer-heartbeat      { animation: footer-heartbeat 2s cubic-bezier(0.25,1,0.5,1) infinite; }
 
 .footer-bg-grid {
@@ -84,8 +84,6 @@ const STYLES = `
     inset 0 1px 1px rgba(255,255,255,0.08),
     inset 0 -1px 2px rgba(0,0,0,0.4);
   border: 1px solid rgba(139,92,246,0.18);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
   transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
 }
 .footer-glass-pill:hover {
@@ -121,13 +119,17 @@ const STYLES = `
 // -------------------------------------------------------------------------
 // 2. MAGNETIC BUTTON PRIMITIVE
 // -------------------------------------------------------------------------
-export type MagneticButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
-  React.AnchorHTMLAttributes<HTMLAnchorElement> & {
-    as?: React.ElementType;
-  };
+export type MagneticButtonProps =
+  React.ButtonHTMLAttributes<HTMLButtonElement> &
+    React.AnchorHTMLAttributes<HTMLAnchorElement> & {
+      as?: React.ElementType;
+    };
 
 const MagneticButton = React.forwardRef<HTMLElement, MagneticButtonProps>(
-  ({ className, children, as: Component = "button", ...props }, forwardedRef) => {
+  (
+    { className, children, as: Component = "button", ...props },
+    forwardedRef,
+  ) => {
     const localRef = useRef<HTMLElement>(null);
 
     useEffect(() => {
@@ -143,22 +145,33 @@ const MagneticButton = React.forwardRef<HTMLElement, MagneticButtonProps>(
           const x = e.clientX - rect.left - h;
           const y = e.clientY - rect.top - w;
           gsap.to(element, {
-            x: x * 0.4, y: y * 0.4,
-            rotationX: -y * 0.15, rotationY: x * 0.15,
+            x: x * 0.4,
+            y: y * 0.4,
+            rotationX: -y * 0.15,
+            rotationY: x * 0.15,
             scale: 1.05,
-            ease: "power2.out", duration: 0.4,
+            ease: "power2.out",
+            duration: 0.4,
           });
         };
         const handleMouseLeave = () => {
           gsap.to(element, {
-            x: 0, y: 0, rotationX: 0, rotationY: 0, scale: 1,
-            ease: "elastic.out(1, 0.3)", duration: 1.2,
+            x: 0,
+            y: 0,
+            rotationX: 0,
+            rotationY: 0,
+            scale: 1,
+            ease: "elastic.out(1, 0.3)",
+            duration: 1.2,
           });
         };
         element.addEventListener("mousemove", handleMouseMove as EventListener);
         element.addEventListener("mouseleave", handleMouseLeave);
         return () => {
-          element.removeEventListener("mousemove", handleMouseMove as EventListener);
+          element.removeEventListener(
+            "mousemove",
+            handleMouseMove as EventListener,
+          );
           element.removeEventListener("mouseleave", handleMouseLeave);
         };
       }, element);
@@ -169,9 +182,13 @@ const MagneticButton = React.forwardRef<HTMLElement, MagneticButtonProps>(
     return (
       <Component
         ref={(node: HTMLElement) => {
-          (localRef as React.MutableRefObject<HTMLElement | null>).current = node;
+          (localRef as React.MutableRefObject<HTMLElement | null>).current =
+            node;
           if (typeof forwardedRef === "function") forwardedRef(node);
-          else if (forwardedRef) (forwardedRef as React.MutableRefObject<HTMLElement | null>).current = node;
+          else if (forwardedRef)
+            (
+              forwardedRef as React.MutableRefObject<HTMLElement | null>
+            ).current = node;
         }}
         className={cn("cursor-pointer", className)}
         {...props}
@@ -179,7 +196,7 @@ const MagneticButton = React.forwardRef<HTMLElement, MagneticButtonProps>(
         {children}
       </Component>
     );
-  }
+  },
 );
 MagneticButton.displayName = "MagneticButton";
 
@@ -188,18 +205,16 @@ MagneticButton.displayName = "MagneticButton";
 // -------------------------------------------------------------------------
 const MarqueeItem = () => (
   <div className="flex items-center space-x-12 px-6 font-body-bold">
-    <span>Code the Seas</span>
+    <span>Endless Innovation</span>
     <span className="text-purple-400/60">✦</span>
-    <span>Conquer the Multiverse</span>
+    <span>Pirate Team-Based Voyage</span>
     <span className="text-purple-500/60">✦</span>
-    <span>48+ Hours of Innovation</span>
+    <span>Guardian Mentors</span>
     <span className="text-purple-400/60">✦</span>
-    <span>Multiverse Mentors</span>
+    <span>Offline Grand Finale</span>
     <span className="text-purple-500/60">✦</span>
-    <span>Pirate-Themed Challenges</span>
-    <span className="text-purple-400/60">✦</span>
     <span>Grand Finale · July 25</span>
-    <span className="text-purple-500/60">✦</span>
+    <span className="text-purple-400/60">✦</span>
   </div>
 );
 
@@ -207,10 +222,10 @@ const MarqueeItem = () => (
 // 4. MAIN CINEMATIC FOOTER
 // -------------------------------------------------------------------------
 export function CinematicFooter() {
-  const wrapperRef    = useRef<HTMLDivElement>(null);
-  const giantTextRef  = useRef<HTMLDivElement>(null);
-  const headingRef    = useRef<HTMLHeadingElement>(null);
-  const linksRef      = useRef<HTMLDivElement>(null);
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const giantTextRef = useRef<HTMLDivElement>(null);
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  const linksRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (typeof window === "undefined" || !wrapperRef.current) return;
@@ -221,24 +236,34 @@ export function CinematicFooter() {
         giantTextRef.current,
         { y: "10vh", scale: 0.8, opacity: 0 },
         {
-          y: "0vh", scale: 1, opacity: 1, ease: "power1.out",
+          y: "0vh",
+          scale: 1,
+          opacity: 1,
+          ease: "power1.out",
           scrollTrigger: {
             trigger: wrapperRef.current,
-            start: "top 80%", end: "bottom bottom", scrub: 1,
+            start: "top 80%",
+            end: "bottom bottom",
+            scrub: 1,
           },
-        }
+        },
       );
       // Staggered content reveal
       gsap.fromTo(
         [headingRef.current, linksRef.current],
         { y: 50, opacity: 0 },
         {
-          y: 0, opacity: 1, stagger: 0.15, ease: "power3.out",
+          y: 0,
+          opacity: 1,
+          stagger: 0.15,
+          ease: "power3.out",
           scrollTrigger: {
             trigger: wrapperRef.current,
-            start: "top 40%", end: "bottom bottom", scrub: 1,
+            start: "top 40%",
+            end: "bottom bottom",
+            scrub: 1,
           },
-        }
+        },
       );
     }, wrapperRef);
 
@@ -256,38 +281,40 @@ export function CinematicFooter() {
         ref={wrapperRef}
         className="relative w-full"
         style={{
-          height: 'clamp(600px, 100svh, 100vh)',
-          clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)"
+          height: "clamp(600px, 100svh, 100vh)",
+          clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)",
         }}
       >
         {/* Fixed footer underneath everything */}
         <footer
           className="fixed bottom-0 left-0 flex w-full flex-col justify-between overflow-hidden cinematic-footer-wrapper"
           style={{
-            height: 'clamp(600px, 100svh, 100vh)',
-            background: '#08000f',
-            color: '#ffffff'
+            height: "clamp(600px, 100svh, 100vh)",
+            background: "#08000f",
+            color: "#ffffff",
           }}
         >
-          {/* Aurora glow */}
-          <div className="footer-aurora absolute left-1/2 top-1/2 h-[60vh] w-[80vw] -translate-x-1/2 -translate-y-1/2 animate-footer-breathe rounded-[50%] blur-[80px] pointer-events-none z-0" />
           {/* Grid */}
           <div className="footer-bg-grid absolute inset-0 z-0 pointer-events-none" />
 
-          {/* Giant background text */}
+          {/* Giant background text — pushed to bottom so it doesn't overlap content */}
           <div
             ref={giantTextRef}
-            className="footer-giant-bg-text absolute -bottom-[5vh] left-1/2 -translate-x-1/2 whitespace-nowrap z-0 pointer-events-none select-none font-display-bold"
+            className="footer-giant-bg-text absolute -bottom-[2vh] left-1/2 -translate-x-1/2 whitespace-nowrap z-0 pointer-events-none select-none font-display-bold"
           >
             VOYAGE
           </div>
 
           {/* ── Marquee ── */}
-          <div className="absolute top-8 sm:top-12 left-0 w-full overflow-hidden border-y border-purple-800/30 py-3 sm:py-4 z-10 shadow-2xl"
-            style={{ background: 'rgba(8,0,15,0.7)', backdropFilter: 'blur(12px)' }}
+          <div
+            className="absolute top-8 sm:top-12 left-0 w-full overflow-hidden border-y border-purple-800/30 py-3 sm:py-4 z-10 shadow-2xl"
+            style={{
+              background: "rgba(8,0,15,0.85)",
+            }}
           >
-            <div className="flex w-max animate-footer-scroll-marquee text-xs md:text-sm tracking-[0.3em] uppercase"
-              style={{ color: 'rgba(168,162,185,0.8)' }}
+            <div
+              className="flex w-max animate-footer-scroll-marquee text-xs md:text-sm tracking-[0.3em] uppercase"
+              style={{ color: "rgba(168,162,185,0.8)" }}
             >
               <MarqueeItem />
               <MarqueeItem />
@@ -295,103 +322,89 @@ export function CinematicFooter() {
           </div>
 
           {/* ── Main center content ── */}
-          <div className="relative z-10 flex flex-1 flex-col items-center justify-center px-4 sm:px-6 mt-24 sm:mt-20 w-full max-w-5xl mx-auto">
+          <div className="relative z-10 flex flex-1 flex-col items-center justify-start pt-24 sm:pt-52 w-full">
+
+            {/* Story block — hidden on small screens to prevent collision, shown md+ */}
+            <div
+              className="hidden md:block absolute left-6 sm:left-10 md:left-16 text-left"
+              style={{ top: 'clamp(11rem, 20vh, 15rem)', maxWidth: '320px' }}
+            >
+              <p className="text-gray-300 text-base sm:text-lg font-display-bold-italic leading-relaxed mb-3">
+                The Black Flag has been raised.<br />
+                The Royal Guards await.<br />
+                The Final Island is rising from the mist.
+              </p>
+              <p className="text-purple-300 text-base sm:text-lg font-display-bold-italic">
+                Will your crew survive the voyage?
+              </p>
+            </div>
+
+            {/* Centered content */}
             <h2
               ref={headingRef}
-              className="text-4xl sm:text-5xl md:text-8xl font-black tracking-tighter mb-8 sm:mb-12 text-center font-display-bold"
+              className="text-3xl sm:text-5xl md:text-6xl font-black tracking-tighter mb-6 sm:mb-10 text-center font-display-bold px-4"
             >
               <GlitchText
                 speed={1}
                 enableShadows={true}
                 enableOnHover={false}
-                style={{ filter: 'drop-shadow(0px 0px 24px rgba(139,92,246,0.5))' }}
+                style={{
+                  filter: "drop-shadow(0px 0px 24px rgba(139,92,246,0.5))",
+                }}
               >
                 Ready to Sail?
               </GlitchText>
             </h2>
 
-            <div ref={linksRef} className="flex flex-col items-center gap-4 sm:gap-6 w-full">
+            <div
+              ref={linksRef}
+              className="flex flex-col items-center gap-4 sm:gap-6 w-full px-4"
+            >
               {/* Primary CTA pills */}
-              <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-4 w-full">
+              <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-4">
                 <MagneticButton
                   as="a"
                   href="#register"
                   className="footer-glass-pill px-8 sm:px-10 py-4 sm:py-5 rounded-full font-bold text-sm md:text-base flex items-center justify-center gap-3 group font-body-bold"
-                  style={{ color: '#ffffff' }}
+                  style={{ color: "#ffffff" }}
                 >
                   Register Your Crew
                 </MagneticButton>
-                <MagneticButton
-                  as="a"
-                  href="#guardians"
-                  className="footer-glass-pill px-8 sm:px-10 py-4 sm:py-5 rounded-full font-bold text-sm md:text-base flex items-center justify-center gap-3 group font-body-bold"
-                  style={{ color: '#ffffff' }}
-                >
-                  Enter the Multiverse
-                </MagneticButton>
               </div>
 
-              {/* Secondary text links */}
-              <div className="flex flex-wrap justify-center gap-2 sm:gap-3 md:gap-6 w-full mt-2">
-                {["Privacy Policy", "Terms of Service", "Support", "FAQ"].map((label) => (
-                  <MagneticButton
-                    key={label}
-                    as="a"
-                    href="#faq"
-                    className="footer-glass-pill px-4 sm:px-6 py-2 sm:py-3 rounded-full font-medium text-xs md:text-sm font-body-bold"
-                    style={{ color: 'rgba(168,162,185,0.8)' }}
-                  >
-                    {label}
-                  </MagneticButton>
-                ))}
-              </div>
+              {/* Quote */}
+              <p className="text-purple-400/70 text-xs sm:text-sm font-display-italic tracking-wide mt-1 text-center">
+                "Legends are forged beyond the storm."
+              </p>
             </div>
           </div>
 
           {/* ── Bottom bar ── */}
-          <div className="relative z-20 w-full pb-24 lg:pb-8 px-4 sm:px-6 md:px-12 flex flex-col md:flex-row items-center justify-between gap-4 sm:gap-6">
-            {/* Copyright */}
-            <div className="text-[10px] md:text-xs font-semibold tracking-widest uppercase order-2 md:order-1 font-mono-bold"
-              style={{ color: 'rgba(168,162,185,0.6)' }}
-            >
-              © 2026 The Grand Pirate Voyage · Where Pirates Become Legends.
-            </div>
-
-            {/* Made with love badge */}
-            <div className="footer-glass-pill px-6 py-3 rounded-full flex items-center gap-2 order-1 md:order-2 cursor-default">
-              <span className="text-[10px] md:text-xs font-bold uppercase tracking-widest font-mono-bold"
-                style={{ color: 'rgba(168,162,185,0.7)' }}
-              >
-                Crafted with
-              </span>
-              <span className="animate-footer-heartbeat text-sm md:text-base" style={{ color: '#ef4444' }}>❤</span>
-              <span className="text-[10px] md:text-xs font-bold uppercase tracking-widest font-mono-bold"
-                style={{ color: 'rgba(168,162,185,0.7)' }}
-              >
-                by
-              </span>
-              <span className="font-black text-xs md:text-sm tracking-normal ml-1 font-display-bold" style={{ color: '#ffffff' }}>
-                AWS SBG
-              </span>
-            </div>
-
+          <div className="relative z-20 w-full pb-24 lg:pb-8 px-4 sm:px-6 md:px-12 flex flex-col md:flex-row items-center justify-end gap-4 sm:gap-6">
             {/* Back to top */}
             <MagneticButton
               as="button"
               onClick={scrollToTop}
-              className="w-12 h-12 rounded-full footer-glass-pill flex items-center justify-center group order-3"
-              style={{ color: 'rgba(168,162,185,0.7)' }}
+              className="w-12 h-12 rounded-full footer-glass-pill flex items-center justify-center group"
+              style={{ color: "rgba(168,162,185,0.7)" }}
             >
               <svg
                 className="w-5 h-5 transform group-hover:-translate-y-1.5 transition-transform duration-300"
-                fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
               >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M5 10l7-7m0 0l7 7m-7-7v18"
+                />
               </svg>
             </MagneticButton>
           </div>
 
-          <SectionBlurEdges showBottom={false} />
+          <SectionBlurEdges showTop={false} showBottom={false} />
         </footer>
       </div>
     </>

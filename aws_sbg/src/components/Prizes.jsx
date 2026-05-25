@@ -1,104 +1,66 @@
-import MagicBento from './ui/MagicBento';
-import SectionBlurEdges from './ui/SectionBlurEdges';
+import MagicBento from "./ui/MagicBento";
+import SectionBlurEdges from "./ui/SectionBlurEdges";
 
-const specialAwards = [
-  'Best Innovation',
-  'Best AI Solution',
-  'Best Design Experience',
-  'Best Social Impact',
-  'Community Favorite',
-  'Rising Crew Award',
+const prizes = [
+  { rank: "Legend Tier", amount: "₹15,000" },
+  { rank: "Storm Tier", amount: "₹10,000" },
+  { rank: "Voyager Tier", amount: "₹5,000" },
 ];
 
-const additionalRewards = [
-  'Internship Opportunities',
-  'Startup Mentorship',
-  'Networking Access',
-  'Swag & Merchandise',
-  'Recognition Certificates',
-  'Showcase Opportunities',
-];
-
-const prizesCardData = [
-  // Card 1 — Grand Champion (full-width banner)
-  {
-    color: '#0d0020',
-    style: {
-      background: 'linear-gradient(135deg, rgba(139,92,246,0.25), rgba(88,28,135,0.4))',
-      border: '1px solid rgba(139,92,246,0.5)',
-      boxShadow: '0 0 60px rgba(139,92,246,0.3), inset 0 0 40px rgba(139,92,246,0.06)',
-      textAlign: 'center',
-      alignItems: 'center',
-    },
-    content: (
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.75em', width: '100%' }}>
-        <div className="bento-star-icon">★</div>
-        <div>
-          <h3 className="magic-bento-card__title" style={{ fontSize: '1.4em', textAlign: 'center' }}>
-            Grand Champion Prize
-          </h3>
-          <p className="magic-bento-card__description" style={{ textAlign: 'center', maxWidth: '520px', opacity: 0.9 }}>
-            The crew that conquers the Final Treasure War earns the title of{' '}
-            <strong style={{ color: '#fff' }}>Pirate Legends</strong> — glory, treasure,
-            legacy, recognition, and opportunities beyond the horizon.
-          </p>
-        </div>
-        <div className="bento-tags" style={{ justifyContent: 'center' }}>
-          {['Glory', 'Treasure', 'Legacy', 'Recognition', 'Opportunities'].map(item => (
-            <span key={item} className="bento-tag">{item}</span>
-          ))}
-        </div>
-      </div>
-    ),
+const prizesCardData = prizes.map((prize, idx) => ({
+  color: "#0d0020",
+  style: {
+    background:
+      idx === 0
+        ? "linear-gradient(135deg, rgba(139,92,246,0.25), rgba(88,28,135,0.4))"
+        : "linear-gradient(135deg, rgba(40,40,40,0.3), rgba(20,20,20,0.5))",
+    border:
+      idx === 0
+        ? "1px solid rgba(139,92,246,0.5)"
+        : "1px solid rgba(80,80,80,0.4)",
+    boxShadow:
+      idx === 0
+        ? "0 0 40px rgba(139,92,246,0.3)"
+        : "0 0 40px rgba(100,100,100,0.1)",
+    textAlign: "center",
+    alignItems: "center",
   },
-  // Card 2 — Special Awards
-  {
-    color: '#120F17',
-    style: { border: '1px solid rgba(255,255,255,0.1)' },
-    content: (
-      <>
-        <div className="magic-bento-card__header">
-          <span className="magic-bento-card__label">Awards</span>
-        </div>
-        <div className="magic-bento-card__content">
-          <h2 className="magic-bento-card__title">Special Awards</h2>
-          <ul className="bento-list">
-            {specialAwards.map(award => <li key={award}>{award}</li>)}
-          </ul>
-        </div>
-      </>
-    ),
-  },
-  // Card 3 — Additional Rewards
-  {
-    color: '#120F17',
-    style: { border: '1px solid rgba(139,92,246,0.25)', background: 'rgba(139,92,246,0.08)' },
-    content: (
-      <>
-        <div className="magic-bento-card__header">
-          <span className="magic-bento-card__label">Rewards</span>
-        </div>
-        <div className="magic-bento-card__content">
-          <h2 className="magic-bento-card__title">Additional Rewards</h2>
-          <ul className="bento-list">
-            {additionalRewards.map(reward => <li key={reward}>{reward}</li>)}
-          </ul>
-        </div>
-      </>
-    ),
-  },
-];
+  content: (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: "1em",
+        width: "100%",
+      }}
+    >
+      <h3
+        className="magic-bento-card__title"
+        style={{ fontSize: "1.5em", textAlign: "center" }}
+      >
+        {prize.rank}
+      </h3>
+      <p style={{ fontSize: 'clamp(1.5rem, 5vw, 2.5em)', fontWeight: "bold", textAlign: "center" }}>
+        {prize.amount}
+      </p>
+    </div>
+  ),
+}));
 
 export default function Prizes() {
   return (
     <section
       id="prizes"
       className="py-16 sm:py-28 px-4 sm:px-6 relative overflow-hidden"
-      style={{ background: '#000000' }}
+      style={{ background: "#000000" }}
     >
       <div
         className="absolute inset-0 pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse 70% 50% at 50% 50%, rgba(88,28,135,0.15) 0%, transparent 70%)' }}
+        style={{
+          background:
+            "radial-gradient(ellipse 70% 50% at 50% 50%, rgba(88,28,135,0.15) 0%, transparent 70%)",
+        }}
       />
 
       <div className="max-w-5xl mx-auto relative z-10">
@@ -126,6 +88,33 @@ export default function Prizes() {
           particleCount={12}
           glowColor="132, 0, 255"
         />
+
+        {/* Additional Rewards */}
+        <div className="mt-12 sm:mt-16 max-w-2xl mx-auto">
+          <div className="bg-gradient-to-r from-purple-900/20 via-transparent to-purple-900/20 border border-purple-500/30 rounded-lg p-5 sm:p-8 backdrop-blur-sm">
+            <h3 className="text-2xl font-display-bold text-white mb-6 text-center">
+              Additional Rewards
+            </h3>
+            <ul className="space-y-4">
+              <li className="flex items-start gap-3">
+                <span className="text-purple-400 font-bold mt-1">★</span>
+                <span className="text-gray-300">Top 10 Crew Swags</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-purple-400 font-bold mt-1">★</span>
+                <span className="text-gray-300">
+                  Certificates for All Participants
+                </span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-purple-400 font-bold mt-1">★</span>
+                <span className="text-gray-300">
+                  Recognition, Networking & Opportunities
+                </span>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
 
       <SectionBlurEdges />

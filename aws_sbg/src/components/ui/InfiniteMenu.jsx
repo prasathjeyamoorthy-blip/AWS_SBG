@@ -491,9 +491,33 @@ export default function InfiniteMenu({items=[],scale=1.0}){
       setIsMoving,sk=>sk.run(),scale
     );
     sketchRef.current=sketch;
-    const onResize=()=>{if(sketchRef.current)sketchRef.current.resize();};
-    window.addEventListener('resize',onResize);onResize();
-    return()=>{window.removeEventListener('resize',onResize);if(sketchRef.current)sketchRef.current.destroy();};
+
+    // Debounced resize
+    let resizeTimer;
+    const onResize=()=>{
+      clearTimeout(resizeTimer);
+      resizeTimer=setTimeout(()=>{if(sketchRef.current)sketchRef.current.resize();},150);
+    };
+    window.addEventListener('resize',onResize);
+    onResize();
+
+    // Pause RAF when off-screen to save GPU
+    const observer=new IntersectionObserver(([entry])=>{
+      if(!sketchRef.current)return;
+      if(entry.isIntersecting){
+        if(!sketchRef.current._rafId)sketchRef.current.run();
+      }else{
+        sketchRef.current.destroy();
+      }
+    },{threshold:0.05});
+    observer.observe(canvas);
+
+    return()=>{
+      clearTimeout(resizeTimer);
+      window.removeEventListener('resize',onResize);
+      observer.disconnect();
+      if(sketchRef.current)sketchRef.current.destroy();
+    };
   },[items,scale]);
 
   const handleButtonClick=()=>{

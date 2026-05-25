@@ -61,11 +61,11 @@ export default function GlitchText({
       if (frame < burstFrames) {
         applyGlitch();
         frame++;
-        timerRef.current = setTimeout(burst, randomBetween(30, 80) / speed);
+        timerRef.current = setTimeout(burst, randomBetween(80, 150) / speed);
       } else {
         // Pause between bursts
         clearGlitch();
-        timerRef.current = setTimeout(scheduleNext, randomBetween(2000, 4000) / speed);
+        timerRef.current = setTimeout(scheduleNext, randomBetween(3000, 6000) / speed);
       }
     }
     burst();

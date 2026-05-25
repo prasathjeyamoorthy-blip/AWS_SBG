@@ -1,45 +1,32 @@
-import GradualBlur from './GradualBlur';
-
 /**
- * Drop this inside any `relative overflow-hidden` section to get
- * top + bottom gradual-blur fade edges.
- *
- * variant="hero" uses a shorter bottom blur that stops before the CTA buttons.
+ * Lightweight fade edges using CSS gradients only.
+ * Replaces the previous GradualBlur implementation that stacked
+ * 14 backdrop-filter layers per section (very expensive on GPU).
  */
-export default function SectionBlurEdges({
-  topHeight    = '5rem',
-  bottomHeight = '8rem',
-  strength     = 3,
-  divCount     = 8,
-  variant,
-}) {
-  // Hero variant: shorter bottom blur so it doesn't cover the CTA buttons
-  const resolvedBottomHeight = variant === 'hero' ? '4rem' : bottomHeight;
-  const resolvedStrength     = variant === 'hero' ? 2      : strength;
-
+export default function SectionBlurEdges({ topHeight = '5rem', bottomHeight = '8rem', variant, showBottom = true, showTop = true }) {
+  const resolvedBottom = variant === 'hero' ? '4rem' : bottomHeight;
   return (
     <>
-      <GradualBlur
-        target="parent"
-        position="top"
-        height={topHeight}
-        strength={2}
-        divCount={6}
-        curve="ease-in"
-        opacity={1}
-        style={{ zIndex: 20 }}
-      />
-      <GradualBlur
-        target="parent"
-        position="bottom"
-        height={resolvedBottomHeight}
-        strength={resolvedStrength}
-        divCount={divCount}
-        curve="bezier"
-        exponential={true}
-        opacity={1}
-        style={{ zIndex: 20 }}
-      />
+      {showTop && (
+        <div
+          className="absolute top-0 left-0 right-0 pointer-events-none"
+          style={{
+            height: topHeight,
+            background: 'linear-gradient(to bottom, var(--section-bg, #08000f), transparent)',
+            zIndex: 20,
+          }}
+        />
+      )}
+      {showBottom && (
+        <div
+          className="absolute bottom-0 left-0 right-0 pointer-events-none"
+          style={{
+            height: resolvedBottom,
+            background: 'linear-gradient(to top, var(--section-bg, #08000f), transparent)',
+            zIndex: 20,
+          }}
+        />
+      )}
     </>
   );
 }

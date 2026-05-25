@@ -188,7 +188,7 @@ export default function Tracks() {
     >
       <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse 80% 60% at 50% 50%, rgba(88,28,135,0.12) 0%, transparent 70%)' }} />
 
-      <div className="max-w-7xl mx-auto relative z-10">
+      <div className="max-w-7xl mx-auto relative z-10 w-full">
         <div className="text-center mb-8">
           <p className="text-purple-400 text-xs tracking-[0.35em] uppercase mb-3 font-mono-bold">Innovation Domains</p>
           <h2 className="text-3xl sm:text-4xl md:text-5xl mb-3 font-display-bold mixed-gradient-text">Hackathon Tracks</h2>
@@ -222,6 +222,7 @@ export default function Tracks() {
                 key={hotspot.track.id}
                 onClick={(e) => handleHotspotClick(e, hotspot)}
                 aria-label={`Reveal ${hotspot.track.title} track`}
+                className="ship-hotspot-btn"
                 style={{
                   position: 'absolute',
                   left: `${hotspot.x}%`,
@@ -269,11 +270,14 @@ export default function Tracks() {
           {popup && (() => {
             const flipX = popup.x > 60;
             const flipY = popup.y > 50;
+            // On mobile, always center the popup below the video
             return (
-              <div key={popup.track.id} className="absolute pointer-events-auto" style={{
-                ...(flipX ? { right: `${100 - popup.x}%` } : { left: `${popup.x}%` }),
-                ...(flipY ? { bottom: `calc(${100 - popup.y}% + 1rem)` } : { top: `calc(${popup.y}% + 1rem)` }),
-                transform: `translateX(${flipX ? '-8px' : '8px'})`,
+              <div key={popup.track.id} className="pointer-events-auto mt-4 flex justify-center sm:absolute sm:mt-0" style={{
+                ...(typeof window !== 'undefined' && window.innerWidth >= 640 ? {
+                  ...(flipX ? { right: `${100 - popup.x}%` } : { left: `${popup.x}%` }),
+                  ...(flipY ? { bottom: `calc(${100 - popup.y}% + 1rem)` } : { top: `calc(${popup.y}% + 1rem)` }),
+                  transform: `translateX(${flipX ? '-8px' : '8px'})`,
+                } : {}),
                 zIndex: 50,
               }}>
                 <TrackCard track={popup.track} onClose={() => setPopup(null)} />

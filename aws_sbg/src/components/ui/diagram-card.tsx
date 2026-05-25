@@ -178,38 +178,33 @@ export const TextRevealCardDescription = ({
 };
 
 const Stars = () => {
-  const random = () => Math.random();
-  return (
-    <div className="absolute inset-0">
-      {[...Array(60)].map((_, i) => (
-        <motion.span
-          key={`star-${i}`}
-          animate={{
-            top: `calc(${random() * 100}% + ${Math.random() * 4 - 2}px)`,
-            left: `calc(${random() * 100}% + ${Math.random() * 4 - 2}px)`,
-            opacity: Math.random(),
-            scale: [1, 1.2, 0],
-          }}
-          transition={{
-            duration: random() * 10 + 20,
-            repeat: Infinity,
-            ease: "linear",
-          }}
-          style={{
-            position: "absolute",
-            top: `${random() * 100}%`,
-            left: `${random() * 100}%`,
-            width: "2px",
-            height: "2px",
-            backgroundColor: "white",
-            borderRadius: "50%",
-            zIndex: 1,
-          }}
-          className="inline-block"
-        />
-      ))}
-    </div>
-  );
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+    const draw = () => {
+      canvas.width  = canvas.offsetWidth  || 300;
+      canvas.height = canvas.offsetHeight || 200;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let i = 0; i < 60; i++) {
+        const x = ((i * 61 + 7)  % 100) / 100 * canvas.width;
+        const y = ((i * 37 + 13) % 100) / 100 * canvas.height;
+        const r = ((i * 17 + 3)  % 2) * 0.5 + 0.5;
+        const a = ((i * 23 + 5)  % 6) / 10 + 0.1;
+        ctx.beginPath();
+        ctx.arc(x, y, r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255,255,255,${a})`;
+        ctx.fill();
+      }
+    };
+    draw();
+    const ro = new ResizeObserver(draw);
+    ro.observe(canvas);
+    return () => ro.disconnect();
+  }, []);
+  return <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" style={{ zIndex: 1 }} />;
 };
 
 const MemoizedStars = memo(Stars);

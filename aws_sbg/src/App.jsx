@@ -8,43 +8,19 @@ import WhyJoin   from './components/WhyJoin';
 import Prizes    from './components/Prizes';
 import FAQ       from './components/FAQ';
 import { CinematicFooter } from './components/ui/motion-footer';
-import { ContainerScroll } from './components/ui/container-scroll-animation';
 
 export default function App() {
   return (
     <div className="min-h-screen pb-24 lg:pb-0 overflow-x-hidden" style={{ background: '#08000f' }}>
       <Navbar />
-
       <Hero />
-
-      <ContainerScroll>
-        <Tracks />
-      </ContainerScroll>
-
-      <ContainerScroll>
-        <Timeline />
-      </ContainerScroll>
-
-      <ContainerScroll>
-        <CrewRoles />
-      </ContainerScroll>
-
-      <ContainerScroll>
-        <Guardians />
-      </ContainerScroll>
-
-      <ContainerScroll>
-        <WhyJoin />
-      </ContainerScroll>
-
-      <ContainerScroll>
-        <Prizes />
-      </ContainerScroll>
-
-      <ContainerScroll>
-        <FAQ />
-      </ContainerScroll>
-
+      <Tracks />
+      <Timeline />
+      <CrewRoles />
+      <Guardians />
+      <WhyJoin />
+      <Prizes />
+      <FAQ />
       <CinematicFooter />
     </div>
   );

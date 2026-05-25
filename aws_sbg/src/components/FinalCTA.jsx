@@ -27,8 +27,12 @@ export default function FinalCTA() {
 
       {/* Purple glow orb */}
       <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full pointer-events-none"
-        style={{ background: 'radial-gradient(circle, rgba(139,92,246,0.2) 0%, transparent 70%)' }}
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full pointer-events-none"
+        style={{
+          width: 'clamp(300px, 70vw, 700px)',
+          height: 'clamp(300px, 70vw, 700px)',
+          background: 'radial-gradient(circle, rgba(139,92,246,0.2) 0%, transparent 70%)'
+        }}
       />
 
       <div className="relative z-10 max-w-3xl mx-auto px-2">
@@ -51,6 +55,25 @@ export default function FinalCTA() {
         <p className="text-white text-base sm:text-lg mb-8 font-display-bold tracking-wide">
           Begin Your Voyage Today
         </p>
+
+        {/* Story block */}
+        <div
+          className="max-w-xl mx-auto mb-10 px-6 py-6 rounded-2xl text-left"
+          style={{
+            background: 'rgba(139,92,246,0.07)',
+            border: '1px solid rgba(139,92,246,0.25)',
+            boxShadow: '0 0 30px rgba(139,92,246,0.1)',
+          }}
+        >
+          <p className="text-gray-300 text-base sm:text-lg leading-relaxed font-display-bold-italic mb-4">
+            The Black Flag has been raised.<br />
+            The Royal Guards await.<br />
+            The Final Island is rising from the mist.
+          </p>
+          <p className="text-purple-300 text-base sm:text-lg font-display-bold-italic">
+            Will your crew survive the voyage?
+          </p>
+        </div>
 
         {/* CTA buttons */}
         <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-4 mb-10">
@@ -84,7 +107,7 @@ export default function FinalCTA() {
           Limited berths available · Applications close soon
         </p>
       </div>
-      <SectionBlurEdges />
+      <SectionBlurEdges showBottom={false} />
     </section>
   );
 }

@@ -126,6 +126,9 @@
   .glow-box {
     box-shadow: 0 0 30px rgba(139,92,246,0.25), inset 0 0 30px rgba(139,92,246,0.04);
   }
+  .glow-box-hover {
+    will-change: transform, box-shadow;
+  }
   .glow-box-hover:hover {
     box-shadow: 0 0 44px rgba(139,92,246,0.5), inset 0 0 30px rgba(139,92,246,0.1);
     transform: translateY(-2px);
@@ -215,7 +218,48 @@
   }
 }
 
-/* ─── Bluetooth Key Button ────────────────────────────────────────────────── */
+/* ─── Responsive Overrides ────────────────────────────────────────────────── */
+@layer utilities {
+
+  /* ── Tracks: scale down hotspot hit areas on mobile ── */
+  .ship-hotspot-btn {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  @media (max-width: 640px) {
+    .ship-hotspot-btn {
+      width: 72px;
+      height: 72px;
+    }
+  }
+
+  /* ── Prizes: scale down large prize amount text on mobile ── */
+  @media (max-width: 480px) {
+    .prize-amount {
+      font-size: 1.8em !important;
+    }
+  }
+
+  /* ── General: prevent any element from exceeding viewport width ── */
+  img, video, canvas, svg {
+    max-width: 100%;
+  }
+
+  /* ── Radial orbital timeline: shrink node labels on small screens ── */
+  @media (max-width: 480px) {
+    .orbital-node-label {
+      font-size: 0.6rem;
+    }
+  }
+}
 
 /* Keyframes */
 @keyframes bt-led-blink {

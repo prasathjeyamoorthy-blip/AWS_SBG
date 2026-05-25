@@ -232,9 +232,12 @@ const GlobalSpotlight = ({
         if (!spotlightRef.current || !gridRef.current) return;
         const section = gridRef.current.closest('.bento-section');
         const rect = section?.getBoundingClientRect();
+        // Use clientX/Y from the event — works whether listener is on section or document
+        const mouseX = e.clientX;
+        const mouseY = e.clientY;
         const mouseInside =
-          rect && e.clientX >= rect.left && e.clientX <= rect.right &&
-          e.clientY >= rect.top && e.clientY <= rect.bottom;
+          rect && mouseX >= rect.left && mouseX <= rect.right &&
+          mouseY >= rect.top && mouseY <= rect.bottom;
 
         const cards = gridRef.current.querySelectorAll('.magic-bento-card');
         if (!mouseInside) {
@@ -251,7 +254,7 @@ const GlobalSpotlight = ({
           const centerX = cardRect.left + cardRect.width / 2;
           const centerY = cardRect.top + cardRect.height / 2;
           const distance =
-            Math.hypot(e.clientX - centerX, e.clientY - centerY) -
+            Math.hypot(mouseX - centerX, mouseY - centerY) -
             Math.max(cardRect.width, cardRect.height) / 2;
           const effectiveDistance = Math.max(0, distance);
           minDistance = Math.min(minDistance, effectiveDistance);
@@ -261,10 +264,10 @@ const GlobalSpotlight = ({
           else if (effectiveDistance <= fadeDistance)
             glowIntensity = (fadeDistance - effectiveDistance) / (fadeDistance - proximity);
 
-          updateCardGlowProperties(card, e.clientX, e.clientY, glowIntensity, spotlightRadius);
+          updateCardGlowProperties(card, mouseX, mouseY, glowIntensity, spotlightRadius);
         });
 
-        gsap.to(spotlightRef.current, { left: e.clientX, top: e.clientY, duration: 0.1, ease: 'power2.out' });
+        gsap.to(spotlightRef.current, { left: mouseX, top: mouseY, duration: 0.1, ease: 'power2.out' });
 
         const targetOpacity =
           minDistance <= proximity ? 0.8
@@ -285,12 +288,13 @@ const GlobalSpotlight = ({
       }
     };
 
-    document.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('mouseleave', handleMouseLeave);
+    const section = gridRef.current.closest('.bento-section') || gridRef.current;
+    section.addEventListener('mousemove', handleMouseMove);
+    section.addEventListener('mouseleave', handleMouseLeave);
 
     return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseleave', handleMouseLeave);
+      section.removeEventListener('mousemove', handleMouseMove);
+      section.removeEventListener('mouseleave', handleMouseLeave);
       spotlightRef.current?.parentNode?.removeChild(spotlightRef.current);
     };
   }, [gridRef, disableAnimations, enabled, spotlightRadius, glowColor]);

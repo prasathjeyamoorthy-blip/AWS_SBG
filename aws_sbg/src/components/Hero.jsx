@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, memo } from 'react';
 import { BluetoothKey } from './ui/bluetooth-key';
 import SectionBlurEdges from './ui/SectionBlurEdges';
 
@@ -6,7 +6,7 @@ import SectionBlurEdges from './ui/SectionBlurEdges';
 const TARGET = new Date('2026-07-25T09:00:00');
 function pad(n) { return String(n).padStart(2, '0'); }
 
-function CountdownUnit({ value, label }) {
+const CountdownUnit = memo(function CountdownUnit({ value, label }) {
   return (
     <div className="flex flex-col items-center gap-1 sm:gap-2">
       <div
@@ -18,7 +18,7 @@ function CountdownUnit({ value, label }) {
       <span className="text-[10px] sm:text-xs text-purple-400 tracking-widest uppercase font-mono-bold">{label}</span>
     </div>
   );
-}
+});
 
 /* ─── Stars — drawn on canvas, zero DOM nodes ────────────────────────────── */
 const STARS = Array.from({ length: 100 }, (_, i) => ({
@@ -66,12 +66,11 @@ export default function Hero() {
     const video = videoRef.current;
     if (!video) return;
     video.playbackRate = 0.9;
-    // Use seeked+ended instead of timeupdate to avoid firing 30x/sec
-    const handleTimeUpdate = () => {
+    // Poll at 250ms instead of timeupdate (which fires ~30x/sec)
+    const id = setInterval(() => {
       if (video.currentTime >= 5) video.currentTime = 0;
-    };
-    video.addEventListener('timeupdate', handleTimeUpdate, { passive: true });
-    return () => video.removeEventListener('timeupdate', handleTimeUpdate);
+    }, 250);
+    return () => clearInterval(id);
   }, []);
 
   /* countdown */
@@ -117,11 +116,17 @@ export default function Hero() {
             objectPosition: 'center top',
             transform: 'scale(1.15)',
             transformOrigin: 'center top',
-            filter: 'contrast(1.1) saturate(1.3) brightness(1.05)',
-            imageRendering: 'high-quality',
             WebkitBackfaceVisibility: 'hidden',
             backfaceVisibility: 'hidden',
             willChange: 'transform',
+          }}
+        />
+        {/* Color-grade overlay — cheaper than CSS filter on <video> */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background: 'rgba(20,0,40,0.18)',
+            mixBlendMode: 'multiply',
           }}
         />
         {/* Vignette — pointer-events-none so it never blocks interaction */}
@@ -142,8 +147,12 @@ export default function Hero() {
 
       {/* Purple glow orb */}
       <div
-        className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full pointer-events-none z-[1]"
-        style={{ background: 'radial-gradient(circle, rgba(139,92,246,0.18) 0%, transparent 70%)' }}
+        className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full pointer-events-none z-[1]"
+        style={{
+          width: 'clamp(300px, 70vw, 700px)',
+          height: 'clamp(300px, 70vw, 700px)',
+          background: 'radial-gradient(circle, rgba(139,92,246,0.18) 0%, transparent 70%)'
+        }}
       />
 
       {/* ── Side stats — left column ── */}

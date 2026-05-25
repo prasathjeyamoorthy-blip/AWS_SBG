@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import SectionBlurEdges from './ui/SectionBlurEdges';
+import BorderGlow from './ui/BorderGlow';
 if (typeof window !== 'undefined') gsap.registerPlugin(ScrollTrigger);
 
 const reasons = [
@@ -24,20 +25,20 @@ export default function WhyJoin() {
       gsap.fromTo(headerRef.current,
         { y: -40, opacity: 0 },
         { y: 0, opacity: 1, duration: 0.9, ease: 'power3.out',
-          scrollTrigger: { trigger: headerRef.current, start: 'top 85%', toggleActions: 'play none none reverse' } }
+          scrollTrigger: { trigger: headerRef.current, start: 'top 85%', toggleActions: 'play none none none' } }
       );
       gsap.fromTo(gridRef.current.children,
         { y: 50, opacity: 0 },
         { y: 0, opacity: 1, stagger: 0.1, duration: 0.7, ease: 'power3.out',
-          scrollTrigger: { trigger: gridRef.current, start: 'top 85%', toggleActions: 'play none none reverse' } }
+          scrollTrigger: { trigger: gridRef.current, start: 'top 85%', toggleActions: 'play none none none' } }
       );
     }, sectionRef);
     return () => ctx.revert();
   }, []);
 
   return (
-    <section id="why" ref={sectionRef} className="py-16 sm:py-28 px-4 sm:px-6 relative overflow-hidden"
-      style={{ background: 'linear-gradient(135deg, #0d0020 0%, #1a0035 50%, #0d0020 100%)' }}
+    <section id="why" ref={sectionRef} className="py-16 sm:py-28 px-4 sm:px-6 relative"
+      style={{ background: 'linear-gradient(135deg, #0d0020 0%, #1a0035 50%, #0d0020 100%)', overflow: 'clip' }}
     >
       <div className="absolute inset-0 pointer-events-none"
         style={{ borderTop: '1px solid rgba(139,92,246,0.25)', borderBottom: '1px solid rgba(139,92,246,0.25)' }}
@@ -54,21 +55,37 @@ export default function WhyJoin() {
         </div>
 
         <div ref={gridRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-          {reasons.map(({ title, description }) => (
-            <div
+          {reasons.map(({ title, description }, i) => (
+            <BorderGlow
               key={title}
-              className="rounded-2xl p-5 sm:p-7 transition-all duration-300 text-center glow-box-hover"
-              style={{
-                background: 'linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(139,92,246,0.1) 100%)',
-                border: '1px solid rgba(255,255,255,0.1)',
-              }}
+              autoGlow
+              sweepDuration={4}
+              sweepDelay={i * 0.7}
+              edgeSensitivity={0}
+              borderRadius={16}
+              glowRadius={36}
+              glowColor="270 60 70"
+              glowIntensity={1.6}
+              coneSpread={22}
+              backgroundColor="#0e0a1a"
+              colors={['#c084fc', '#f472b6', '#38bdf8']}
+              fillOpacity={0.2}
+              className="h-full"
             >
-              <div className="w-8 h-8 rounded-full bg-purple-600/30 border border-purple-500/50 mx-auto mb-4 flex items-center justify-center">
-                <span className="w-2.5 h-2.5 rounded-full bg-purple-400" />
+              <div className="p-5 sm:p-7 text-left h-full flex flex-col">
+                {/* Sparkle icon */}
+                <div className="mb-4 flex items-end gap-1">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L13.5 9.5L21 11L13.5 12.5L12 20L10.5 12.5L3 11L10.5 9.5L12 2Z"/>
+                  </svg>
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg" style={{ marginBottom: '2px' }}>
+                    <path d="M12 2L13.5 9.5L21 11L13.5 12.5L12 20L10.5 12.5L3 11L10.5 9.5L12 2Z"/>
+                  </svg>
+                </div>
+                <h3 className="text-white text-base sm:text-lg mb-3 font-display-bold">{title}</h3>
+                <p className="text-gray-400 text-sm leading-relaxed font-body-bold">{description}</p>
               </div>
-              <h3 className="text-white text-base mb-3 font-display-bold">{title}</h3>
-              <p className="text-gray-300 text-sm leading-relaxed font-body-bold">{description}</p>
-            </div>
+            </BorderGlow>
           ))}
         </div>
       </div>
