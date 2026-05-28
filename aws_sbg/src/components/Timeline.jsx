@@ -117,11 +117,11 @@ export default function Timeline() {
         </div>
 
         {/* Treasure map — image already contains all timeline info */}
-        <div className="relative w-full rounded-2xl overflow-hidden" style={{ boxShadow: '0 0 60px rgba(139,92,246,0.25), 0 0 120px rgba(88,28,135,0.15)' }}>
+        <div className="relative w-full rounded-xl sm:rounded-2xl overflow-hidden" style={{ boxShadow: '0 0 40px rgba(139,92,246,0.2), 0 0 80px rgba(88,28,135,0.1)' }}>
           <img
             src="/treasure_map.png"
             alt="Event Timeline Treasure Map"
-            className="w-full h-auto block"
+            className="timeline-map-img w-full h-auto block"
             style={{ filter: 'brightness(0.85) saturate(1.1)' }}
             draggable={false}
           />

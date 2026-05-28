@@ -322,19 +322,29 @@ export function CinematicFooter() {
           </div>
 
           {/* ── Main center content ── */}
-          <div className="relative z-10 flex flex-1 flex-col items-center justify-start pt-24 sm:pt-52 w-full">
+          <div className="relative z-10 flex flex-1 flex-col items-center justify-start pt-20 sm:pt-28 lg:pt-52 w-full">
 
-            {/* Story block — hidden on small screens to prevent collision, shown md+ */}
+            {/* Story block — only shown on large screens where there's room beside the heading */}
             <div
-              className="hidden md:block absolute left-6 sm:left-10 md:left-16 text-left"
-              style={{ top: 'clamp(11rem, 20vh, 15rem)', maxWidth: '320px' }}
+              className="hidden lg:block absolute left-10 xl:left-16 text-left"
+              style={{ top: 'clamp(11rem, 20vh, 15rem)', maxWidth: '280px' }}
             >
-              <p className="text-gray-300 text-base sm:text-lg font-display-bold-italic leading-relaxed mb-3">
+              <p className="text-gray-300 text-base font-display-bold-italic leading-relaxed mb-3">
                 The Black Flag has been raised.<br />
                 The Royal Guards await.<br />
                 The Final Island is rising from the mist.
               </p>
-              <p className="text-purple-300 text-base sm:text-lg font-display-bold-italic">
+              <p className="text-purple-300 text-base font-display-bold-italic">
+                Will your crew survive the voyage?
+              </p>
+            </div>
+
+            {/* Story block for mobile + tablet — inline, above heading, no overlap */}
+            <div className="lg:hidden w-full max-w-md text-center mb-5 px-6">
+              <p className="text-gray-400 text-sm sm:text-base font-display-bold-italic leading-relaxed mb-2">
+                The Black Flag has been raised. The Royal Guards await.
+              </p>
+              <p className="text-purple-400 text-sm sm:text-base font-display-bold-italic">
                 Will your crew survive the voyage?
               </p>
             </div>
@@ -380,7 +390,7 @@ export function CinematicFooter() {
           </div>
 
           {/* ── Bottom bar ── */}
-          <div className="relative z-20 w-full pb-24 lg:pb-8 px-4 sm:px-6 md:px-12 flex flex-col md:flex-row items-center justify-end gap-4 sm:gap-6">
+          <div className="footer-bottom-bar relative z-20 w-full px-4 sm:px-6 md:px-12 flex flex-col md:flex-row items-center justify-end gap-4 sm:gap-6">
             {/* Back to top */}
             <MagneticButton
               as="button"

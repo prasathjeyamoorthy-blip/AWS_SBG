@@ -1,32 +1,43 @@
-import { useState, useEffect } from 'react';
-import { Home, Map, Clock, Shield, Compass, Trophy, HelpCircle } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+import { Home, Clock, Shield, Compass, Trophy, HelpCircle } from 'lucide-react';
 import { LimelightNav } from './ui/limelight-nav';
 import { JoinNowButton } from './ui/join-now-button';
 
-// Shared nav data — used for both desktop (text) and mobile (icon) modes
+// Shared nav data — order must match page section order
 const NAV = [
   { id: 'home',      label: 'Home',      href: '#hero',      icon: <Home /> },
-  { id: 'voyage',    label: 'Voyage',    href: '#about',     icon: <Map /> },
+  { id: 'tracks',    label: 'Tracks',    href: '#tracks',    icon: <Compass /> },
   { id: 'timeline',  label: 'Timeline',  href: '#timeline',  icon: <Clock /> },
   { id: 'guardians', label: 'Guardians', href: '#guardians', icon: <Shield /> },
-  { id: 'tracks',    label: 'Tracks',    href: '#tracks',    icon: <Compass /> },
   { id: 'treasure',  label: 'Treasure',  href: '#prizes',    icon: <Trophy /> },
   { id: 'faq',       label: 'FAQ',       href: '#faq',       icon: <HelpCircle /> },
 ];
 
+// Section IDs in page order (strip the '#')
+const SECTION_IDS = NAV.map(({ href }) => href.replace('#', ''));
+
 const desktopItems = NAV.map(({ id, label, href, icon }) => ({
   id, label, icon,
-  onClick: () => { window.location.hash = href; },
+  onClick: () => {
+    document.getElementById(href.replace('#', ''))?.scrollIntoView({ behavior: 'smooth' });
+  },
 }));
 
 const mobileItems = NAV.map(({ id, label, href, icon }) => ({
   id, label, icon,
-  onClick: () => { window.location.hash = href; },
+  onClick: () => {
+    document.getElementById(href.replace('#', ''))?.scrollIntoView({ behavior: 'smooth' });
+  },
 }));
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
+  const [scrolled, setScrolled]       = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
+  // Track which index was last clicked so we don't immediately override it
+  const clickedIndexRef = useRef(-1);
+  const clickTimerRef   = useRef(null);
 
+  /* ── Scroll background ── */
   useEffect(() => {
     const onScroll = () => {
       const isScrolled = window.scrollY > 20;
@@ -35,6 +46,76 @@ export default function Navbar() {
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
+
+  /* ── Active section tracking via IntersectionObserver ── */
+  useEffect(() => {
+    // Map sectionId → nav index
+    const indexMap = Object.fromEntries(SECTION_IDS.map((id, i) => [id, i]));
+    // Track how much of each section is visible
+    const visibilityMap = {};
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          visibilityMap[entry.target.id] = entry.intersectionRatio;
+        });
+
+        // If a click just happened, don't override for 800ms
+        if (clickedIndexRef.current !== -1) return;
+
+        // Pick the section with the highest intersection ratio
+        let bestId = null;
+        let bestRatio = 0;
+        Object.entries(visibilityMap).forEach(([id, ratio]) => {
+          if (ratio > bestRatio) {
+            bestRatio = ratio;
+            bestId = id;
+          }
+        });
+
+        if (bestId !== null && indexMap[bestId] !== undefined) {
+          setActiveIndex(indexMap[bestId]);
+        }
+      },
+      {
+        // Fire at multiple thresholds for smooth tracking
+        threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
+        // Shrink the root viewport so sections near the top/bottom edges
+        // don't count as "active" — the middle 60% of the screen wins
+        rootMargin: '-20% 0px -20% 0px',
+      }
+    );
+
+    SECTION_IDS.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) {
+        visibilityMap[id] = 0;
+        observer.observe(el);
+      }
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  /* ── On click: immediately set active and lock for 800ms ── */
+  const handleNavClick = (index) => {
+    setActiveIndex(index);
+    clickedIndexRef.current = index;
+    if (clickTimerRef.current) clearTimeout(clickTimerRef.current);
+    clickTimerRef.current = setTimeout(() => {
+      clickedIndexRef.current = -1;
+    }, 800);
+  };
+
+  const desktopItemsWithClick = desktopItems.map((item, i) => ({
+    ...item,
+    onClick: () => { handleNavClick(i); item.onClick(); },
+  }));
+
+  const mobileItemsWithClick = mobileItems.map((item, i) => ({
+    ...item,
+    onClick: () => { handleNavClick(i); item.onClick(); },
+  }));
 
   return (
     <>
@@ -57,8 +138,8 @@ export default function Navbar() {
         {/* Limelight nav — text mode, centered */}
         <div className="flex-1 flex justify-center min-w-0 overflow-hidden">
           <LimelightNav
-            items={desktopItems}
-            defaultActiveIndex={0}
+            items={desktopItemsWithClick}
+            activeIndex={activeIndex}
             textMode={true}
             className="bg-transparent border-transparent h-14"
             limelightClassName="bg-purple-500 shadow-[0_0_18px_4px_rgba(139,92,246,0.55)]"
@@ -106,12 +187,12 @@ export default function Navbar() {
       </header>
 
       {/* ── LIMELIGHT BOTTOM NAV (mobile + tablet only) ── */}
-      <div className="fixed bottom-4 sm:bottom-6 left-0 right-0 z-50 flex justify-center lg:hidden pointer-events-none px-3">
-        <div className="pointer-events-auto w-full max-w-sm sm:max-w-md">
+      <div className="fixed bottom-2 sm:bottom-4 left-0 right-0 z-50 flex justify-center lg:hidden pointer-events-none px-2 sm:px-3">
+        <div className="pointer-events-auto w-full max-w-[22rem] sm:max-w-sm md:max-w-md">
           <LimelightNav
-            items={mobileItems}
-            defaultActiveIndex={0}
-            className="bg-black/80 backdrop-blur-xl border-purple-800/40 shadow-2xl shadow-purple-950/60 w-full justify-around"
+            items={mobileItemsWithClick}
+            activeIndex={activeIndex}
+            className="bg-black/85 backdrop-blur-xl border-purple-800/40 shadow-2xl shadow-purple-950/60 w-full justify-around"
             limelightClassName="bg-purple-500 shadow-[0_0_18px_4px_rgba(139,92,246,0.6)]"
             iconClassName="text-purple-200"
           />

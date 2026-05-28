@@ -91,7 +91,7 @@ export default function Prizes() {
 
         {/* Additional Rewards */}
         <div className="mt-12 sm:mt-16 max-w-2xl mx-auto">
-          <div className="bg-gradient-to-r from-purple-900/20 via-transparent to-purple-900/20 border border-purple-500/30 rounded-lg p-5 sm:p-8 backdrop-blur-sm">
+          <div className="prizes-rewards-card bg-gradient-to-r from-purple-900/20 via-transparent to-purple-900/20 border border-purple-500/30 rounded-lg p-5 sm:p-8 backdrop-blur-sm">
             <h3 className="text-2xl font-display-bold text-white mb-6 text-center">
               Additional Rewards
             </h3>

@@ -40,7 +40,7 @@ export default function CrewRoles() {
         </div>
 
         {/* Characters image */}
-        <div className="relative w-full mb-14 sm:mb-20" style={{ background: "transparent" }}>
+        <div className="relative w-full mb-10 sm:mb-14 md:mb-20" style={{ background: "transparent" }}>
           <img
             src="/pirate_characters.png"
             alt="Pirate Crew Characters"
@@ -57,12 +57,12 @@ export default function CrewRoles() {
             style={{ background: "linear-gradient(to bottom, rgba(139,92,246,0.6), rgba(139,92,246,0.1))" }}
           />
 
-          <ol className="flex flex-col gap-7 sm:gap-9">
+          <ol className="flex flex-col gap-6 sm:gap-9">
             {STEPS.map(({ n, title, desc }) => (
-              <li key={n} className="flex items-start gap-5">
+              <li key={n} className="flex items-start gap-4 sm:gap-5">
                 {/* Step badge */}
                 <div
-                  className="relative z-10 flex-shrink-0 w-11 h-11 rounded-full flex items-center justify-center font-mono-bold text-sm"
+                  className="relative z-10 flex-shrink-0 w-10 h-10 sm:w-11 sm:h-11 rounded-full flex items-center justify-center font-mono-bold text-sm"
                   style={{
                     background: "linear-gradient(135deg, #7c3aed, #4c1d95)",
                     boxShadow: "0 0 18px rgba(139,92,246,0.55)",
@@ -73,11 +73,11 @@ export default function CrewRoles() {
                 </div>
 
                 {/* Text */}
-                <div className="pt-1.5">
-                  <p className="text-white font-display-bold text-base sm:text-lg leading-snug mb-1">
+                <div className="pt-1">
+                  <p className="text-white font-display-bold text-sm sm:text-base md:text-lg leading-snug mb-1">
                     {title}
                   </p>
-                  <p className="text-gray-400 font-body-bold text-sm sm:text-base leading-relaxed">
+                  <p className="text-gray-400 font-body-bold text-xs sm:text-sm md:text-base leading-relaxed">
                     {desc}
                   </p>
                 </div>

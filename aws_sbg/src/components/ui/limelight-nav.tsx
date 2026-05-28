@@ -1,4 +1,4 @@
-import React, { useState, useRef, useLayoutEffect, cloneElement } from 'react';
+import React, { useState, useRef, useLayoutEffect, useEffect, cloneElement } from 'react';
 import { cn } from '@/lib/utils';
 
 // --- Internal Types ---
@@ -12,6 +12,8 @@ export type NavItem = {
 type LimelightNavProps = {
   items?: NavItem[];
   defaultActiveIndex?: number;
+  /** Controlled active index — overrides internal state when provided */
+  activeIndex?: number;
   onTabChange?: (index: number) => void;
   className?: string;
   limelightClassName?: string;
@@ -24,10 +26,12 @@ type LimelightNavProps = {
 /**
  * An adaptive-width navigation bar with a "limelight" effect that highlights the active item.
  * Supports both icon mode (mobile) and text-label mode (desktop).
+ * Pass `activeIndex` for scroll-driven controlled mode.
  */
 export const LimelightNav = ({
   items = [],
   defaultActiveIndex = 0,
+  activeIndex: controlledIndex,
   onTabChange,
   className,
   limelightClassName,
@@ -35,10 +39,13 @@ export const LimelightNav = ({
   iconClassName,
   textMode = false,
 }: LimelightNavProps) => {
-  const [activeIndex, setActiveIndex] = useState(defaultActiveIndex);
+  const [internalIndex, setInternalIndex] = useState(defaultActiveIndex);
   const [isReady, setIsReady] = useState(false);
   const navItemRefs = useRef<(HTMLAnchorElement | null)[]>([]);
   const limelightRef = useRef<HTMLDivElement | null>(null);
+
+  // Use controlled index when provided, otherwise internal
+  const activeIndex = controlledIndex !== undefined ? controlledIndex : internalIndex;
 
   useLayoutEffect(() => {
     if (items.length === 0) return;
@@ -59,7 +66,7 @@ export const LimelightNav = ({
   if (items.length === 0) return null;
 
   const handleItemClick = (index: number, itemOnClick?: () => void) => {
-    setActiveIndex(index);
+    setInternalIndex(index);
     onTabChange?.(index);
     itemOnClick?.();
   };
@@ -68,7 +75,7 @@ export const LimelightNav = ({
     <nav
       className={cn(
         'relative inline-flex items-center rounded-2xl border',
-        textMode ? 'h-full px-1' : 'h-14 px-1',
+        textMode ? 'h-full px-1' : 'h-12 sm:h-14 px-1',
         className,
       )}
     >
@@ -80,7 +87,7 @@ export const LimelightNav = ({
             'relative z-20 flex h-full cursor-pointer items-center justify-center transition-colors duration-150 flex-1',
             textMode
               ? 'px-3 text-xs sm:text-sm font-body-bold tracking-wide'
-              : 'p-3 sm:p-4',
+              : 'p-2 sm:p-3',
             textMode
               ? activeIndex === index
                 ? 'text-white'
@@ -96,7 +103,7 @@ export const LimelightNav = ({
           ) : (
             cloneElement(icon, {
               className: cn(
-                'w-5 h-5 sm:w-6 sm:h-6 transition-opacity duration-100 ease-in-out',
+                'w-4 h-4 sm:w-5 sm:h-5 transition-opacity duration-100 ease-in-out',
                 activeIndex === index ? 'opacity-100' : 'opacity-40',
                 icon.props.className,
                 iconClassName,

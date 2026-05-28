@@ -41,7 +41,7 @@ function TrackCard({ track, onClose }) {
       ref={cardRef}
       className="relative rounded-[24px] overflow-hidden"
       style={{
-        width: 'min(300px, 80vw)',
+        width: 'min(260px, 72vw)',
         backgroundColor: '#0e131f',
         boxShadow: '0 -10px 80px 8px rgba(139,92,246,0.3), 0 0 10px 0 rgba(0,0,0,0.6)',
         transition: 'transform 0.15s ease',
@@ -196,20 +196,23 @@ export default function Tracks() {
           <div className="section-divider w-48 mx-auto mt-6" />
         </div>
 
-        <div
-          ref={containerRef}
-          className="relative w-full rounded-3xl"
-          style={{ aspectRatio: '16 / 9', overflow: 'hidden', cursor: calibrate ? 'crosshair' : 'default' }}
-          onClick={() => !calibrate && setPopup(null)}
-        >
-          <video
-            ref={videoRef}
-            src="/track_video.mp4"
-            autoPlay loop muted playsInline preload="auto"
-            className="absolute inset-0 w-full h-full object-cover rounded-3xl pointer-events-none"
-          />
-
-          <div className="absolute inset-0 rounded-3xl pointer-events-none" style={{ background: 'radial-gradient(ellipse 80% 80% at 50% 50%, transparent 40%, rgba(0,0,0,0.4) 100%)' }} />
+        <div className="relative w-full rounded-2xl sm:rounded-3xl">
+          <div
+            ref={containerRef}
+            className="tracks-video-container relative w-full rounded-2xl sm:rounded-3xl"
+            style={{ overflow: 'visible', cursor: calibrate ? 'crosshair' : 'default' }}
+            onClick={() => !calibrate && setPopup(null)}
+          >
+          {/* Video clipped to rounded corners via its own wrapper */}
+          <div className="absolute inset-0 rounded-2xl sm:rounded-3xl overflow-hidden pointer-events-none">
+            <video
+              ref={videoRef}
+              src="/track_video.mp4"
+              autoPlay loop muted playsInline preload="auto"
+              className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+            />
+            <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse 80% 80% at 50% 50%, transparent 40%, rgba(0,0,0,0.4) 100%)' }} />
+          </div>
 
           {/* Calibration overlay */}
           {calibrate && <CalibrationOverlay containerRef={containerRef} />}
@@ -231,7 +234,6 @@ export default function Tracks() {
                   zIndex: 20,
                   background: 'none',
                   border: 'none',
-                  /* Large hit area covering the whole ship */
                   width: '120px',
                   height: '120px',
                   borderRadius: '50%',
@@ -257,34 +259,43 @@ export default function Tracks() {
             );
           })}
 
+          {/* Popup card — rendered inside the video container, overlaid on the map */}
+          <AnimatePresence>
+            {popup && (() => {
+              const flipX = popup.x > 60;
+              const flipY = popup.y > 55;
+              // On mobile clamp to keep card inside the container
+              const leftStyle  = flipX ? 'auto' : `clamp(4px, ${popup.x}%, calc(100% - 260px))`;
+              const rightStyle = flipX ? `clamp(4px, ${100 - popup.x}%, calc(100% - 260px))` : 'auto';
+              const topStyle   = flipY ? 'auto' : `clamp(4px, calc(${popup.y}% + 0.75rem), calc(100% - 180px))`;
+              const bottomStyle = flipY ? `clamp(4px, calc(${100 - popup.y}% + 0.75rem), calc(100% - 180px))` : 'auto';
+              return (
+                <div
+                  key={popup.track.id}
+                  className="pointer-events-auto absolute"
+                  style={{
+                    left: leftStyle,
+                    right: rightStyle,
+                    top: topStyle,
+                    bottom: bottomStyle,
+                    zIndex: 50,
+                  }}
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <TrackCard track={popup.track} onClose={() => setPopup(null)} />
+                </div>
+              );
+            })()}
+          </AnimatePresence>
+
           {/* Hint */}
           <div className="absolute bottom-3 left-0 right-0 flex justify-center pointer-events-none">
             <p className="text-purple-300/60 text-xs font-mono-bold tracking-widest uppercase">
               ⚓ click a ship to reveal its track
             </p>
           </div>
-        </div>
-
-        {/* Popup card — outside overflow:hidden container so it's never clipped */}
-        <AnimatePresence>
-          {popup && (() => {
-            const flipX = popup.x > 60;
-            const flipY = popup.y > 50;
-            // On mobile, always center the popup below the video
-            return (
-              <div key={popup.track.id} className="pointer-events-auto mt-4 flex justify-center sm:absolute sm:mt-0" style={{
-                ...(typeof window !== 'undefined' && window.innerWidth >= 640 ? {
-                  ...(flipX ? { right: `${100 - popup.x}%` } : { left: `${popup.x}%` }),
-                  ...(flipY ? { bottom: `calc(${100 - popup.y}% + 1rem)` } : { top: `calc(${popup.y}% + 1rem)` }),
-                  transform: `translateX(${flipX ? '-8px' : '8px'})`,
-                } : {}),
-                zIndex: 50,
-              }}>
-                <TrackCard track={popup.track} onClose={() => setPopup(null)} />
-              </div>
-            );
-          })()}
-        </AnimatePresence>
+          </div>{/* end containerRef */}
+        </div>{/* end outer wrapper */}
       </div>
 
       <SectionBlurEdges />

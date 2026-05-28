@@ -72,7 +72,7 @@ export default function WhyJoin() {
               fillOpacity={0.2}
               className="h-full"
             >
-              <div className="p-5 sm:p-7 text-left h-full flex flex-col">
+              <div className="p-4 sm:p-5 md:p-7 text-left h-full flex flex-col">
                 {/* Sparkle icon */}
                 <div className="mb-4 flex items-end gap-1">
                   <svg width="22" height="22" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">

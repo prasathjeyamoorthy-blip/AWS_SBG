@@ -10,12 +10,12 @@ const CountdownUnit = memo(function CountdownUnit({ value, label }) {
   return (
     <div className="flex flex-col items-center gap-1 sm:gap-2">
       <div
-        className="w-14 h-14 sm:w-20 sm:h-20 md:w-24 md:h-24 flex items-center justify-center rounded-xl border border-purple-500/40 bg-purple-950/50 backdrop-blur-sm"
+        className="w-12 h-12 sm:w-20 sm:h-20 md:w-24 md:h-24 flex items-center justify-center rounded-xl border border-purple-500/40 bg-purple-950/50 backdrop-blur-sm"
         style={{ boxShadow: '0 0 20px rgba(139,92,246,0.3)' }}
       >
-        <span className="text-xl sm:text-3xl md:text-4xl text-white font-mono-bold">{pad(value)}</span>
+        <span className="text-lg sm:text-3xl md:text-4xl text-white font-mono-bold">{pad(value)}</span>
       </div>
-      <span className="text-[10px] sm:text-xs text-purple-400 tracking-widest uppercase font-mono-bold">{label}</span>
+      <span className="text-[9px] sm:text-xs text-purple-400 tracking-widest uppercase font-mono-bold">{label}</span>
     </div>
   );
 });
@@ -96,7 +96,7 @@ export default function Hero() {
     <section
       id="hero"
       ref={sectionRef}
-      className="relative min-h-screen flex flex-col items-center justify-center text-center px-4 sm:px-6 pt-16 sm:pt-20 pb-36 sm:pb-32 md:pb-16 overflow-hidden"
+      className="relative min-h-screen flex flex-col items-center justify-center text-center px-4 sm:px-6 pt-16 sm:pt-20 pb-44 md:pb-16 overflow-hidden"
       style={{
         background: 'radial-gradient(ellipse 90% 65% at 50% 30%, rgba(88,28,135,0.4) 0%, #08000f 68%)',
       }}
@@ -236,18 +236,18 @@ export default function Hero() {
         </div>
 
         {/* Countdown */}
-        <div className="flex items-center justify-center gap-2 sm:gap-3 md:gap-5 mb-10 sm:mb-12">
+        <div className="flex items-center justify-center gap-1 sm:gap-3 md:gap-5 mb-10 sm:mb-12">
           <CountdownUnit value={timeLeft.days} label="Days" />
-          <span className="text-purple-500 text-2xl sm:text-3xl font-mono-bold mb-6">:</span>
+          <span className="text-purple-500 text-xl sm:text-3xl font-mono-bold mb-5 sm:mb-6">:</span>
           <CountdownUnit value={timeLeft.hours} label="Hours" />
-          <span className="text-purple-500 text-2xl sm:text-3xl font-mono-bold mb-6">:</span>
+          <span className="text-purple-500 text-xl sm:text-3xl font-mono-bold mb-5 sm:mb-6">:</span>
           <CountdownUnit value={timeLeft.minutes} label="Minutes" />
-          <span className="text-purple-500 text-2xl sm:text-3xl font-mono-bold mb-6">:</span>
+          <span className="text-purple-500 text-xl sm:text-3xl font-mono-bold mb-5 sm:mb-6">:</span>
           <CountdownUnit value={timeLeft.seconds} label="Seconds" />
         </div>
 
         {/* CTA buttons */}
-        <div className="relative flex flex-wrap justify-center gap-3 sm:gap-4 pointer-events-auto" style={{ zIndex: 30 }}>
+        <div className="hero-cta-group relative flex flex-wrap justify-center gap-3 sm:gap-4 pointer-events-auto" style={{ zIndex: 30 }}>
           <BluetoothKey label="Register Your Crew" href="#register" variant="primary" />
           <BluetoothKey label="Explore the Timeline" href="#timeline" variant="secondary" />
           <BluetoothKey label="Meet the Guardians" href="#guardians" variant="secondary" />
@@ -255,8 +255,8 @@ export default function Hero() {
       </div>
 
       {/* Quote — sits above bottom nav on mobile, normal on desktop */}
-      <div className="absolute bottom-24 sm:bottom-20 md:bottom-7 left-0 right-0 z-30 flex justify-center pointer-events-none px-6">
-        <p className="text-purple-200 text-sm sm:text-base md:text-xl lg:text-2xl font-display-italic text-center" style={{ textShadow: '0 0 12px rgba(216,180,254,0.5)' }}>
+      <div className="hero-quote absolute left-0 right-0 z-30 flex justify-center pointer-events-none px-6">
+        <p className="text-purple-200 text-xs sm:text-base md:text-xl lg:text-2xl font-display-italic text-center" style={{ textShadow: '0 0 12px rgba(216,180,254,0.5)' }}>
           "Not all treasures are gold — some are innovation."
         </p>
       </div>

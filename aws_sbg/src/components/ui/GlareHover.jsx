@@ -85,7 +85,7 @@ const GlareHover = ({
   return (
     <div
       className={`relative grid place-items-center overflow-hidden cursor-pointer ${className}`}
-      style={{ width, height, background, borderRadius, ...style }}
+      style={{ width, ...(height !== '100%' ? { height } : {}), background, borderRadius, ...style }}
       onMouseEnter={animateIn}
       onMouseLeave={animateOut}
     >

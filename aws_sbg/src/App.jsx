@@ -11,7 +11,7 @@ import { CinematicFooter } from './components/ui/motion-footer';
 
 export default function App() {
   return (
-    <div className="min-h-screen pb-24 lg:pb-0 overflow-x-hidden" style={{ background: '#08000f' }}>
+    <div className="min-h-screen overflow-x-hidden" style={{ background: '#08000f' }}>
       <Navbar />
       <Hero />
       <Tracks />

@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { ArrowRight, Link, Zap } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -120,7 +120,7 @@ export default function RadialOrbitalTimeline({ timelineData }: RadialOrbitalTim
   return (
     <div
       className="w-full flex flex-col items-center justify-center overflow-hidden"
-      style={{ height: 'clamp(340px, 60vw, 560px)', background: 'transparent' }}
+      style={{ height: 'clamp(280px, 55vw, 560px)', background: 'transparent' }}
       ref={containerRef}
       onClick={(e) => {
         if (e.target === containerRef.current || e.target === orbitRef.current) {
@@ -184,7 +184,7 @@ export default function RadialOrbitalTimeline({ timelineData }: RadialOrbitalTim
                   {item.title}
                 </div>
                 {isExpanded && (
-                  <Card className="absolute top-20 left-1/2 -translate-x-1/2 w-[min(256px,70vw)] bg-black/90 border-white/30 shadow-xl overflow-visible">
+                  <Card className="absolute top-20 left-1/2 -translate-x-1/2 w-[min(240px,65vw)] bg-black/90 border-white/30 shadow-xl overflow-visible">
                     <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-px h-3 bg-white/50" />
                     <CardHeader className="pb-2">
                       <div className="flex justify-between items-center">

@@ -236,8 +236,14 @@
   }
   @media (max-width: 640px) {
     .ship-hotspot-btn {
-      width: 72px;
-      height: 72px;
+      width: 52px;
+      height: 52px;
+    }
+  }
+  @media (min-width: 641px) and (max-width: 1023px) {
+    .ship-hotspot-btn {
+      width: 80px;
+      height: 80px;
     }
   }
 
@@ -257,6 +263,166 @@
   @media (max-width: 480px) {
     .orbital-node-label {
       font-size: 0.6rem;
+    }
+  }
+
+  /* ── Ensure sections never overflow horizontally ── */
+  @media (max-width: 640px) {
+    section {
+      overflow-x: hidden;
+    }
+
+    /* Tighten section vertical padding on very small screens */
+    .py-16 {
+      padding-top: 3rem;
+      padding-bottom: 3rem;
+    }
+  }
+
+  /* ── Limelight bottom nav: ensure it doesn't overlap content ── */
+  @media (max-width: 1023px) {
+    body {
+      padding-bottom: max(5.5rem, env(safe-area-inset-bottom, 5.5rem));
+    }
+  }
+
+  /* ── MagicBento: ensure cards stack properly on mobile ── */
+  @media (max-width: 599px) {
+    .card-grid {
+      padding: 0.25em;
+    }
+    .magic-bento-card {
+      min-height: 140px;
+      padding: 1em;
+    }
+  }
+
+  /* ── Footer giant text: scale down on mobile ── */
+  @media (max-width: 640px) {
+    .footer-giant-bg-text {
+      font-size: 38vw !important;
+    }
+  }
+
+  /* ── Tracks video container: switch to 4:3 on portrait mobile ── */
+  .tracks-video-container {
+    aspect-ratio: 16 / 9;
+  }
+  @media (max-width: 480px) {
+    .tracks-video-container {
+      aspect-ratio: 4 / 3;
+    }
+  }
+  @media (min-width: 481px) and (max-width: 767px) {
+    .tracks-video-container {
+      aspect-ratio: 4 / 3;
+    }
+  }
+
+  /* ── Hero: ensure quote never overlaps bottom nav ── */
+  @media (max-width: 1023px) {
+    .hero-quote {
+      bottom: 7rem !important;
+    }
+  }
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .hero-quote {
+      bottom: 7.5rem !important;
+    }
+  }
+  @media (min-width: 1024px) {
+    .hero-quote {
+      bottom: 1.75rem !important;
+    }
+  }
+
+  /* ── Hero section: extra bottom padding on mobile for bottom nav ── */
+  @media (max-width: 1023px) {
+    #hero {
+      padding-bottom: 10rem !important;
+    }
+  }
+  @media (min-width: 768px) and (max-width: 1023px) {
+    #hero {
+      padding-bottom: 9rem !important;
+    }
+  }
+
+  /* ── CinematicFooter: bottom bar clearance for bottom nav ── */
+  @media (max-width: 1023px) {
+    .footer-bottom-bar {
+      padding-bottom: 6rem !important;
+    }
+  }
+  @media (min-width: 1024px) {
+    .footer-bottom-bar {
+      padding-bottom: 2rem !important;
+    }
+  }
+
+  /* ── Guardians GlareHover cards: consistent height across breakpoints ── */
+  .guardian-card {
+    height: clamp(130px, 18vw, 220px);
+  }
+  @media (max-width: 640px) {
+    .guardian-card {
+      height: clamp(110px, 40vw, 160px);
+    }
+  }
+
+  /* ── Tracks popup card: full-width on very small screens ── */
+  @media (max-width: 380px) {
+    .track-popup-card {
+      width: 95vw !important;
+    }
+  }
+
+  /* ── FAQ stacked cards: ensure readable text on small screens ── */
+  @media (max-width: 480px) {
+    .stacked-faq-card {
+      padding: 0.875rem !important;
+    }
+  }
+
+  /* ── Countdown units: tighter on very small screens ── */
+  @media (max-width: 360px) {
+    .countdown-unit-box {
+      width: 2.5rem !important;
+      height: 2.5rem !important;
+    }
+    .countdown-unit-value {
+      font-size: 1rem !important;
+    }
+  }
+
+  /* ── Hero CTA buttons: stack vertically on very small screens ── */
+  @media (max-width: 400px) {
+    .hero-cta-group {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+
+  /* ── Section headers: prevent text overflow on narrow screens ── */
+  @media (max-width: 380px) {
+    h1, h2 {
+      word-break: break-word;
+      hyphens: auto;
+    }
+  }
+
+  /* ── Prizes additional rewards card: full width on mobile ── */
+  @media (max-width: 640px) {
+    .prizes-rewards-card {
+      padding: 1.25rem !important;
+    }
+  }
+
+  /* ── Timeline treasure map: min height so it's readable on mobile ── */
+  @media (max-width: 480px) {
+    .timeline-map-img {
+      min-height: 200px;
+      object-fit: cover;
     }
   }
 }
@@ -302,14 +468,14 @@
     padding-bottom: 20px;
   }
   .bt-button {
-    padding: 8px 16px;
+    padding: 7px 14px;
   }
   .bt-inner-face {
-    padding: 6px 14px;
+    padding: 5px 12px;
   }
   .bt-label {
-    font-size: 0.6rem;
-    letter-spacing: 0.12em;
+    font-size: 0.55rem;
+    letter-spacing: 0.10em;
   }
 }
 

@@ -74,7 +74,7 @@ export default function Guardians() {
             <GlareHover
               key={universe}
               width="100%"
-              height="clamp(160px, 20vw, 220px)"
+              height="100%"
               background="linear-gradient(135deg, rgba(88,28,135,0.15) 0%, rgba(12,0,24,0.92) 100%)"
               borderRadius="16px"
               borderColor="transparent"
@@ -85,11 +85,12 @@ export default function Guardians() {
               transitionDuration={1800}
               autoPlay={true}
               autoPlayInterval={5000}
+              className="guardian-card"
             >
               <span
                 className="font-display-bold select-none"
                 style={{
-                  fontSize: "5rem",
+                  fontSize: "clamp(3rem, 8vw, 5rem)",
                   color: "rgba(139,92,246,0.45)",
                   lineHeight: 1,
                 }}
