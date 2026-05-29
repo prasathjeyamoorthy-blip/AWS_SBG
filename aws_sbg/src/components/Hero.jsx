@@ -49,17 +49,24 @@ function ParticleCanvas() {
 
     function init() {
       const count = Math.min(Math.floor((W * H) / 9000), 120);
-      particles = Array.from({ length: count }, () => ({
-        x: Math.random() * W,
-        y: Math.random() * H,
-        vx: (Math.random() - 0.5) * 0.4,
-        vy: (Math.random() - 0.5) * 0.4,
-        r: Math.random() * 2 + 1,
-        color: COLORS[Math.floor(Math.random() * COLORS.length)],
-        opacity: Math.random() * 0.5 + 0.2,
-        pulse: Math.random() * Math.PI * 2,
-        pulseSpeed: 0.02 + Math.random() * 0.02,
-      }));
+      particles = Array.from({ length: count }, () => {
+        // Give each particle a fixed base drift speed so they always move
+        const angle = Math.random() * Math.PI * 2;
+        const speed = 0.25 + Math.random() * 0.35;
+        return {
+          x: Math.random() * W,
+          y: Math.random() * H,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          baseVx: Math.cos(angle) * speed,
+          baseVy: Math.sin(angle) * speed,
+          r: Math.random() * 2 + 1,
+          color: COLORS[Math.floor(Math.random() * COLORS.length)],
+          opacity: Math.random() * 0.5 + 0.2,
+          pulse: Math.random() * Math.PI * 2,
+          pulseSpeed: 0.015 + Math.random() * 0.015,
+        };
+      });
     }
 
     function draw() {
@@ -120,27 +127,31 @@ function ParticleCanvas() {
         ctx.fillStyle = p.color + (pulsedOpacity + 0.3) + ')';
         ctx.fill();
 
-        // Move
-        p.x += p.vx;
-        p.y += p.vy;
-
-        // Mouse repulsion
+        // Mouse repulsion — strong push away
         const repDx = p.x - mouse.current.x;
         const repDy = p.y - mouse.current.y;
         const repDist = Math.sqrt(repDx * repDx + repDy * repDy);
-        if (repDist < 100) {
-          const force = (100 - repDist) / 100 * 0.8;
+        if (repDist < 120 && repDist > 0) {
+          const force = (120 - repDist) / 120 * 1.2;
           p.vx += (repDx / repDist) * force;
           p.vy += (repDy / repDist) * force;
         }
 
-        // Dampen velocity
-        p.vx *= 0.99;
-        p.vy *= 0.99;
-
-        // Clamp speed
+        // Clamp max speed (repelled particles can go faster)
         const speed = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
-        if (speed > 1.5) { p.vx = (p.vx / speed) * 1.5; p.vy = (p.vy / speed) * 1.5; }
+        const maxSpeed = repDist < 120 ? 4.0 : 0.7;
+        if (speed > maxSpeed) {
+          p.vx = (p.vx / speed) * maxSpeed;
+          p.vy = (p.vy / speed) * maxSpeed;
+        }
+
+        // Gently steer back toward base drift velocity (galaxy drift always on)
+        p.vx += (p.baseVx - p.vx) * 0.012;
+        p.vy += (p.baseVy - p.vy) * 0.012;
+
+        // Move
+        p.x += p.vx;
+        p.y += p.vy;
 
         // Wrap edges
         if (p.x < -10) p.x = W + 10;
