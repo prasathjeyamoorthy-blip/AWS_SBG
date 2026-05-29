@@ -10,7 +10,7 @@ const NAV = [
   { id: 'tracks',    label: 'Tracks',    href: '#tracks',    icon: <Compass /> },
   { id: 'timeline',  label: 'Timeline',  href: '#timeline',  icon: <Clock /> },
   { id: 'guardians', label: 'Guardians', href: '#guardians', icon: <Shield /> },
-  { id: 'treasure',  label: 'Treasure',  href: '#prizes',    icon: <Trophy /> },
+  { id: 'prizes',    label: 'Prizes',    href: '#prizes',    icon: <Trophy /> },
   { id: 'faq',       label: 'FAQ',       href: '#faq',       icon: <HelpCircle /> },
 ];
 

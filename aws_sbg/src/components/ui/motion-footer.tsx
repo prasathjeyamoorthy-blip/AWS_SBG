@@ -201,13 +201,13 @@ const MagneticButton = React.forwardRef<HTMLElement, MagneticButtonProps>(
 MagneticButton.displayName = "MagneticButton";
 
 // -------------------------------------------------------------------------
-// 3. MARQUEE ITEM — updated with pirate voyage content
+// 3. MARQUEE ITEM — updated with hackathon content
 // -------------------------------------------------------------------------
 const MarqueeItem = () => (
   <div className="flex items-center space-x-12 px-6 font-body-bold">
     <span>Endless Innovation</span>
     <span className="text-purple-400/60">✦</span>
-    <span>Pirate Team-Based Voyage</span>
+    <span>Team-Based Hackathon</span>
     <span className="text-purple-500/60">✦</span>
     <span>Guardian Mentors</span>
     <span className="text-purple-400/60">✦</span>
@@ -302,7 +302,7 @@ export function CinematicFooter() {
             ref={giantTextRef}
             className="footer-giant-bg-text absolute -bottom-[2vh] left-1/2 -translate-x-1/2 whitespace-nowrap z-0 pointer-events-none select-none font-display-bold"
           >
-            VOYAGE
+            BUILD
           </div>
 
           {/* ── Marquee ── */}
@@ -330,22 +330,22 @@ export function CinematicFooter() {
               style={{ top: 'clamp(11rem, 20vh, 15rem)', maxWidth: '280px' }}
             >
               <p className="text-gray-300 text-base font-display-bold-italic leading-relaxed mb-3">
-                The Black Flag has been raised.<br />
-                The Royal Guards await.<br />
-                The Final Island is rising from the mist.
+                Registrations are open.<br />
+                Expert mentors are standing by.<br />
+                The Grand Finale stage is being set.
               </p>
               <p className="text-purple-300 text-base font-display-bold-italic">
-                Will your crew survive the voyage?
+                Will your team make it to the top?
               </p>
             </div>
 
             {/* Story block for mobile + tablet — inline, above heading, no overlap */}
             <div className="lg:hidden w-full max-w-md text-center mb-5 px-6">
               <p className="text-gray-400 text-sm sm:text-base font-display-bold-italic leading-relaxed mb-2">
-                The Black Flag has been raised. The Royal Guards await.
+                Registrations are open. Expert mentors are standing by.
               </p>
               <p className="text-purple-400 text-sm sm:text-base font-display-bold-italic">
-                Will your crew survive the voyage?
+                Will your team make it to the top?
               </p>
             </div>
 
@@ -362,7 +362,7 @@ export function CinematicFooter() {
                   filter: "drop-shadow(0px 0px 24px rgba(139,92,246,0.5))",
                 }}
               >
-                Ready to Sail?
+                Ready to Build?
               </GlitchText>
             </h2>
 
@@ -378,7 +378,7 @@ export function CinematicFooter() {
                   className="footer-glass-pill px-8 sm:px-10 py-4 sm:py-5 rounded-full font-bold text-sm md:text-base flex items-center justify-center gap-3 group font-body-bold"
                   style={{ color: "#ffffff" }}
                 >
-                  Register Your Crew
+                  Register Your Team
                 </MagneticButton>
               </div>
 

@@ -6,12 +6,12 @@ import BorderGlow from './ui/BorderGlow';
 if (typeof window !== 'undefined') gsap.registerPlugin(ScrollTrigger);
 
 const reasons = [
-  { title: 'Immersive Story Experience',    description: 'Every stage of the hackathon unfolds like a cinematic pirate adventure.' },
-  { title: 'Learn From Legendary Mentors',  description: 'Gain guidance from industry experts represented through iconic multiverse factions.' },
-  { title: 'Build Real Products',           description: 'Transform ideas into working prototypes and future startups.' },
-  { title: 'Network With Builders',         description: 'Meet developers, designers, founders, and innovators from across the seas.' },
-  { title: 'Compete for Glory',             description: 'Win prizes, recognition, opportunities, and a place in pirate legend.' },
-  { title: 'Gamified Experience',           description: 'Progress through missions, trials, rankings, and hidden challenges throughout the voyage.' },
+  { title: 'Immersive Experience',         description: 'Every stage of the hackathon is designed to challenge, inspire, and push you further.' },
+  { title: 'Learn From Expert Mentors',    description: 'Gain guidance from industry professionals across tech, product, and entrepreneurship.' },
+  { title: 'Build Real Products',          description: 'Transform ideas into working prototypes and future startups.' },
+  { title: 'Network With Builders',        description: 'Meet developers, designers, founders, and innovators from across the country.' },
+  { title: 'Compete for Recognition',      description: 'Win prizes, certificates, opportunities, and a place in the leaderboard.' },
+  { title: 'Gamified Experience',          description: 'Progress through phases, rankings, and challenges throughout the hackathon.' },
 ];
 
 export default function WhyJoin() {
@@ -49,7 +49,7 @@ export default function WhyJoin() {
             More Than Just a Hackathon
           </p>
           <h2 className="text-3xl sm:text-4xl md:text-5xl mb-3 font-display-bold white-gradient-text">
-            Why Join the Voyage?
+            Why Join the Hackathon?
           </h2>
           <div className="section-divider w-48 mx-auto mt-6" />
         </div>

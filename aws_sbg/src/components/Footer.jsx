@@ -1,5 +1,5 @@
 const footerLinks = {
-  Voyage: ["About", "Timeline", "Tracks", "Prizes"],
+  Event: ["About", "Timeline", "Tracks", "Prizes"],
   Community: ["Discord", "GitHub", "LinkedIn", "Twitter"],
   Resources: ["Blog", "Code of Conduct", "Contact"],
 };
@@ -28,10 +28,10 @@ export default function Footer() {
               </span>
             </div>
             <p className="text-gray-400 text-sm leading-relaxed font-body-bold">
-              Where Pirates Become Legends.
+              Where Builders Become Legends.
             </p>
             <p className="text-purple-500 text-xs mt-3 font-display-italic">
-              Code the Seas. Conquer the Multiverse.
+              Code the Future. Conquer the Multiverse.
             </p>
           </div>
 
@@ -63,7 +63,7 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-gray-600 text-xs font-mono-bold text-center md:text-left">
-            The Grand Pirate Voyage © 2026 · Where Pirates Become Legends.
+            The Grand Hackathon © 2026 · Where Builders Become Legends.
           </p>
         </div>
       </div>

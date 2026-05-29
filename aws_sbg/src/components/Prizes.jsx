@@ -2,9 +2,9 @@ import MagicBento from "./ui/MagicBento";
 import SectionBlurEdges from "./ui/SectionBlurEdges";
 
 const prizes = [
-  { rank: "Legend Tier", amount: "₹15,000" },
-  { rank: "Storm Tier", amount: "₹10,000" },
-  { rank: "Voyager Tier", amount: "₹5,000" },
+  { rank: "Champion Tier", amount: "₹15,000" },
+  { rank: "Elite Tier", amount: "₹10,000" },
+  { rank: "Builder Tier", amount: "₹5,000" },
 ];
 
 const prizesCardData = prizes.map((prize, idx) => ({
@@ -67,7 +67,7 @@ export default function Prizes() {
         {/* Header */}
         <div className="text-center mb-10 sm:mb-16">
           <p className="text-purple-400 text-xs tracking-[0.35em] uppercase mb-3 font-mono-bold">
-            The Ultimate Treasure Chest
+            The Ultimate Prize Pool
           </p>
           <h2 className="text-3xl sm:text-4xl md:text-5xl mb-3 font-display-bold mixed-gradient-text">
             Prizes &amp; Rewards
@@ -98,7 +98,7 @@ export default function Prizes() {
             <ul className="space-y-4">
               <li className="flex items-start gap-3">
                 <span className="text-purple-400 font-bold mt-1">★</span>
-                <span className="text-gray-300">Top 10 Crew Swags</span>
+                <span className="text-gray-300">Top 10 Team Swags</span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-purple-400 font-bold mt-1">★</span>

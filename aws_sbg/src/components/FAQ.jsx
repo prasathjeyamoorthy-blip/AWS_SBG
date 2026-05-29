@@ -62,7 +62,7 @@ export default function FAQ() {
             Got Questions?
           </h2>
           <p className="text-gray-400 font-display-italic text-sm sm:text-base">
-            Every sailor has doubts before the first voyage.
+            Every builder has questions before the first sprint.
           </p>
           <div className="section-divider w-48 mx-auto mt-6" />
         </div>

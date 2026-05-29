@@ -37,23 +37,23 @@ export default function FinalCTA() {
 
       <div className="relative z-10 max-w-3xl mx-auto px-2">
         <p className="text-purple-400 text-xs tracking-[0.35em] uppercase mb-6 font-mono-bold">
-          The Final Quest
+          The Final Stage
         </p>
 
         <h2 className="text-4xl sm:text-5xl md:text-7xl leading-tight mb-4 font-display-bold mixed-gradient-text">
-          The Seas Are Calling
+          The Stage Is Set
         </h2>
 
         <p className="text-gray-200 text-lg sm:text-xl md:text-2xl mb-6 font-display-bold-italic">
-          The Black Flag has been raised. The portals are opening. The Pirate Council awaits.
+          The competition is open. The mentors are ready. The judging panel awaits.
         </p>
 
         <p className="text-gray-400 text-sm sm:text-base leading-relaxed mb-10 max-w-xl mx-auto font-body-bold">
-          Will your crew rise above the storm and claim the ultimate treasure?
+          Will your team rise to the challenge and claim the ultimate prize?
         </p>
 
         <p className="text-white text-base sm:text-lg mb-8 font-display-bold tracking-wide">
-          Begin Your Voyage Today
+          Start Building Today
         </p>
 
         {/* Story block */}
@@ -66,12 +66,12 @@ export default function FinalCTA() {
           }}
         >
           <p className="text-gray-300 text-base sm:text-lg leading-relaxed font-display-bold-italic mb-4">
-            The Black Flag has been raised.<br />
-            The Royal Guards await.<br />
-            The Final Island is rising from the mist.
+            Registrations are open.<br />
+            Expert mentors are standing by.<br />
+            The Grand Finale stage is being set.
           </p>
           <p className="text-purple-300 text-base sm:text-lg font-display-bold-italic">
-            Will your crew survive the voyage?
+            Will your team make it to the top?
           </p>
         </div>
 
@@ -85,26 +85,26 @@ export default function FinalCTA() {
               boxShadow: '0 0 40px rgba(139,92,246,0.5)',
             }}
           >
-            Register Your Crew
+            Register Your Team
           </a>
           <a
             href="#guardians"
             className="w-full sm:w-auto px-8 sm:px-10 py-4 text-white text-sm rounded-full transition-all duration-300 font-body-bold tracking-widest uppercase text-center"
             style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.2)' }}
           >
-            Enter the Multiverse
+            Meet the Mentors
           </a>
           <a
             href="#about"
             className="w-full sm:w-auto px-8 sm:px-10 py-4 text-purple-300 text-sm rounded-full transition-all duration-300 font-body-bold tracking-widest uppercase text-center"
             style={{ border: '1px solid rgba(139,92,246,0.4)' }}
           >
-            Start the Adventure
+            Explore the Event
           </a>
         </div>
 
         <p className="text-gray-600 text-xs tracking-wider font-mono-bold">
-          Limited berths available · Applications close soon
+          Limited spots available · Applications close soon
         </p>
       </div>
       <SectionBlurEdges showBottom={false} />

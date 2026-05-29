@@ -26,16 +26,16 @@ const phases = [
     content: (
       <div>
         <div className="flex items-center gap-2 mb-1">
-          <span className="text-2xl">⚓</span>
+          <span className="text-2xl">📋</span>
           <div>
             <p className="text-purple-300 text-xs tracking-widest uppercase font-mono-bold">Phase 1 · 10 Days</p>
             <h4 className="text-white text-lg font-display-bold leading-tight">Registration</h4>
           </div>
         </div>
         <p className="text-gray-400 text-sm font-display-italic mt-2 mb-3 leading-relaxed">
-          The Black Flag has been raised. Young pirates gather at the harbor, ready to form their crews and begin the hunt for legendary treasure.
+          Applications are open. Teams from across the country register, form their squads, and get ready to build.
         </p>
-        <ActivityList items={['Team Registration', 'Crew Formation', 'Portal Open']} icon="·" />
+        <ActivityList items={['Team Registration', 'Team Formation', 'Portal Open']} icon="·" />
       </div>
     ),
   },
@@ -45,16 +45,16 @@ const phases = [
     content: (
       <div>
         <div className="flex items-center gap-2 mb-1">
-          <span className="text-2xl">🗺️</span>
+          <span className="text-2xl">💡</span>
           <div>
             <p className="text-purple-300 text-xs tracking-widest uppercase font-mono-bold">Phase 2 · 8 Days</p>
             <h4 className="text-white text-lg font-display-bold leading-tight">Ideation</h4>
           </div>
         </div>
         <p className="text-gray-400 text-sm font-display-italic mt-2 mb-3 leading-relaxed">
-          Pirate crews study ancient maps, decode mysterious riddles, and shape bold ideas capable of conquering unknown seas.
+          Teams research problem statements, validate ideas, and shape bold solutions ready to tackle real-world challenges.
         </p>
-        <ActivityList items={['Idea Planning', 'Treasure Mapping', 'Proposal Submission']} icon="·" />
+        <ActivityList items={['Idea Planning', 'Problem Mapping', 'Proposal Submission']} icon="·" />
       </div>
     ),
   },
@@ -64,16 +64,16 @@ const phases = [
     content: (
       <div>
         <div className="flex items-center gap-2 mb-1">
-          <span className="text-2xl">⚔️</span>
+          <span className="text-2xl">📊</span>
           <div>
             <p className="text-purple-300 text-xs tracking-widest uppercase font-mono-bold">Phase 3 · 1 Day</p>
             <h4 className="text-white text-lg font-display-bold leading-tight">Ideation Result</h4>
           </div>
         </div>
         <p className="text-gray-400 text-sm font-display-italic mt-2 mb-3 leading-relaxed">
-          The Pirate Council reviews every treasure map. Only the strongest ideas earn permission to continue deeper into the voyage.
+          The judging panel reviews every submitted proposal. Only the strongest ideas earn a spot in the development rounds.
         </p>
-        <ActivityList items={['Team Shortlisting', 'Council Selection', 'Voyage Qualification']} icon="·" />
+        <ActivityList items={['Team Shortlisting', 'Panel Review', 'Round Qualification']} icon="·" />
       </div>
     ),
   },
@@ -90,7 +90,7 @@ const phases = [
           </div>
         </div>
         <p className="text-gray-400 text-sm font-display-italic mt-2 mb-3 leading-relaxed">
-          Selected pirate crews begin constructing their mighty vessels. Code becomes cannons. Design becomes sails.
+          Shortlisted teams start building their MVPs. Code becomes features. Design becomes experience. Ideas become products.
         </p>
         <ActivityList items={['Initial Development', 'Prototype Construction', 'Feature Building']} icon="·" />
       </div>
@@ -102,16 +102,16 @@ const phases = [
     content: (
       <div>
         <div className="flex items-center gap-2 mb-1">
-          <span className="text-2xl">🌊</span>
+          <span className="text-2xl">📋</span>
           <div>
             <p className="text-purple-300 text-xs tracking-widest uppercase font-mono-bold">Phase 5 · 1 Day</p>
             <h4 className="text-white text-lg font-display-bold leading-tight">Phase 1 Result</h4>
           </div>
         </div>
         <p className="text-gray-400 text-sm font-display-italic mt-2 mb-3 leading-relaxed">
-          The ocean grows violent. The Pirate Council announces the crews worthy of entering the forbidden Multiverse Waters.
+          The competition intensifies. The judging panel announces teams advancing to the mentorship and final development round.
         </p>
-        <ActivityList items={['Evaluation Review', 'Stormbreaker Trials', 'Team Advancement']} icon="·" />
+        <ActivityList items={['Evaluation Review', 'Performance Judging', 'Team Advancement']} icon="·" />
       </div>
     ),
   },
@@ -124,11 +124,11 @@ const phases = [
           <span className="text-2xl">🧭</span>
           <div>
             <p className="text-purple-300 text-xs tracking-widest uppercase font-mono-bold">Phase 6 · 10 Days</p>
-            <h4 className="text-white text-lg font-display-bold leading-tight">Guardian Trials</h4>
+            <h4 className="text-white text-lg font-display-bold leading-tight">Mentor Sessions</h4>
           </div>
         </div>
         <p className="text-gray-400 text-sm font-display-italic mt-2 mb-3 leading-relaxed">
-          Mysterious portals open. Legendary mentors from distant universes arrive to guide pirate crews toward greatness.
+          Expert mentors from industry are assigned to teams. Guidance, feedback, and refinement push every project to its best.
         </p>
         <ActivityList items={['Mentor Guidance', 'Final Development', 'Optimization', 'Submission Finalization']} icon="·" />
       </div>
@@ -143,13 +143,13 @@ const phases = [
           <span className="text-2xl">🏆</span>
           <div>
             <p className="text-purple-300 text-xs tracking-widest uppercase font-mono-bold">Phase 7 · 1 Day</p>
-            <h4 className="text-white text-lg font-display-bold leading-tight">Top 10 Crews</h4>
+            <h4 className="text-white text-lg font-display-bold leading-tight">Top 10 Teams</h4>
           </div>
         </div>
         <p className="text-gray-400 text-sm font-display-italic mt-2 mb-3 leading-relaxed">
-          Only 10 legendary crews remain. Their names echo across every sea as they earn a place among the greatest pirate captains.
+          Only 10 finalist teams remain. Their names are announced as they earn a place in the Grand Finale.
         </p>
-        <ActivityList items={['Finalist Reveal', 'Hall of Legends', 'Finale Qualification']} icon="·" />
+        <ActivityList items={['Finalist Reveal', 'Leaderboard Announcement', 'Finale Qualification']} icon="·" />
       </div>
     ),
   },
@@ -159,16 +159,16 @@ const phases = [
     content: (
       <div>
         <div className="flex items-center gap-2 mb-1">
-          <span className="text-2xl">💎</span>
+          <span className="text-2xl">🎯</span>
           <div>
             <p className="text-purple-300 text-xs tracking-widest uppercase font-mono-bold">Phase 8 · Grand Finale</p>
             <h4 className="text-white text-lg font-display-bold leading-tight">Grand Finale</h4>
           </div>
         </div>
         <p className="text-gray-400 text-sm font-display-italic mt-2 mb-3 leading-relaxed">
-          The Final Island rises from the mist. One crew will claim the ultimate treasure before the Grand Pirate Council.
+          The final stage begins. Top 10 teams present live before the judging panel. One team claims the ultimate prize.
         </p>
-        <ActivityList items={['Offline Finale', 'Live Demonstrations', 'Final Battle', 'Winner Announcement']} icon="·" />
+        <ActivityList items={['Offline Finale', 'Live Demonstrations', 'Final Pitches', 'Winner Announcement']} icon="·" />
         <div className="mt-4 px-4 py-2 rounded-lg text-center font-display-bold text-sm"
           style={{
             background: 'linear-gradient(135deg, rgba(139,92,246,0.25), rgba(88,28,135,0.35))',
@@ -176,7 +176,7 @@ const phases = [
             color: '#d8b4fe',
             boxShadow: '0 0 20px rgba(139,92,246,0.15)',
           }}>
-          🏴‍☠️ Treasure Achieved!
+          🏆 Victory Achieved!
         </div>
       </div>
     ),
@@ -198,13 +198,12 @@ export default function TimelineSection() {
         {/* Header */}
         <div className="text-center mb-10 sm:mb-16">
           <p className="text-purple-400 text-xs tracking-[0.35em] uppercase mb-3 font-mono-bold">
-            The Voyage Unfolds
-          </p>
+            The Hackathon Journey          </p>
           <h2 className="text-3xl sm:text-4xl md:text-5xl mb-3 font-display-bold white-gradient-text">
             Event Timeline
           </h2>
           <p className="text-gray-400 font-display-italic text-sm sm:text-base">
-            Every stage unlocks a new chapter in the pirate story.
+            Every stage unlocks a new chapter in your hackathon journey.
           </p>
           <div className="section-divider w-48 mx-auto mt-6" />
         </div>

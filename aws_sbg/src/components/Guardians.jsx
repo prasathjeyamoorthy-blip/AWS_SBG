@@ -59,11 +59,10 @@ export default function Guardians() {
             Mentor Reveal
           </p>
           <h2 className="text-3xl sm:text-4xl md:text-5xl mb-3 font-display-bold white-gradient-text">
-            Meet the Guardians of the Multiverse
+            Meet the Mentors
           </h2>
           <p className="text-gray-300 font-display-italic text-sm sm:text-base max-w-2xl mx-auto px-2">
-            Legendary mentors from across the multiverse will answer the call.
-            Their identities will be revealed soon.
+            Industry experts and professionals will be assigned to guide your team. Their identities will be revealed soon.
           </p>
           <div className="section-divider w-48 mx-auto mt-6" />
         </div>
@@ -101,19 +100,17 @@ export default function Guardians() {
           ))}
         </div>
 
-        {/* Royal Sea Guards Summary */}
+        {/* Mentor Summary */}
         <div className="text-center mt-8 sm:mt-10 px-4">
           <p className="text-gray-300 text-sm sm:text-base max-w-2xl mx-auto">
-            The Royal Sea Guards are legendary protectors who choose only worthy
-            crews. Through the Guardian Trials, earn their mentorship to
-            strengthen your strategy and prepare for the Final Treasure War.
+            Expert mentors are selected to guide the most promising teams. Through dedicated mentor sessions, sharpen your strategy and prepare for the Grand Finale.
           </p>
         </div>
 
         {/* Quote */}
         <div className="text-center mt-12 sm:mt-16 px-4">
           <p className="text-purple-300 text-base sm:text-lg md:text-xl font-display-bold-italic">
-            "A wise crew listens before the storm arrives."
+            "A great mentor accelerates what takes years alone."
           </p>
         </div>
       </div>
