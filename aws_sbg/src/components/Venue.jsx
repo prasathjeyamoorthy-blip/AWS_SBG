@@ -65,7 +65,7 @@ const DETAILS = [
   { icon: Building2,  label: 'Institution', value: 'SMVEC — Est. 1999' },
   { icon: MapPin,     label: 'Location',    value: 'Madagadipet, Puducherry' },
   { icon: Navigation, label: 'Highway',     value: 'NH-45A, Puducherry–Villupuram' },
-  { icon: Trophy,     label: 'Event',       value: 'Grand Finale — Offline' },
+  { icon: Trophy,     label: 'Event',       value: '#include<1.0> — Grand Finale' },
 ];
 
 export default function Venue() {

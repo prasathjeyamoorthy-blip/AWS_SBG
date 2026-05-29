@@ -1,13 +1,13 @@
-import { Mail, GraduationCap, Zap } from 'lucide-react';
+import { Mail, GraduationCap, Zap, Phone } from 'lucide-react';
 import SectionBlurEdges from './ui/SectionBlurEdges';
 
 // ── Replace this value once the club mail is ready ──
 const CLUB_EMAIL = null; // e.g. 'awssbg@smvec.ac.in'
 
 const COORDINATORS = [
-  { name: 'Manojkumar',  initials: 'MK' },
-  { name: 'Janani',      initials: 'JN' },
-  { name: 'Devaprasath', initials: 'DP' },
+  { name: 'Manojkumar',  initials: 'MK', phone: '+91 86674 96714' },
+  { name: 'Janani',      initials: 'JN', phone: '+91 94865 62329' },
+  { name: 'Devaprasath', initials: 'DP', phone: '+91 76958 42138' },
 ];
 
 /* Tiny deterministic sparkle dots for the faculty card */
@@ -90,6 +90,13 @@ export default function Contact() {
               <p className="text-purple-300/60 text-xs font-mono-bold mt-1 tracking-widest uppercase">
                 Sri Manakula Vinayagar Engineering College
               </p>
+              <a
+                href="tel:+919894182905"
+                className="inline-flex items-center gap-1.5 mt-2 text-purple-300 hover:text-white transition-colors text-sm font-mono-bold"
+              >
+                <Phone size={12} />
+                +91 98941 82905
+              </a>
             </div>
 
             {/* decorative badge */}
@@ -151,6 +158,14 @@ export default function Contact() {
                   <p className="text-white/30 text-xs font-mono-bold mt-0.5 tracking-wider">
                     Coordinator
                   </p>
+                  <a
+                    href={`tel:${c.phone.replace(/\s/g, '')}`}
+                    className="inline-flex items-center gap-1 mt-1 text-purple-400 hover:text-purple-200 transition-colors text-xs font-mono-bold"
+                    onClick={e => e.stopPropagation()}
+                  >
+                    <Phone size={10} />
+                    {c.phone}
+                  </a>
                 </div>
 
                 {/* subtle index number — removed */}
@@ -159,7 +174,7 @@ export default function Contact() {
           </div>
         </div>
 
-        {/* ── Club Email ── */}
+        {/* ── Email ── */}
         <div
           className="rounded-2xl p-5 sm:p-6 flex flex-col sm:flex-row items-start sm:items-center gap-4"
           style={{
@@ -179,7 +194,7 @@ export default function Contact() {
 
           <div className="flex-1 min-w-0">
             <p className="text-white/40 text-xs tracking-[0.25em] uppercase font-mono-bold mb-1">
-              Club Email
+              Email
             </p>
             {CLUB_EMAIL ? (
               <a

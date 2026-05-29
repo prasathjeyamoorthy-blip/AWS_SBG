@@ -322,11 +322,112 @@ export default function Hero() {
           AWS Student Builder Group · Hackathon 2026
         </p>
 
-        <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl text-white leading-[1.05] mb-4 font-display-bold">
+        <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl text-white leading-[1.05] mb-6 font-display-bold">
           THE GRAND
           <br />
           <span className="purple-gradient-text glow-purple">HACKATHON</span>
         </h1>
+
+        {/* ── Hackathon name — #include<1.0> ── */}
+        <div className="relative inline-block mb-4 select-none">
+          {/* Animated shimmer sweep */}
+          <style>{`
+            @keyframes shimmerSweep {
+              0%   { transform: translateX(-100%); }
+              100% { transform: translateX(300%); }
+            }
+            @keyframes borderPulse {
+              0%, 100% { opacity: 0.5; }
+              50%       { opacity: 1; }
+            }
+            @keyframes glowPulse {
+              0%, 100% { opacity: 0.6; }
+              50%       { opacity: 1; }
+            }
+          `}</style>
+
+          {/* Outer glow halo */}
+          <div className="absolute inset-0 rounded-2xl pointer-events-none"
+            style={{
+              background: 'radial-gradient(ellipse 80% 60% at 50% 50%, rgba(139,92,246,0.35) 0%, transparent 70%)',
+              filter: 'blur(16px)',
+              animation: 'glowPulse 3s ease-in-out infinite',
+            }}
+          />
+
+          {/* Main name block */}
+          <div
+            className="relative px-6 sm:px-10 py-3 sm:py-4 rounded-2xl overflow-hidden"
+            style={{
+              background: 'linear-gradient(135deg, rgba(109,40,217,0.25) 0%, rgba(15,0,30,0.8) 50%, rgba(109,40,217,0.2) 100%)',
+              border: '1px solid rgba(168,85,247,0.45)',
+              boxShadow: '0 0 40px rgba(139,92,246,0.25), inset 0 1px 0 rgba(255,255,255,0.07)',
+            }}
+          >
+            {/* Shimmer sweep */}
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                background: 'linear-gradient(105deg, transparent 40%, rgba(192,132,252,0.15) 50%, transparent 60%)',
+                animation: 'shimmerSweep 3.5s ease-in-out infinite',
+              }}
+            />
+
+            {/* Top-left corner accent */}
+            <div className="absolute top-0 left-0 w-6 h-6 pointer-events-none"
+              style={{ borderTop: '2px solid rgba(168,85,247,0.8)', borderLeft: '2px solid rgba(168,85,247,0.8)', borderRadius: '8px 0 0 0' }} />
+            {/* Bottom-right corner accent */}
+            <div className="absolute bottom-0 right-0 w-6 h-6 pointer-events-none"
+              style={{ borderBottom: '2px solid rgba(168,85,247,0.8)', borderRight: '2px solid rgba(168,85,247,0.8)', borderRadius: '0 0 8px 0' }} />
+
+            {/* The name */}
+            <div className="relative flex items-baseline justify-center gap-0.5 sm:gap-1">
+              {/* # */}
+              <span
+                className="font-mono-bold text-2xl sm:text-4xl md:text-5xl"
+                style={{ color: '#a78bfa', textShadow: '0 0 20px rgba(167,139,250,0.8)' }}
+              >#</span>
+              {/* include */}
+              <span
+                className="font-mono-bold text-2xl sm:text-4xl md:text-5xl tracking-tight"
+                style={{
+                  background: 'linear-gradient(90deg, #e9d5ff 0%, #c084fc 40%, #a855f7 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                  textShadow: 'none',
+                  filter: 'drop-shadow(0 0 12px rgba(192,132,252,0.6))',
+                }}
+              >include</span>
+              {/* < */}
+              <span
+                className="font-mono-bold text-xl sm:text-3xl md:text-4xl"
+                style={{ color: '#7c3aed', textShadow: '0 0 16px rgba(124,58,237,0.9)' }}
+              >&lt;</span>
+              {/* 1.0 */}
+              <span
+                className="font-mono-bold text-2xl sm:text-4xl md:text-5xl"
+                style={{
+                  background: 'linear-gradient(90deg, #f0abfc 0%, #e879f9 50%, #c026d3 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                  filter: 'drop-shadow(0 0 14px rgba(232,121,249,0.7))',
+                }}
+              >1.0</span>
+              {/* > */}
+              <span
+                className="font-mono-bold text-xl sm:text-3xl md:text-4xl"
+                style={{ color: '#7c3aed', textShadow: '0 0 16px rgba(124,58,237,0.9)' }}
+              >&gt;</span>
+            </div>
+
+            {/* Subtitle line */}
+            <p className="relative text-center text-purple-400/70 text-[10px] sm:text-xs font-mono-bold tracking-[0.3em] uppercase mt-1 hidden">
+              The Grand Hackathon
+            </p>
+          </div>
+        </div>
 
         <p className="text-purple-300 text-base sm:text-lg md:text-2xl mb-3 font-display-bold-italic">
           Code the Future. Build What Matters.
