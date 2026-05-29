@@ -323,7 +323,7 @@ export default function Hero() {
         </p>
 
         <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl text-white leading-[1.05] mb-6 font-display-bold">
-          THE GRAND
+          THE NEXTGEN
           <br />
           <span className="purple-gradient-text glow-purple">HACKATHON</span>
         </h1>
@@ -399,11 +399,6 @@ export default function Hero() {
                   filter: 'drop-shadow(0 0 12px rgba(192,132,252,0.6))',
                 }}
               >include</span>
-              {/* < */}
-              <span
-                className="font-mono-bold text-xl sm:text-3xl md:text-4xl"
-                style={{ color: '#7c3aed', textShadow: '0 0 16px rgba(124,58,237,0.9)' }}
-              >&lt;</span>
               {/* 1.0 */}
               <span
                 className="font-mono-bold text-2xl sm:text-4xl md:text-5xl"
@@ -415,11 +410,6 @@ export default function Hero() {
                   filter: 'drop-shadow(0 0 14px rgba(232,121,249,0.7))',
                 }}
               >1.0</span>
-              {/* > */}
-              <span
-                className="font-mono-bold text-xl sm:text-3xl md:text-4xl"
-                style={{ color: '#7c3aed', textShadow: '0 0 16px rgba(124,58,237,0.9)' }}
-              >&gt;</span>
             </div>
 
             {/* Subtitle line */}
@@ -460,7 +450,7 @@ export default function Hero() {
 
         {/* CTA buttons */}
         <div className="hero-cta-group relative flex flex-wrap justify-center gap-3 sm:gap-4 pointer-events-auto" style={{ zIndex: 30 }}>
-          <BluetoothKey label="Register Your Team" href="#register" variant="primary" />
+          <BluetoothKey label="Register Your Team" href="https://docs.google.com/forms/d/e/1FAIpQLScqy6GeNnTs3BPmAgFw73AAZ3RA6WenwfTFCrWYIKZDK0GGYQ/viewform?usp=publish-editor" variant="primary" />
           <BluetoothKey label="Explore the Timeline" href="#timeline" variant="secondary" />
           <BluetoothKey label="Meet the Mentors" href="#guardians" variant="secondary" />
         </div>

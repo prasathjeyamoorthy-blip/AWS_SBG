@@ -9,12 +9,16 @@ const NAV = [
   { id: 'home',      label: 'Home',      href: '#hero',      icon: <Home /> },
   { id: 'tracks',    label: 'Tracks',    href: '#tracks',    icon: <Compass /> },
   { id: 'timeline',  label: 'Timeline',  href: '#timeline',  icon: <Clock /> },
-  { id: 'guardians', label: 'Guardians', href: '#guardians', icon: <Shield /> },
+  { id: 'mentors', label: 'Mentors', href: '#mentors', icon: <Shield /> },
   { id: 'prizes',    label: 'Prizes',    href: '#prizes',    icon: <Trophy /> },
   { id: 'venue',     label: 'Venue',     href: '#venue',     icon: <MapPin /> },
   { id: 'faq',       label: 'FAQ',       href: '#faq',       icon: <HelpCircle /> },
   { id: 'contact',   label: 'Contact',   href: '#contact',   icon: <Phone /> },
 ];
+
+// Mobile shows only 5 key items so each icon is large and tappable
+const MOBILE_NAV_IDS = ['home', 'timeline', 'prizes', 'faq', 'contact'];
+const MOBILE_NAV = NAV.filter(n => MOBILE_NAV_IDS.includes(n.id));
 
 // Section IDs in page order (strip the '#')
 const SECTION_IDS = NAV.map(({ href }) => href.replace('#', ''));
@@ -27,6 +31,13 @@ const desktopItems = NAV.map(({ id, label, href, icon }) => ({
 }));
 
 const mobileItems = NAV.map(({ id, label, href, icon }) => ({
+  id, label, icon,
+  onClick: () => {
+    document.getElementById(href.replace('#', ''))?.scrollIntoView({ behavior: 'smooth' });
+  },
+}));
+
+const mobileOnlyItems = MOBILE_NAV.map(({ id, label, href, icon }) => ({
   id, label, icon,
   onClick: () => {
     document.getElementById(href.replace('#', ''))?.scrollIntoView({ behavior: 'smooth' });
@@ -120,6 +131,16 @@ export default function Navbar() {
     onClick: () => { handleNavClick(i); item.onClick(); },
   }));
 
+  // Mobile-only 5-item nav — activeIndex mapped to MOBILE_NAV position
+  const mobileOnlyActiveIndex = MOBILE_NAV_IDS.indexOf(NAV[activeIndex]?.id);
+  const mobileOnlyItemsWithClick = mobileOnlyItems.map((item, i) => {
+    const globalIndex = NAV.findIndex(n => n.id === item.id);
+    return {
+      ...item,
+      onClick: () => { handleNavClick(globalIndex); item.onClick(); },
+    };
+  });
+
   return (
     <>
       {/* ── DESKTOP (lg+): Logo | LimelightNav | JoinNowButton ── */}
@@ -155,7 +176,7 @@ export default function Navbar() {
             className="text-xs font-mono-bold text-purple-400 hover:text-white transition-colors whitespace-nowrap">
             Code of Conduct
           </Link>
-          <JoinNowButton href="#register" />
+          <JoinNowButton href="https://docs.google.com/forms/d/e/1FAIpQLScqy6GeNnTs3BPmAgFw73AAZ3RA6WenwfTFCrWYIKZDK0GGYQ/viewform?usp=publish-editor" />
         </div>
       </header>
 
@@ -178,7 +199,7 @@ export default function Navbar() {
             className="text-xs font-mono-bold text-purple-400 hover:text-white transition-colors whitespace-nowrap">
             Code of Conduct
           </Link>
-          <JoinNowButton href="#register" />
+          <JoinNowButton href="https://docs.google.com/forms/d/e/1FAIpQLScqy6GeNnTs3BPmAgFw73AAZ3RA6WenwfTFCrWYIKZDK0GGYQ/viewform?usp=publish-editor" />
         </div>
       </header>
 
@@ -196,12 +217,25 @@ export default function Navbar() {
             AWS SBG
           </span>
         </div>
-        <JoinNowButton href="#register" />
+        <JoinNowButton href="https://docs.google.com/forms/d/e/1FAIpQLScqy6GeNnTs3BPmAgFw73AAZ3RA6WenwfTFCrWYIKZDK0GGYQ/viewform?usp=publish-editor" />
       </header>
 
-      {/* ── LIMELIGHT BOTTOM NAV (mobile + tablet only) ── */}
-      <div className="fixed bottom-2 sm:bottom-4 left-0 right-0 z-50 flex justify-center lg:hidden pointer-events-none px-2 sm:px-3">
-        <div className="pointer-events-auto w-full max-w-[22rem] sm:max-w-sm md:max-w-md">
+      {/* ── BOTTOM NAV: mobile <sm — 5 items, large icons ── */}
+      <div className="fixed bottom-3 left-0 right-0 z-50 flex justify-center sm:hidden pointer-events-none px-4">
+        <div className="pointer-events-auto w-full max-w-xs">
+          <LimelightNav
+            items={mobileOnlyItemsWithClick}
+            activeIndex={mobileOnlyActiveIndex}
+            className="bg-black/90 backdrop-blur-xl border-purple-800/40 shadow-2xl shadow-purple-950/60 w-full justify-around h-16"
+            limelightClassName="bg-purple-500 shadow-[0_0_18px_4px_rgba(139,92,246,0.6)]"
+            iconClassName="text-purple-200 w-6 h-6"
+          />
+        </div>
+      </div>
+
+      {/* ── BOTTOM NAV: tablet sm–lg — all 8 items ── */}
+      <div className="fixed bottom-4 left-0 right-0 z-50 hidden sm:flex justify-center lg:hidden pointer-events-none px-3">
+        <div className="pointer-events-auto w-full max-w-sm md:max-w-md">
           <LimelightNav
             items={mobileItemsWithClick}
             activeIndex={activeIndex}

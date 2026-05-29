@@ -43,9 +43,11 @@ const BEAMS = [
 
 const GRADIENT_COLORS = { start: "#c084fc", middle: "#a855f7", end: "#7c3aed" };
 
-export function JoinNowButton({ href = "#register" }: { href?: string }) {
+const REGISTER_URL = 'https://docs.google.com/forms/d/e/1FAIpQLScqy6GeNnTs3BPmAgFw73AAZ3RA6WenwfTFCrWYIKZDK0GGYQ/viewform?usp=publish-editor';
+
+export function JoinNowButton({ href = REGISTER_URL }: { href?: string }) {
   return (
-    <a href={href} className="relative inline-flex items-center justify-center group">
+    <a href={href} target="_blank" rel="noopener noreferrer" className="relative inline-flex items-center justify-center group">
       {/* Animated SVG beams — hidden on very small screens to avoid overflow */}
       <svg
         width="260"

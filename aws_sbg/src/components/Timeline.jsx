@@ -1,5 +1,6 @@
 import { Timeline } from './ui/timeline';
 import SectionBlurEdges from './ui/SectionBlurEdges';
+import { ClipboardList, Lightbulb, BarChart2, Wrench, CheckCircle, Users, Trophy, Target } from 'lucide-react';
 
 // Returns true if today is past the given end date (YYYY-MM-DD)
 function isPast(dateStr) {
@@ -19,6 +20,13 @@ const ActivityList = ({ items, icon }) => (
   </div>
 );
 
+const PhaseIcon = ({ icon: Icon }) => (
+  <div className="flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center"
+    style={{ background: 'rgba(139,92,246,0.15)', border: '1px solid rgba(139,92,246,0.3)' }}>
+    <Icon size={16} className="text-purple-400" />
+  </div>
+);
+
 const phases = [
   {
     title: "June 1–10",
@@ -26,7 +34,7 @@ const phases = [
     content: (
       <div>
         <div className="flex items-center gap-2 mb-1">
-          <span className="text-2xl">📋</span>
+          <PhaseIcon icon={ClipboardList} />
           <div>
             <p className="text-purple-300 text-xs tracking-widest uppercase font-mono-bold">Phase 1 · 10 Days</p>
             <h4 className="text-white text-lg font-display-bold leading-tight">Registration</h4>
@@ -45,7 +53,7 @@ const phases = [
     content: (
       <div>
         <div className="flex items-center gap-2 mb-1">
-          <span className="text-2xl">💡</span>
+          <PhaseIcon icon={Lightbulb} />
           <div>
             <p className="text-purple-300 text-xs tracking-widest uppercase font-mono-bold">Phase 2 · 8 Days</p>
             <h4 className="text-white text-lg font-display-bold leading-tight">Ideation</h4>
@@ -64,7 +72,7 @@ const phases = [
     content: (
       <div>
         <div className="flex items-center gap-2 mb-1">
-          <span className="text-2xl">📊</span>
+          <PhaseIcon icon={BarChart2} />
           <div>
             <p className="text-purple-300 text-xs tracking-widest uppercase font-mono-bold">Phase 3 · 1 Day</p>
             <h4 className="text-white text-lg font-display-bold leading-tight">Ideation Result</h4>
@@ -83,7 +91,7 @@ const phases = [
     content: (
       <div>
         <div className="flex items-center gap-2 mb-1">
-          <span className="text-2xl">🔧</span>
+          <PhaseIcon icon={Wrench} />
           <div>
             <p className="text-purple-300 text-xs tracking-widest uppercase font-mono-bold">Phase 4 · 8 Days</p>
             <h4 className="text-white text-lg font-display-bold leading-tight">Prototype Phase 1</h4>
@@ -102,7 +110,7 @@ const phases = [
     content: (
       <div>
         <div className="flex items-center gap-2 mb-1">
-          <span className="text-2xl">📋</span>
+          <PhaseIcon icon={CheckCircle} />
           <div>
             <p className="text-purple-300 text-xs tracking-widest uppercase font-mono-bold">Phase 5 · 1 Day</p>
             <h4 className="text-white text-lg font-display-bold leading-tight">Phase 1 Result</h4>
@@ -121,7 +129,7 @@ const phases = [
     content: (
       <div>
         <div className="flex items-center gap-2 mb-1">
-          <span className="text-2xl">🧭</span>
+          <PhaseIcon icon={Users} />
           <div>
             <p className="text-purple-300 text-xs tracking-widest uppercase font-mono-bold">Phase 6 · 10 Days</p>
             <h4 className="text-white text-lg font-display-bold leading-tight">Mentor Sessions</h4>
@@ -140,7 +148,7 @@ const phases = [
     content: (
       <div>
         <div className="flex items-center gap-2 mb-1">
-          <span className="text-2xl">🏆</span>
+          <PhaseIcon icon={Trophy} />
           <div>
             <p className="text-purple-300 text-xs tracking-widest uppercase font-mono-bold">Phase 7 · 1 Day</p>
             <h4 className="text-white text-lg font-display-bold leading-tight">Top 10 Teams</h4>
@@ -159,7 +167,7 @@ const phases = [
     content: (
       <div>
         <div className="flex items-center gap-2 mb-1">
-          <span className="text-2xl">🎯</span>
+          <PhaseIcon icon={Target} />
           <div>
             <p className="text-purple-300 text-xs tracking-widest uppercase font-mono-bold">Phase 8 · Grand Finale</p>
             <h4 className="text-white text-lg font-display-bold leading-tight">Grand Finale</h4>
@@ -169,14 +177,15 @@ const phases = [
           The final stage begins. Top 10 teams present live before the judging panel. One team claims the ultimate prize.
         </p>
         <ActivityList items={['Offline Finale', 'Live Demonstrations', 'Final Pitches', 'Winner Announcement']} icon="·" />
-        <div className="mt-4 px-4 py-2 rounded-lg text-center font-display-bold text-sm"
+        <div className="mt-4 px-4 py-2 rounded-lg flex items-center justify-center gap-2 font-display-bold text-sm"
           style={{
             background: 'linear-gradient(135deg, rgba(139,92,246,0.25), rgba(88,28,135,0.35))',
             border: '1px solid rgba(168,85,247,0.4)',
             color: '#d8b4fe',
             boxShadow: '0 0 20px rgba(139,92,246,0.15)',
           }}>
-          🏆 Victory Achieved!
+          <Trophy size={14} className="text-purple-300" />
+          Victory Achieved!
         </div>
       </div>
     ),
@@ -190,15 +199,14 @@ export default function TimelineSection() {
       className="py-16 sm:py-28 px-4 sm:px-6 relative overflow-hidden"
       style={{ background: 'linear-gradient(180deg, #0d0020 0%, #000000 50%, #0d0020 100%)' }}
     >
-      {/* Ambient background glow */}
       <div className="absolute inset-0 pointer-events-none"
         style={{ background: 'radial-gradient(ellipse 60% 40% at 50% 30%, rgba(88,28,135,0.12) 0%, transparent 70%)' }} />
 
       <div className="max-w-5xl mx-auto relative">
-        {/* Header */}
         <div className="text-center mb-10 sm:mb-16">
           <p className="text-purple-400 text-xs tracking-[0.35em] uppercase mb-3 font-mono-bold">
-            The Hackathon Journey          </p>
+            The Hackathon Journey
+          </p>
           <h2 className="text-3xl sm:text-4xl md:text-5xl mb-3 font-display-bold white-gradient-text">
             Event Timeline
           </h2>

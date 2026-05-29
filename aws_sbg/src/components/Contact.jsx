@@ -1,22 +1,15 @@
-import { Mail, GraduationCap, Zap, Phone } from 'lucide-react';
+import { Mail, Phone } from 'lucide-react';
 import SectionBlurEdges from './ui/SectionBlurEdges';
 
 // ── Replace this value once the club mail is ready ──
 const CLUB_EMAIL = null; // e.g. 'awssbg@smvec.ac.in'
 
-const COORDINATORS = [
-  { name: 'Manojkumar',  initials: 'MK', phone: '+91 86674 96714' },
-  { name: 'Janani',      initials: 'JN', phone: '+91 94865 62329' },
-  { name: 'Devaprasath', initials: 'DP', phone: '+91 76958 42138' },
+const PEOPLE = [
+  { name: 'Mrs. A. Ilakkia', initials: 'AI', role: 'Faculty Coordinator',    phone: '+91 98941 82905', tel: '+919894182905' },
+  { name: 'Manojkumar',      initials: 'MK', role: 'Hackathon Coordinator',  phone: '+91 86674 96714', tel: '+918667496714' },
+  { name: 'Janani',          initials: 'JN', role: 'Hackathon Coordinator',  phone: '+91 94865 62329', tel: '+919486562329' },
+  { name: 'Devaprasath',     initials: 'DP', role: 'Hackathon Coordinator',  phone: '+91 76958 42138', tel: '+917695842138' },
 ];
-
-/* Tiny deterministic sparkle dots for the faculty card */
-const SPARKS = Array.from({ length: 18 }, (_, i) => ({
-  top:     ((i * 53 + 7)  % 90) + 5,
-  left:    ((i * 79 + 11) % 90) + 5,
-  size:    ((i * 13 + 3)  % 2) + 1,
-  opacity: ((i * 17 + 5)  % 5) / 10 + 0.08,
-}));
 
 export default function Contact() {
   return (
@@ -41,137 +34,59 @@ export default function Contact() {
           <div className="section-divider w-48 mx-auto mt-6" />
         </div>
 
-        {/* ── Faculty Coordinator — full-width spotlight card ── */}
-        <div
-          className="relative rounded-3xl overflow-hidden mb-6 p-8 sm:p-10"
-          style={{
-            background: 'linear-gradient(135deg, rgba(109,40,217,0.18) 0%, rgba(139,92,246,0.08) 60%, rgba(0,0,0,0) 100%)',
-            border: '1px solid rgba(139,92,246,0.35)',
-            boxShadow: '0 0 60px rgba(139,92,246,0.12), inset 0 1px 0 rgba(255,255,255,0.06)',
-          }}
-        >
-          {/* background sparkles */}
-          <div className="absolute inset-0 pointer-events-none">
-            {SPARKS.map((s, i) => (
-              <div
-                key={i}
-                className="absolute rounded-full bg-purple-400"
-                style={{ top: s.top + '%', left: s.left + '%', width: s.size, height: s.size, opacity: s.opacity }}
-              />
-            ))}
-          </div>
-
-          {/* purple glow orb */}
-          <div
-            className="absolute -top-16 -right-16 w-64 h-64 rounded-full pointer-events-none"
-            style={{ background: 'radial-gradient(circle, rgba(139,92,246,0.2) 0%, transparent 70%)' }}
-          />
-
-          <div className="relative z-10 flex flex-col sm:flex-row items-start sm:items-center gap-6">
-            {/* Avatar */}
+        {/* ── Uniform 2×2 grid ── */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+          {PEOPLE.map((p) => (
             <div
-              className="flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 rounded-2xl flex items-center justify-center"
+              key={p.name}
+              className="rounded-2xl p-5 sm:p-6 flex items-center gap-4 transition-all duration-300"
               style={{
-                background: 'linear-gradient(135deg, rgba(139,92,246,0.3), rgba(109,40,217,0.5))',
-                border: '1px solid rgba(139,92,246,0.5)',
-                boxShadow: '0 0 24px rgba(139,92,246,0.3)',
+                background: 'rgba(255,255,255,0.03)',
+                border: '1px solid rgba(139,92,246,0.2)',
+              }}
+              onMouseEnter={e => {
+                e.currentTarget.style.background = 'rgba(139,92,246,0.08)';
+                e.currentTarget.style.borderColor = 'rgba(139,92,246,0.4)';
+                e.currentTarget.style.boxShadow = '0 0 24px rgba(139,92,246,0.12)';
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.background = 'rgba(255,255,255,0.03)';
+                e.currentTarget.style.borderColor = 'rgba(139,92,246,0.2)';
+                e.currentTarget.style.boxShadow = 'none';
               }}
             >
-              <GraduationCap size={28} className="text-purple-200" />
-            </div>
-
-            <div className="flex-1">
-              <p className="text-purple-400 text-xs tracking-[0.3em] uppercase font-mono-bold mb-1">
-                Faculty Coordinator
-              </p>
-              <p className="text-white text-2xl sm:text-3xl font-display-bold leading-tight">
-                Mrs. A. Ilakkia
-              </p>
-              <p className="text-purple-300/60 text-xs font-mono-bold mt-1 tracking-widest uppercase">
-                Sri Manakula Vinayagar Engineering College
-              </p>
-              <a
-                href="tel:+919894182905"
-                className="inline-flex items-center gap-1.5 mt-2 text-purple-300 hover:text-white transition-colors text-sm font-mono-bold"
-              >
-                <Phone size={12} />
-                +91 98941 82905
-              </a>
-            </div>
-
-            {/* decorative badge */}
-            <div
-              className="hidden sm:flex flex-shrink-0 items-center gap-2 px-4 py-2 rounded-full"
-              style={{
-                background: 'rgba(139,92,246,0.12)',
-                border: '1px solid rgba(139,92,246,0.3)',
-              }}
-            >
-              <Zap size={12} className="text-purple-400" />
-              <span className="text-purple-300 text-xs font-mono-bold tracking-widest uppercase">Faculty</span>
-            </div>
-          </div>
-        </div>
-
-        {/* ── Hackathon Coordinators — individual avatar cards ── */}
-        <div className="mb-6">
-          <p className="text-white/30 text-xs tracking-[0.3em] uppercase font-mono-bold mb-4 pl-1">
-            Hackathon Coordinators
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            {COORDINATORS.map((c, i) => (
+              {/* Initials avatar */}
               <div
-                key={c.name}
-                className="group relative rounded-2xl p-5 flex items-center gap-4 transition-all duration-300"
+                className="flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center text-sm font-display-bold"
                 style={{
-                  background: 'rgba(255,255,255,0.03)',
-                  border: '1px solid rgba(255,255,255,0.08)',
-                }}
-                onMouseEnter={e => {
-                  e.currentTarget.style.background = 'rgba(139,92,246,0.08)';
-                  e.currentTarget.style.borderColor = 'rgba(139,92,246,0.3)';
-                  e.currentTarget.style.boxShadow = '0 0 20px rgba(139,92,246,0.1)';
-                }}
-                onMouseLeave={e => {
-                  e.currentTarget.style.background = 'rgba(255,255,255,0.03)';
-                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)';
-                  e.currentTarget.style.boxShadow = 'none';
+                  background: 'rgba(139,92,246,0.15)',
+                  border: '1px solid rgba(139,92,246,0.3)',
+                  color: '#c4b5fd',
+                  letterSpacing: '0.05em',
                 }}
               >
-                {/* Initials avatar */}
-                <div
-                  className="flex-shrink-0 w-11 h-11 rounded-xl flex items-center justify-center text-sm font-display-bold"
-                  style={{
-                    background: `rgba(139,92,246,${0.12 + i * 0.04})`,
-                    border: '1px solid rgba(139,92,246,0.25)',
-                    color: '#c4b5fd',
-                    letterSpacing: '0.05em',
-                  }}
-                >
-                  {c.initials}
-                </div>
-
-                <div className="min-w-0">
-                  <p className="text-white font-display-bold text-base leading-tight truncate">
-                    {c.name}
-                  </p>
-                  <p className="text-white/30 text-xs font-mono-bold mt-0.5 tracking-wider">
-                    Coordinator
-                  </p>
-                  <a
-                    href={`tel:${c.phone.replace(/\s/g, '')}`}
-                    className="inline-flex items-center gap-1 mt-1 text-purple-400 hover:text-purple-200 transition-colors text-xs font-mono-bold"
-                    onClick={e => e.stopPropagation()}
-                  >
-                    <Phone size={10} />
-                    {c.phone}
-                  </a>
-                </div>
-
-                {/* subtle index number — removed */}
+                {p.initials}
               </div>
-            ))}
-          </div>
+
+              {/* Info */}
+              <div className="min-w-0 flex-1">
+                <p className="text-white font-display-bold text-base leading-tight truncate">
+                  {p.name}
+                </p>
+                <p className="text-purple-400/70 text-xs font-mono-bold mt-0.5 tracking-wider">
+                  {p.role}
+                </p>
+                <a
+                  href={`tel:${p.tel}`}
+                  className="inline-flex items-center gap-1.5 mt-1.5 text-purple-300 hover:text-white transition-colors text-xs font-mono-bold"
+                  onClick={e => e.stopPropagation()}
+                >
+                  <Phone size={10} />
+                  {p.phone}
+                </a>
+              </div>
+            </div>
+          ))}
         </div>
 
         {/* ── Email ── */}

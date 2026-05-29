@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform, useInView, useSpring } from "framer-motion";
+import { Check } from "lucide-react";
 
 /* Floating particle that drifts upward */
 function Particle({ style }) {
@@ -88,8 +89,8 @@ function TimelineItem({ item, index, scrollYProgress }) {
           {item.title}
         </span>
         {item.completed && (
-          <span className="text-xs font-mono-bold mt-1" style={{ color: 'rgba(134,239,172,0.8)' }}>
-            ✓ Completed
+          <span className="text-xs font-mono-bold mt-1 flex items-center gap-1" style={{ color: 'rgba(134,239,172,0.8)' }}>
+            <Check size={11} /> Completed
           </span>
         )}
       </motion.div>
@@ -116,7 +117,9 @@ function TimelineItem({ item, index, scrollYProgress }) {
             {item.title}
           </span>
           {item.completed && (
-            <span className="text-xs font-mono-bold" style={{ color: 'rgba(134,239,172,0.8)' }}>✓</span>
+            <span className="text-xs font-mono-bold flex items-center gap-0.5" style={{ color: 'rgba(134,239,172,0.8)' }}>
+              <Check size={10} />
+            </span>
           )}
         </div>
 
@@ -184,11 +187,13 @@ export function Timeline({ data }) {
     <div ref={containerRef} className="w-full">
       <div ref={ref} className="relative max-w-5xl mx-auto pb-20">
 
-        {/* Background track line — desktop only, centered on dot (160px date col + 22px = dot center) */}
+        {/* Background track line — desktop only
+             dot center = date minWidth(160) + gap-4(16) + half dot(22) = 198px
+             line left  = 198 - 1 (half of 2px line) = 197px                    */}
         <div
           className="absolute hidden md:block"
           style={{
-            left: '181px',
+            left: '197px',
             top: 0,
             width: 2,
             height: `${height}px`,

@@ -1,5 +1,6 @@
 import MagicBento from "./ui/MagicBento";
 import SectionBlurEdges from "./ui/SectionBlurEdges";
+import { Gift, Star, Trophy } from "lucide-react";
 
 const prizes = [
   { rank: "Champion Tier", amount: "₹15,000" },
@@ -101,7 +102,7 @@ export default function Prizes() {
               boxShadow: '0 0 32px rgba(139,92,246,0.15)',
             }}
           >
-            <span className="text-3xl flex-shrink-0" role="img" aria-label="gift">🎁</span>
+            <Gift size={28} className="text-purple-300 flex-shrink-0" />
             <div>
               <p className="text-purple-300 text-xs tracking-[0.25em] uppercase font-mono-bold mb-0.5">
                 Exclusive Swags
@@ -118,17 +119,17 @@ export default function Prizes() {
             </h3>
             <ul className="space-y-4">
               <li className="flex items-start gap-3">
-                <span className="text-purple-400 font-bold mt-1">★</span>
+                <Star size={14} className="text-purple-400 mt-0.5 flex-shrink-0" />
                 <span className="text-gray-300">Top 10 Team Swags</span>
               </li>
               <li className="flex items-start gap-3">
-                <span className="text-purple-400 font-bold mt-1">★</span>
+                <Star size={14} className="text-purple-400 mt-0.5 flex-shrink-0" />
                 <span className="text-gray-300">
                   Certificates for All Participants
                 </span>
               </li>
               <li className="flex items-start gap-3">
-                <span className="text-purple-400 font-bold mt-1">★</span>
+                <Star size={14} className="text-purple-400 mt-0.5 flex-shrink-0" />
                 <span className="text-gray-300">
                   Recognition, Networking & Opportunities
                 </span>

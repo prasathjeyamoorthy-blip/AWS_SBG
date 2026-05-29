@@ -1,12 +1,13 @@
 import { useState, useRef } from 'react';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
+import { Bot, Cloud, Link2, ShieldCheck, Rocket } from 'lucide-react';
 import SectionBlurEdges from './ui/SectionBlurEdges';
 
 const tracks = [
   {
     id: 1,
     title: 'AI & Automation',
-    emoji: '🤖',
+    icon: Bot,
     description: 'Build intelligent systems that learn, adapt, and automate. From ML models to smart assistants — make machines work for people.',
     tags: ['Machine Learning', 'NLP', 'Computer Vision', 'Automation'],
     color: '#7c3aed',
@@ -16,7 +17,7 @@ const tracks = [
   {
     id: 2,
     title: 'Web & Cloud',
-    emoji: '☁️',
+    icon: Cloud,
     description: 'Design scalable platforms, APIs, and cloud-native apps. Build the digital infrastructure that powers the next generation.',
     tags: ['AWS', 'Full Stack', 'Serverless', 'DevOps'],
     color: '#0ea5e9',
@@ -26,7 +27,7 @@ const tracks = [
   {
     id: 3,
     title: 'Blockchain & Web3',
-    emoji: '🔗',
+    icon: Link2,
     description: 'Decentralize trust. Build smart contracts, DeFi tools, and Web3 applications that redefine ownership and transparency.',
     tags: ['Smart Contracts', 'DeFi', 'NFTs', 'Decentralized Apps'],
     color: '#f59e0b',
@@ -36,7 +37,7 @@ const tracks = [
   {
     id: 4,
     title: 'Cybersecurity',
-    emoji: '🛡️',
+    icon: ShieldCheck,
     description: 'Protect systems, data, and people. Build tools that detect threats, secure infrastructure, and keep the digital world safe.',
     tags: ['Threat Detection', 'Encryption', 'Pen Testing', 'Zero Trust'],
     color: '#10b981',
@@ -46,7 +47,7 @@ const tracks = [
   {
     id: 5,
     title: 'Future Tech',
-    emoji: '🚀',
+    icon: Rocket,
     description: 'Push the boundaries of what\'s possible. AR/VR, IoT, robotics, quantum — build the technology that doesn\'t exist yet.',
     tags: ['AR/VR', 'IoT', 'Robotics', 'Quantum'],
     color: '#ec4899',
@@ -112,14 +113,19 @@ function TrackCard({ track, index, isActive, onClick }) {
       />
 
       <div className="relative p-5 sm:p-6 z-10">
-        {/* Number + emoji row */}
+        {/* Number + icon row */}
         <div className="flex items-center justify-between mb-4">
-          <span
-            className="text-3xl sm:text-4xl"
-            style={{ filter: isActive || hovered ? 'drop-shadow(0 0 12px ' + track.color + ')' : 'none', transition: 'filter 0.3s' }}
+          <div
+            className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+            style={{
+              background: isActive || hovered ? track.color + '25' : 'rgba(139,92,246,0.1)',
+              border: `1px solid ${isActive || hovered ? track.color + '50' : 'rgba(139,92,246,0.2)'}`,
+              transition: 'all 0.3s',
+              boxShadow: isActive || hovered ? `0 0 12px ${track.color}` : 'none',
+            }}
           >
-            {track.emoji}
-          </span>
+            <track.icon size={18} style={{ color: isActive || hovered ? track.color : 'rgba(168,85,247,0.7)', transition: 'color 0.3s' }} />
+          </div>
           <span
             className="text-xs font-mono-bold px-2 py-1 rounded-full"
             style={{
@@ -219,7 +225,16 @@ function DetailPanel({ track }) {
 
       <div className="relative z-10 p-8 flex flex-col justify-between h-full">
         <div>
-          <div className="text-6xl mb-6">{track.emoji}</div>
+          <div
+            className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6"
+            style={{
+              background: track.color + '20',
+              border: `1px solid ${track.color}40`,
+              boxShadow: `0 0 24px ${track.glow}`,
+            }}
+          >
+            <track.icon size={32} style={{ color: track.color }} />
+          </div>
           <h3 className="text-3xl font-display-bold text-white mb-3">{track.title}</h3>
           <p className="text-base leading-relaxed font-display-regular mb-6" style={{ color: 'rgba(220,210,240,0.85)' }}>
             {track.description}

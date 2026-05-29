@@ -206,15 +206,15 @@ MagneticButton.displayName = "MagneticButton";
 const MarqueeItem = () => (
   <div className="flex items-center space-x-12 px-6 font-body-bold">
     <span>Endless Innovation</span>
-    <span className="text-purple-400/60">✦</span>
+    <span className="text-purple-400/60 text-xs">◆</span>
     <span>Team-Based Hackathon</span>
-    <span className="text-purple-500/60">✦</span>
+    <span className="text-purple-500/60 text-xs">◆</span>
     <span>Guardian Mentors</span>
-    <span className="text-purple-400/60">✦</span>
+    <span className="text-purple-400/60 text-xs">◆</span>
     <span>Offline Grand Finale</span>
-    <span className="text-purple-500/60">✦</span>
+    <span className="text-purple-500/60 text-xs">◆</span>
     <span>Grand Finale · July 25</span>
-    <span className="text-purple-400/60">✦</span>
+    <span className="text-purple-400/60 text-xs">◆</span>
   </div>
 );
 
@@ -374,7 +374,7 @@ export function CinematicFooter() {
               <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-4">
                 <MagneticButton
                   as="a"
-                  href="#register"
+                  href="https://docs.google.com/forms/d/e/1FAIpQLScqy6GeNnTs3BPmAgFw73AAZ3RA6WenwfTFCrWYIKZDK0GGYQ/viewform?usp=publish-editor"
                   className="footer-glass-pill px-8 sm:px-10 py-4 sm:py-5 rounded-full font-bold text-sm md:text-base flex items-center justify-center gap-3 group font-body-bold"
                   style={{ color: "#ffffff" }}
                 >

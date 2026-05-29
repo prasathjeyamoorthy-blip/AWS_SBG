@@ -20,10 +20,15 @@ export const BluetoothKey = ({
   const handleClick = () => {
     setChecked((v) => !v);
     if (href && href !== "#") {
-      setTimeout(() => {
-        const el = document.querySelector(href);
-        if (el) el.scrollIntoView({ behavior: "smooth" });
-      }, 120);
+      if (href.startsWith('http')) {
+        // External URL — open in new tab
+        setTimeout(() => window.open(href, '_blank', 'noopener,noreferrer'), 120);
+      } else {
+        setTimeout(() => {
+          const el = document.querySelector(href);
+          if (el) el.scrollIntoView({ behavior: "smooth" });
+        }, 120);
+      }
     }
   };
 

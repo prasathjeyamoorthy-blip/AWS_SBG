@@ -78,7 +78,9 @@ export default function FinalCTA() {
         {/* CTA buttons */}
         <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-4 mb-10">
           <a
-            href="#"
+            href="https://docs.google.com/forms/d/e/1FAIpQLScqy6GeNnTs3BPmAgFw73AAZ3RA6WenwfTFCrWYIKZDK0GGYQ/viewform?usp=publish-editor"
+            target="_blank"
+            rel="noopener noreferrer"
             className="w-full sm:w-auto px-8 sm:px-10 py-4 text-white text-sm rounded-full transition-all duration-300 font-body-bold tracking-widest uppercase text-center"
             style={{
               background: 'linear-gradient(135deg, #7c3aed, #9333ea)',
