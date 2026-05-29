@@ -1,109 +1,202 @@
-import { motion, AnimatePresence } from 'framer-motion';
+import { Timeline } from './ui/timeline';
 import SectionBlurEdges from './ui/SectionBlurEdges';
+
+// Returns true if today is past the given end date (YYYY-MM-DD)
+function isPast(dateStr) {
+  return new Date() > new Date(dateStr + 'T23:59:59');
+}
+
+const Tag = ({ children }) => (
+  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-mono-bold"
+    style={{ background: 'rgba(139,92,246,0.15)', border: '1px solid rgba(139,92,246,0.3)', color: 'rgba(216,180,254,0.9)' }}>
+    {children}
+  </span>
+);
+
+const ActivityList = ({ items, icon }) => (
+  <div className="flex flex-wrap gap-2 mt-3">
+    {items.map(a => <Tag key={a}>{icon} {a}</Tag>)}
+  </div>
+);
 
 const phases = [
   {
-    dates: 'June 1 – June 10',
-    label: 'Registration Phase',
-    title: 'The Call of the Sea',
-    description: 'The Black Flag has been raised. Young pirates from across the world gather at the harbor, ready to form their crews and begin the hunt for legendary treasure.',
-    activities: ['Team Formation', 'Registration & Crew Onboarding', 'Theme Exploration', 'Community Networking'],
-    quote: '"Every captain begins with a crew — but only the fearless dare to sail."',
-    completed: true,
-    // pin position on the map (% of image width/height)
-    pin: { x: 12, y: 20 },
+    title: "June 1–10",
+    completed: isPast('2026-06-10'),
+    content: (
+      <div>
+        <div className="flex items-center gap-2 mb-1">
+          <span className="text-2xl">⚓</span>
+          <div>
+            <p className="text-purple-300 text-xs tracking-widest uppercase font-mono-bold">Phase 1 · 10 Days</p>
+            <h4 className="text-white text-lg font-display-bold leading-tight">Registration</h4>
+          </div>
+        </div>
+        <p className="text-gray-400 text-sm font-display-italic mt-2 mb-3 leading-relaxed">
+          The Black Flag has been raised. Young pirates gather at the harbor, ready to form their crews and begin the hunt for legendary treasure.
+        </p>
+        <ActivityList items={['Team Registration', 'Crew Formation', 'Portal Open']} icon="·" />
+      </div>
+    ),
   },
   {
-    dates: 'June 11 – June 18',
-    label: 'Ideation Phase',
-    title: 'Charting the Treasure Map',
-    description: 'The pirate crews study ancient maps, decode mysterious riddles, and shape bold ideas capable of conquering unknown seas.',
-    activities: ['Problem Solving Sessions', 'Idea Validation', 'Product Brainstorming', 'Mentor Discussions', 'Initial Pitch Preparation'],
-    quote: '"A weak map leads to lost waters. A strong idea leads to treasure."',
-    completed: true,
-    pin: { x: 28, y: 38 },
+    title: "June 11–18",
+    completed: isPast('2026-06-18'),
+    content: (
+      <div>
+        <div className="flex items-center gap-2 mb-1">
+          <span className="text-2xl">🗺️</span>
+          <div>
+            <p className="text-purple-300 text-xs tracking-widest uppercase font-mono-bold">Phase 2 · 8 Days</p>
+            <h4 className="text-white text-lg font-display-bold leading-tight">Ideation</h4>
+          </div>
+        </div>
+        <p className="text-gray-400 text-sm font-display-italic mt-2 mb-3 leading-relaxed">
+          Pirate crews study ancient maps, decode mysterious riddles, and shape bold ideas capable of conquering unknown seas.
+        </p>
+        <ActivityList items={['Idea Planning', 'Treasure Mapping', 'Proposal Submission']} icon="·" />
+      </div>
+    ),
   },
   {
-    dates: 'June 21',
-    label: 'Ideation Results',
-    title: "The Captain's Selection",
-    description: 'The Pirate Council reviews every treasure map submitted by the crews. Only the strongest ideas earn permission to continue deeper into the voyage.',
-    activities: ['Idea Evaluation', 'Team Shortlisting', 'Qualification for Development Rounds'],
-    quote: '"Not every ship survives the harbor."',
-    completed: true,
-    pin: { x: 42, y: 25 },
+    title: "June 21",
+    completed: isPast('2026-06-21'),
+    content: (
+      <div>
+        <div className="flex items-center gap-2 mb-1">
+          <span className="text-2xl">⚔️</span>
+          <div>
+            <p className="text-purple-300 text-xs tracking-widest uppercase font-mono-bold">Phase 3 · 1 Day</p>
+            <h4 className="text-white text-lg font-display-bold leading-tight">Ideation Result</h4>
+          </div>
+        </div>
+        <p className="text-gray-400 text-sm font-display-italic mt-2 mb-3 leading-relaxed">
+          The Pirate Council reviews every treasure map. Only the strongest ideas earn permission to continue deeper into the voyage.
+        </p>
+        <ActivityList items={['Team Shortlisting', 'Council Selection', 'Voyage Qualification']} icon="·" />
+      </div>
+    ),
   },
   {
-    dates: 'June 22 – June 30',
-    label: 'Phase 1 Development',
-    title: 'Forging the Black Pearl',
-    description: 'The selected pirate crews begin constructing their mighty vessels. Code becomes cannons. Design becomes sails. Innovation becomes power.',
-    activities: ['MVP Development', 'UI/UX Design', 'AI Integration', 'Backend Engineering', 'Product Testing'],
-    quote: '"A true pirate does not fear the storm."',
-    completed: false,
-    pin: { x: 55, y: 45 },
+    title: "June 22–30",
+    completed: isPast('2026-06-30'),
+    content: (
+      <div>
+        <div className="flex items-center gap-2 mb-1">
+          <span className="text-2xl">🔧</span>
+          <div>
+            <p className="text-purple-300 text-xs tracking-widest uppercase font-mono-bold">Phase 4 · 8 Days</p>
+            <h4 className="text-white text-lg font-display-bold leading-tight">Prototype Phase 1</h4>
+          </div>
+        </div>
+        <p className="text-gray-400 text-sm font-display-italic mt-2 mb-3 leading-relaxed">
+          Selected pirate crews begin constructing their mighty vessels. Code becomes cannons. Design becomes sails.
+        </p>
+        <ActivityList items={['Initial Development', 'Prototype Construction', 'Feature Building']} icon="·" />
+      </div>
+    ),
   },
   {
-    dates: 'July 4',
-    label: 'Phase 1 Results',
-    title: 'The Stormbreaker Trials',
-    description: 'The ocean grows violent. The Pirate Council announces the crews worthy of entering the forbidden Multiverse Waters. Only the relentless survive.',
-    activities: ['Midway Evaluations', 'Prototype Reviews', 'Performance Judging', 'Team Advancements'],
-    quote: '"The ocean respects only the relentless."',
-    completed: false,
-    pin: { x: 65, y: 30 },
+    title: "July 4",
+    completed: isPast('2026-07-04'),
+    content: (
+      <div>
+        <div className="flex items-center gap-2 mb-1">
+          <span className="text-2xl">🌊</span>
+          <div>
+            <p className="text-purple-300 text-xs tracking-widest uppercase font-mono-bold">Phase 5 · 1 Day</p>
+            <h4 className="text-white text-lg font-display-bold leading-tight">Phase 1 Result</h4>
+          </div>
+        </div>
+        <p className="text-gray-400 text-sm font-display-italic mt-2 mb-3 leading-relaxed">
+          The ocean grows violent. The Pirate Council announces the crews worthy of entering the forbidden Multiverse Waters.
+        </p>
+        <ActivityList items={['Evaluation Review', 'Stormbreaker Trials', 'Team Advancement']} icon="·" />
+      </div>
+    ),
   },
   {
-    dates: 'July 5 – July 14',
-    label: 'Phase 2 + Mentor Reveal',
-    title: 'The Multiverse Alliance',
-    description: 'Mysterious portals open across the sea. Legendary mentors from distant universes arrive to guide pirate crews toward greatness.',
-    activities: ['Mentor Assignments', 'Guardian Sessions', 'Advanced Development', 'Product Refinement'],
-    quote: '"Even pirates need legends beside them."',
-    completed: false,
-    pin: { x: 72, y: 55 },
+    title: "July 5–14",
+    completed: isPast('2026-07-14'),
+    content: (
+      <div>
+        <div className="flex items-center gap-2 mb-1">
+          <span className="text-2xl">🧭</span>
+          <div>
+            <p className="text-purple-300 text-xs tracking-widest uppercase font-mono-bold">Phase 6 · 10 Days</p>
+            <h4 className="text-white text-lg font-display-bold leading-tight">Guardian Trials</h4>
+          </div>
+        </div>
+        <p className="text-gray-400 text-sm font-display-italic mt-2 mb-3 leading-relaxed">
+          Mysterious portals open. Legendary mentors from distant universes arrive to guide pirate crews toward greatness.
+        </p>
+        <ActivityList items={['Mentor Guidance', 'Final Development', 'Optimization', 'Submission Finalization']} icon="·" />
+      </div>
+    ),
   },
   {
-    dates: 'July 19',
-    label: 'Finalist Announcement',
-    title: 'The Council of the Ten Seas',
-    description: 'Only 10 legendary crews remain. Their names echo across every sea as they earn a place among the greatest pirate captains.',
-    activities: ['Finalist Announcement', 'Hall of Legends Reveal', 'Community Recognition'],
-    quote: '"Many sailed. Few conquered."',
-    completed: false,
-    pin: { x: 82, y: 38 },
+    title: "July 19",
+    completed: isPast('2026-07-19'),
+    content: (
+      <div>
+        <div className="flex items-center gap-2 mb-1">
+          <span className="text-2xl">🏆</span>
+          <div>
+            <p className="text-purple-300 text-xs tracking-widest uppercase font-mono-bold">Phase 7 · 1 Day</p>
+            <h4 className="text-white text-lg font-display-bold leading-tight">Top 10 Crews</h4>
+          </div>
+        </div>
+        <p className="text-gray-400 text-sm font-display-italic mt-2 mb-3 leading-relaxed">
+          Only 10 legendary crews remain. Their names echo across every sea as they earn a place among the greatest pirate captains.
+        </p>
+        <ActivityList items={['Finalist Reveal', 'Hall of Legends', 'Finale Qualification']} icon="·" />
+      </div>
+    ),
   },
   {
-    dates: 'July 25',
-    label: 'Grand Finale',
-    title: 'The Final Treasure War',
-    description: 'The Final Island rises from the mist. One crew will claim the ultimate treasure before the Grand Pirate Council.',
-    activities: ['Live Demonstrations', 'Final Pitch Battles', 'Jury Evaluations', 'Winner Announcements', 'Closing Ceremony'],
-    quote: '"Legends are not found. They are forged."',
-    completed: false,
-    pin: { x: 88, y: 68 },
+    title: "July 25",
+    completed: isPast('2026-07-25'),
+    content: (
+      <div>
+        <div className="flex items-center gap-2 mb-1">
+          <span className="text-2xl">💎</span>
+          <div>
+            <p className="text-purple-300 text-xs tracking-widest uppercase font-mono-bold">Phase 8 · Grand Finale</p>
+            <h4 className="text-white text-lg font-display-bold leading-tight">Grand Finale</h4>
+          </div>
+        </div>
+        <p className="text-gray-400 text-sm font-display-italic mt-2 mb-3 leading-relaxed">
+          The Final Island rises from the mist. One crew will claim the ultimate treasure before the Grand Pirate Council.
+        </p>
+        <ActivityList items={['Offline Finale', 'Live Demonstrations', 'Final Battle', 'Winner Announcement']} icon="·" />
+        <div className="mt-4 px-4 py-2 rounded-lg text-center font-display-bold text-sm"
+          style={{
+            background: 'linear-gradient(135deg, rgba(139,92,246,0.25), rgba(88,28,135,0.35))',
+            border: '1px solid rgba(168,85,247,0.4)',
+            color: '#d8b4fe',
+            boxShadow: '0 0 20px rgba(139,92,246,0.15)',
+          }}>
+          🏴‍☠️ Treasure Achieved!
+        </div>
+      </div>
+    ),
   },
 ];
 
-function CheckIcon() {
-  return (
-    <svg viewBox="0 0 14 14" fill="none" width="10" height="10">
-      <path d="M2.5 7l3.5 3.5 5.5-6" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-export default function Timeline() {
+export default function TimelineSection() {
   return (
     <section
       id="timeline"
       className="py-16 sm:py-28 px-4 sm:px-6 relative overflow-hidden"
       style={{ background: 'linear-gradient(180deg, #0d0020 0%, #000000 50%, #0d0020 100%)' }}
     >
-      <div className="max-w-5xl mx-auto">
+      {/* Ambient background glow */}
+      <div className="absolute inset-0 pointer-events-none"
+        style={{ background: 'radial-gradient(ellipse 60% 40% at 50% 30%, rgba(88,28,135,0.12) 0%, transparent 70%)' }} />
 
+      <div className="max-w-5xl mx-auto relative">
         {/* Header */}
-        <div className="text-center mb-10 sm:mb-14">
+        <div className="text-center mb-10 sm:mb-16">
           <p className="text-purple-400 text-xs tracking-[0.35em] uppercase mb-3 font-mono-bold">
             The Voyage Unfolds
           </p>
@@ -116,21 +209,7 @@ export default function Timeline() {
           <div className="section-divider w-48 mx-auto mt-6" />
         </div>
 
-        {/* Treasure map — image already contains all timeline info */}
-        <div className="relative w-full rounded-xl sm:rounded-2xl overflow-hidden" style={{ boxShadow: '0 0 40px rgba(139,92,246,0.2), 0 0 80px rgba(88,28,135,0.1)' }}>
-          <img
-            src="/treasure_map.png"
-            alt="Event Timeline Treasure Map"
-            className="timeline-map-img w-full h-auto block"
-            style={{ filter: 'brightness(0.85) saturate(1.1)' }}
-            draggable={false}
-          />
-          <div
-            className="absolute inset-0 pointer-events-none"
-            style={{ background: 'linear-gradient(135deg, rgba(88,28,135,0.18) 0%, transparent 60%, rgba(88,28,135,0.12) 100%)' }}
-          />
-        </div>
-
+        <Timeline data={phases} />
       </div>
       <SectionBlurEdges />
     </section>

@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { Home, Clock, Shield, Compass, Trophy, HelpCircle } from 'lucide-react';
 import { LimelightNav } from './ui/limelight-nav';
 import { JoinNowButton } from './ui/join-now-button';
@@ -147,7 +148,11 @@ export default function Navbar() {
         </div>
 
         {/* CTA */}
-        <div className="flex-shrink-0 min-w-[100px] flex justify-end">
+        <div className="flex-shrink-0 min-w-[100px] flex items-center justify-end gap-3">
+          <Link to="/code-of-conduct"
+            className="text-xs font-mono-bold text-purple-400 hover:text-white transition-colors whitespace-nowrap">
+            Code of Conduct
+          </Link>
           <JoinNowButton href="#register" />
         </div>
       </header>
@@ -166,7 +171,13 @@ export default function Navbar() {
             AWS SBG
           </span>
         </div>
-        <JoinNowButton href="#register" />
+        <div className="flex items-center gap-3">
+          <Link to="/code-of-conduct"
+            className="text-xs font-mono-bold text-purple-400 hover:text-white transition-colors whitespace-nowrap">
+            Code of Conduct
+          </Link>
+          <JoinNowButton href="#register" />
+        </div>
       </header>
 
       {/* ── MOBILE (<md): Logo | JoinNowButton ── */}
