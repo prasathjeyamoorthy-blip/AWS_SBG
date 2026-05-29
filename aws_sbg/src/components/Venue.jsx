@@ -16,10 +16,10 @@ L.Icon.Default.mergeOptions({
   shadowUrl:     markerShadow,
 });
 
-// ── SMVEC verified coordinates (NH-45A, Madagadipet, Puducherry) ────────────
-// Source: OpenStreetMap node for Sri Manakula Vinayagar Engineering College
-const LAT = 11.9352;
-const LNG = 79.8174;
+// ── SMVEC exact coordinates — verified from OpenStreetMap (way #340086970) ──
+// Sri Manakula Vinayakar Engineering College, Madhagadipet Main Road
+const LAT = 11.9141;
+const LNG = 79.6356;
 
 // Google Maps links — use place name so Google resolves the exact listing
 const GMAPS_LINK   = `https://www.google.com/maps/search/Sri+Manakula+Vinayagar+Engineering+College,+Madagadipet,+Puducherry/@${LAT},${LNG},17z`;

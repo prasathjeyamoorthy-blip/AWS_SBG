@@ -184,9 +184,9 @@ export function Timeline({ data }) {
     <div ref={containerRef} className="w-full">
       <div ref={ref} className="relative max-w-5xl mx-auto pb-20">
 
-        {/* Background track line */}
+        {/* Background track line — desktop only */}
         <div
-          className="absolute"
+          className="absolute hidden md:block"
           style={{
             left: 'calc(160px + 1.35rem)',
             top: 0,
