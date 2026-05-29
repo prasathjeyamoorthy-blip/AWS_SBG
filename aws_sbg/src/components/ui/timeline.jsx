@@ -95,7 +95,7 @@ function TimelineItem({ item, index, scrollYProgress }) {
       </motion.div>
 
       {/* Dot */}
-      <div className="relative z-10 flex-shrink-0" style={{ marginLeft: '0.25rem', marginRight: '0.25rem' }}>
+      <div className="relative z-10 flex-shrink-0" style={{ marginLeft: 0, marginRight: '0.25rem' }}>
         <TimelineDot completed={item.completed} index={index} scrollYProgress={scrollYProgress} />
         {/* Particles near dot */}
         {item.completed && [0, 1, 2].map(i => (
@@ -184,11 +184,11 @@ export function Timeline({ data }) {
     <div ref={containerRef} className="w-full">
       <div ref={ref} className="relative max-w-5xl mx-auto pb-20">
 
-        {/* Background track line — desktop only */}
+        {/* Background track line — desktop only, centered on dot (160px date col + 22px = dot center) */}
         <div
           className="absolute hidden md:block"
           style={{
-            left: 'calc(160px + 1.35rem)',
+            left: '181px',
             top: 0,
             width: 2,
             height: `${height}px`,
@@ -223,11 +223,11 @@ export function Timeline({ data }) {
           />
         </div>
 
-        {/* Mobile line (no date column offset) */}
+        {/* Mobile line — centered exactly on the dot (dot: marginLeft 0 + half of 44px = 22px, minus 1px half-width) */}
         <div
           className="absolute md:hidden"
           style={{
-            left: '1.35rem',
+            left: '21px',
             top: 0,
             width: 2,
             height: `${height}px`,
