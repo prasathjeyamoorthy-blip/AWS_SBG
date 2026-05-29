@@ -13,19 +13,9 @@ export interface FAQItem {
   icon?: React.ReactNode;
 }
 
-/** Stacked top offset when collapsed */
-const COLLAPSED_OFFSETS = [
-  'top-6',
-  'top-[calc(1.5rem+0.75rem)]',
-  'top-[calc(1.5rem+1.5rem)]',
-  'top-[calc(1.5rem+2.25rem)]',
-  'top-[calc(1.5rem+3rem)]',
-  'top-[calc(1.5rem+3.75rem)]',
-  'top-[calc(1.5rem+4.5rem)]',
-  'top-[calc(1.5rem+5.25rem)]',
-  'top-[calc(1.5rem+6rem)]',
-  'top-[calc(1.5rem+6.75rem)]',
-];
+// Fixed card height when collapsed — identical on every screen size
+const COLLAPSED_CARD_HEIGHT = 64; // px
+const STACK_STEP = 8;             // px each subsequent card peeks below the previous
 
 interface StackedFAQCardsProps {
   items: FAQItem[];
@@ -40,20 +30,18 @@ export default function StackedFAQCards({ items, className }: StackedFAQCardsPro
   const [expandedOffsets, setExpandedOffsets] = useState<number[]>([]);
   const [totalExpandedHeight, setTotalExpandedHeight] = useState(0);
 
-  // Measure card heights after expansion to compute dynamic offsets
   const computeOffsets = useCallback(() => {
-    const heights: number[] = cardRefs.current.map(el => el?.offsetHeight ?? 80);
+    const heights: number[] = cardRefs.current.map(el => el?.offsetHeight ?? COLLAPSED_CARD_HEIGHT);
     const offsets: number[] = [];
-    let cumulative = 24; // 1.5rem = 24px
+    let cumulative = 0;
     for (let i = 0; i < heights.length; i++) {
       offsets.push(cumulative);
       cumulative += heights[i] + GAP;
     }
     setExpandedOffsets(offsets);
-    setTotalExpandedHeight(cumulative + 48); // extra space for collapse button
+    setTotalExpandedHeight(cumulative + 48);
   }, []);
 
-  // Recompute on window resize when expanded
   useEffect(() => {
     if (!isActive) return;
     computeOffsets();
@@ -64,7 +52,6 @@ export default function StackedFAQCards({ items, className }: StackedFAQCardsPro
 
   const handleExpand = () => {
     setIsActive(true);
-    // Compute after next paint so cards are visible and measurable
     requestAnimationFrame(() => requestAnimationFrame(computeOffsets));
   };
 
@@ -73,14 +60,18 @@ export default function StackedFAQCards({ items, className }: StackedFAQCardsPro
     setIsActive(false);
   };
 
-  const collapsedHeight = `calc(1.5rem + ${Math.min(items.length, 7)} * 0.75rem + 80px)`;
+  // Collapsed container: first card height + peeking stack lines
+  const visibleStack = Math.min(items.length - 1, 6);
+  const collapsedContainerHeight = COLLAPSED_CARD_HEIGHT + visibleStack * STACK_STEP;
 
   return (
     <div
       className={cn('relative w-full cursor-pointer', className)}
       style={{
-        minHeight: isActive ? totalExpandedHeight || collapsedHeight : collapsedHeight,
-        transition: 'min-height 1s cubic-bezier(0.075,0.82,0.165,1)',
+        height: isActive ? `${totalExpandedHeight}px` : `${collapsedContainerHeight}px`,
+        minHeight: isActive ? `${totalExpandedHeight}px` : `${collapsedContainerHeight}px`,
+        transition: 'height 1s cubic-bezier(0.075,0.82,0.165,1), min-height 1s cubic-bezier(0.075,0.82,0.165,1)',
+        overflow: isActive ? 'visible' : 'hidden',
       }}
       onClick={handleExpand}
     >
@@ -89,26 +80,42 @@ export default function StackedFAQCards({ items, className }: StackedFAQCardsPro
           key={index}
           ref={el => { cardRefs.current[index] = el; }}
           className={cn(
-            'absolute left-0 right-0 mx-auto flex flex-col gap-2 rounded-2xl border border-white/10 bg-white/5 p-4 sm:p-5 shadow-lg shadow-black/20 backdrop-blur-xl transition-all duration-1000 ease-[cubic-bezier(0.075,0.82,0.165,1)] hover:bg-white/8',
-            !isActive && COLLAPSED_OFFSETS[index],
+            'absolute left-0 right-0 mx-auto rounded-2xl border bg-white/5 shadow-lg shadow-black/20 backdrop-blur-xl transition-all duration-1000 ease-[cubic-bezier(0.075,0.82,0.165,1)]',
           )}
           style={{
             maxWidth: '720px',
             zIndex: items.length - index,
+            borderColor: index === 0 ? 'rgba(255,255,255,0.10)' : 'rgba(255,255,255,0.06)',
             ...(isActive && expandedOffsets[index] !== undefined
-              ? { top: `${expandedOffsets[index]}px` }
-              : {}),
+              ? {
+                  top: `${expandedOffsets[index]}px`,
+                  height: 'auto',
+                  padding: '1rem 1.25rem',
+                }
+              : {
+                  top: `${index * STACK_STEP}px`,
+                  height: `${COLLAPSED_CARD_HEIGHT}px`,
+                  padding: '0 1.25rem',
+                  overflow: 'hidden',
+                }),
           }}
         >
-          {/* Question row */}
-          <div className="flex items-start gap-3">
+          {/* Question row — vertically centred in the fixed-height collapsed card */}
+          <div
+            className="flex items-center gap-3"
+            style={{ height: isActive ? 'auto' : `${COLLAPSED_CARD_HEIGHT}px` }}
+          >
             {item.icon && (
-              <span className="mt-0.5 flex-shrink-0 text-purple-400">{item.icon}</span>
+              <span className="flex-shrink-0 text-purple-400">{item.icon}</span>
             )}
-            <p className="text-white text-sm sm:text-base font-bold leading-snug flex-1">
+            <p className={cn(
+              'text-white text-sm sm:text-base font-bold leading-snug flex-1',
+              !isActive && 'truncate',
+            )}>
               {item.question}
             </p>
           </div>
+
           {/* Answer — only visible when expanded */}
           <div
             className={cn(
@@ -130,9 +137,7 @@ export default function StackedFAQCards({ items, className }: StackedFAQCardsPro
           isActive ? 'pointer-events-auto visible opacity-100' : 'pointer-events-none invisible opacity-0',
         )}
         style={{
-          top: isActive && totalExpandedHeight
-            ? `${totalExpandedHeight - 48}px`
-            : `calc(1.5rem + ${items.length} * 130px + ${items.length} * 1rem)`,
+          top: isActive && totalExpandedHeight ? `${totalExpandedHeight - 48}px` : '9999px',
           maxWidth: '720px',
         }}
       >

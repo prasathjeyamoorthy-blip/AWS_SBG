@@ -91,6 +91,27 @@ export default function Prizes() {
 
         {/* Additional Rewards */}
         <div className="mt-12 sm:mt-16 max-w-2xl mx-auto">
+
+          {/* Swag highlight banner */}
+          <div
+            className="mb-5 rounded-2xl px-6 py-5 flex items-center gap-4"
+            style={{
+              background: 'linear-gradient(135deg, rgba(139,92,246,0.18) 0%, rgba(109,40,217,0.1) 100%)',
+              border: '1px solid rgba(139,92,246,0.45)',
+              boxShadow: '0 0 32px rgba(139,92,246,0.15)',
+            }}
+          >
+            <span className="text-3xl flex-shrink-0" role="img" aria-label="gift">🎁</span>
+            <div>
+              <p className="text-purple-300 text-xs tracking-[0.25em] uppercase font-mono-bold mb-0.5">
+                Exclusive Swags
+              </p>
+              <p className="text-white font-display-bold text-base sm:text-lg leading-snug">
+                Top 10 shortlisted teams receive <span className="text-purple-300">exclusive event swags</span> at the Grand Finale.
+              </p>
+            </div>
+          </div>
+
           <div className="prizes-rewards-card bg-gradient-to-r from-purple-900/20 via-transparent to-purple-900/20 border border-purple-500/30 rounded-lg p-5 sm:p-8 backdrop-blur-sm">
             <h3 className="text-2xl font-display-bold text-white mb-6 text-center">
               Additional Rewards

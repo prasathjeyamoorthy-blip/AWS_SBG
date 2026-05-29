@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { Home, Clock, Shield, Compass, Trophy, HelpCircle } from 'lucide-react';
+import { Home, Clock, Shield, Compass, Trophy, HelpCircle, Phone, MapPin } from 'lucide-react';
 import { LimelightNav } from './ui/limelight-nav';
 import { JoinNowButton } from './ui/join-now-button';
 
@@ -11,7 +11,9 @@ const NAV = [
   { id: 'timeline',  label: 'Timeline',  href: '#timeline',  icon: <Clock /> },
   { id: 'guardians', label: 'Guardians', href: '#guardians', icon: <Shield /> },
   { id: 'prizes',    label: 'Prizes',    href: '#prizes',    icon: <Trophy /> },
+  { id: 'venue',     label: 'Venue',     href: '#venue',     icon: <MapPin /> },
   { id: 'faq',       label: 'FAQ',       href: '#faq',       icon: <HelpCircle /> },
+  { id: 'contact',   label: 'Contact',   href: '#contact',   icon: <Phone /> },
 ];
 
 // Section IDs in page order (strip the '#')
@@ -132,7 +134,7 @@ export default function Navbar() {
         <div className="flex items-center gap-2 flex-shrink-0 min-w-[100px]">
           <img src="/aws-sbg-icon.png" alt="AWS SBG" className="w-7 h-7 xl:w-8 xl:h-8 object-contain" />
           <span className="text-white text-xs tracking-[0.15em] xl:tracking-[0.2em] uppercase font-display-bold whitespace-nowrap">
-            AWS SBG
+            AWS SBG SMVEC
           </span>
         </div>
 

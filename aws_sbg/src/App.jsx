@@ -6,7 +6,9 @@ import Guardians from './components/Guardians';
 import Tracks    from './components/Tracks';
 import WhyJoin   from './components/WhyJoin';
 import Prizes    from './components/Prizes';
+import Venue     from './components/Venue';
 import FAQ       from './components/FAQ';
+import Contact   from './components/Contact';
 import { CinematicFooter } from './components/ui/motion-footer';
 import CodeOfConduct from './pages/CodeOfConduct';
 
@@ -20,7 +22,9 @@ function MainPage() {
       <Guardians />
       <WhyJoin />
       <Prizes />
+      <Venue />
       <FAQ />
+      <Contact />
       <CinematicFooter />
     </div>
   );
