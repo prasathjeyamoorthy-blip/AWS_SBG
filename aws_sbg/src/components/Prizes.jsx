@@ -1,6 +1,7 @@
 import MagicBento from "./ui/MagicBento";
 import SectionBlurEdges from "./ui/SectionBlurEdges";
-import { Gift, Star, Trophy } from "lucide-react";
+import TextType from "./ui/TextType";
+import { Gift, Star } from "lucide-react";
 
 const prizes = [
   { rank: "Champion Tier", amount: "₹15,000" },
@@ -76,19 +77,102 @@ export default function Prizes() {
           <div className="section-divider w-48 mx-auto mt-6" />
         </div>
 
-        <MagicBento
-          cardData={prizesCardData}
-          textAutoHide={false}
-          enableStars={true}
-          enableSpotlight={true}
-          enableBorderGlow={true}
-          enableTilt={true}
-          enableMagnetism={true}
-          clickEffect={true}
-          spotlightRadius={300}
-          particleCount={12}
-          glowColor="132, 0, 255"
-        />
+        {/* Prize cards with "coming soon" overlay */}
+        <div style={{ position: "relative" }}>
+          <MagicBento
+            cardData={prizesCardData}
+            textAutoHide={false}
+            enableStars={true}
+            enableSpotlight={true}
+            enableBorderGlow={true}
+            enableTilt={true}
+            enableMagnetism={true}
+            clickEffect={true}
+            spotlightRadius={300}
+            particleCount={12}
+            glowColor="132, 0, 255"
+          />
+
+          {/* Frosted glass overlay */}
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              borderRadius: "1rem",
+              backdropFilter: "blur(14px) saturate(1.2)",
+              WebkitBackdropFilter: "blur(14px) saturate(1.2)",
+              background:
+                "linear-gradient(135deg, rgba(10,0,30,0.55) 0%, rgba(88,28,135,0.35) 50%, rgba(10,0,30,0.55) 100%)",
+              border: "1px solid rgba(139,92,246,0.25)",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "1.25rem",
+              zIndex: 10,
+            }}
+          >
+            {/* Big transparent lock */}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 64 64"
+              fill="none"
+              style={{
+                width: "clamp(100px, 18vw, 180px)",
+                height: "clamp(100px, 18vw, 180px)",
+                opacity: 0.18,
+                filter: "drop-shadow(0 0 32px rgba(192,132,252,0.5))",
+              }}
+            >
+              {/* Shackle */}
+              <path
+                d="M20 28V20a12 12 0 0 1 24 0v8"
+                stroke="#c084fc"
+                strokeWidth="3.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              {/* Body */}
+              <rect
+                x="10"
+                y="28"
+                width="44"
+                height="30"
+                rx="5"
+                ry="5"
+                stroke="#c084fc"
+                strokeWidth="3.5"
+                fill="rgba(192,132,252,0.07)"
+              />
+              {/* Keyhole circle */}
+              <circle cx="32" cy="43" r="4" stroke="#c084fc" strokeWidth="3" fill="none" />
+              {/* Keyhole stem */}
+              <line x1="32" y1="47" x2="32" y2="53" stroke="#c084fc" strokeWidth="3" strokeLinecap="round" />
+            </svg>
+
+            {/* Typing animation */}
+            <TextType
+              text={[
+                "Will be revealed soon...",
+                "Stay tuned for prizes!",
+              ]}
+              typingSpeed={65}
+              deletingSpeed={35}
+              pauseDuration={1800}
+              showCursor={true}
+              cursorCharacter="|"
+              loop={true}
+              style={{
+                fontSize: "clamp(1.1rem, 2.5vw, 1.5rem)",
+                fontWeight: 700,
+                color: "#e9d5ff",
+                letterSpacing: "0.04em",
+                textAlign: "center",
+                fontFamily: "inherit",
+              }}
+            />
+          </div>
+        </div>
 
         {/* Additional Rewards */}
         <div className="mt-12 sm:mt-16 max-w-2xl mx-auto">

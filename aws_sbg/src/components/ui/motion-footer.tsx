@@ -78,20 +78,23 @@ const STYLES = `
 }
 
 .footer-glass-pill {
-  background: linear-gradient(145deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%);
+  background: linear-gradient(135deg, rgba(139,92,246,0.18) 0%, rgba(88,28,135,0.12) 50%, rgba(139,92,246,0.1) 100%);
   box-shadow:
-    0 10px 30px -10px rgba(0,0,0,0.5),
-    inset 0 1px 1px rgba(255,255,255,0.08),
-    inset 0 -1px 2px rgba(0,0,0,0.4);
-  border: 1px solid rgba(139,92,246,0.18);
+    0 8px 32px rgba(139,92,246,0.25),
+    0 2px 8px rgba(0,0,0,0.4),
+    inset 0 1px 1px rgba(255,255,255,0.12),
+    inset 0 -1px 2px rgba(0,0,0,0.3);
+  border: 1px solid rgba(168,85,247,0.45);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
 }
 .footer-glass-pill:hover {
-  background: linear-gradient(145deg, rgba(139,92,246,0.12) 0%, rgba(139,92,246,0.04) 100%);
-  border-color: rgba(139,92,246,0.4);
+  background: linear-gradient(135deg, rgba(139,92,246,0.35) 0%, rgba(109,40,217,0.25) 100%);
+  border-color: rgba(168,85,247,0.75);
   box-shadow:
-    0 20px 40px -10px rgba(139,92,246,0.3),
-    inset 0 1px 1px rgba(168,85,247,0.2);
+    0 20px 48px rgba(139,92,246,0.4),
+    inset 0 1px 1px rgba(168,85,247,0.3);
   color: #ffffff;
 }
 
@@ -305,11 +308,14 @@ export function CinematicFooter() {
             BUILD
           </div>
 
-          {/* ── Marquee ── */}
+          {/* ── Marquee — fixed strip always flush under the navbar ── */}
           <div
-            className="absolute top-8 sm:top-12 left-0 w-full overflow-hidden border-y border-purple-800/30 py-3 sm:py-4 z-10 shadow-2xl"
+            className="fixed left-0 w-full overflow-hidden border-b border-purple-800/30 py-3 sm:py-4 z-40 shadow-2xl"
             style={{
-              background: "rgba(8,0,15,0.85)",
+              top: "56px", /* matches navbar h-14 = 3.5rem = 56px */
+              background: "rgba(8,0,15,0.92)",
+              backdropFilter: "blur(8px)",
+              WebkitBackdropFilter: "blur(8px)",
             }}
           >
             <div
@@ -322,7 +328,7 @@ export function CinematicFooter() {
           </div>
 
           {/* ── Main center content ── */}
-          <div className="relative z-10 flex flex-1 flex-col items-center justify-start pt-20 sm:pt-28 lg:pt-52 w-full">
+          <div className="relative z-10 flex flex-1 flex-col items-center justify-start pt-24 sm:pt-28 lg:pt-52 w-full">
 
             {/* Story block — only shown on large screens where there's room beside the heading */}
             <div
@@ -340,11 +346,11 @@ export function CinematicFooter() {
             </div>
 
             {/* Story block for mobile + tablet — inline, above heading, no overlap */}
-            <div className="lg:hidden w-full max-w-md text-center mb-5 px-6">
-              <p className="text-gray-400 text-sm sm:text-base font-display-bold-italic leading-relaxed mb-2">
+            <div className="lg:hidden w-full max-w-lg text-center mb-8 px-6">
+              <p className="text-gray-200 text-lg sm:text-xl font-display-bold-italic leading-relaxed mb-3">
                 Registrations are open. Expert mentors are standing by.
               </p>
-              <p className="text-purple-400 text-sm sm:text-base font-display-bold-italic">
+              <p className="text-purple-300 text-lg sm:text-xl font-display-bold-italic">
                 Will your team make it to the top?
               </p>
             </div>
@@ -352,7 +358,7 @@ export function CinematicFooter() {
             {/* Centered content */}
             <h2
               ref={headingRef}
-              className="text-3xl sm:text-5xl md:text-6xl font-black tracking-tighter mb-6 sm:mb-10 text-center font-display-bold px-4"
+              className="text-5xl sm:text-5xl md:text-6xl font-black tracking-tighter mb-8 sm:mb-10 text-center font-display-bold px-4"
             >
               <GlitchText
                 speed={1}
@@ -368,22 +374,22 @@ export function CinematicFooter() {
 
             <div
               ref={linksRef}
-              className="flex flex-col items-center gap-4 sm:gap-6 w-full px-4"
+              className="flex flex-col items-center gap-5 sm:gap-6 w-full px-6 sm:px-4"
             >
               {/* Primary CTA pills */}
-              <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-4">
+              <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-4 w-full sm:w-auto">
                 <MagneticButton
                   as="a"
                   href="https://docs.google.com/forms/d/e/1FAIpQLScqy6GeNnTs3BPmAgFw73AAZ3RA6WenwfTFCrWYIKZDK0GGYQ/viewform?usp=publish-editor"
-                  className="footer-glass-pill px-8 sm:px-10 py-4 sm:py-5 rounded-full font-bold text-sm md:text-base flex items-center justify-center gap-3 group font-body-bold"
-                  style={{ color: "#ffffff" }}
+                  className="footer-glass-pill w-full sm:w-auto px-8 sm:px-10 py-5 sm:py-5 rounded-2xl font-bold text-lg sm:text-base flex items-center justify-center gap-3 group font-body-bold"
+                  style={{ color: "#ffffff", letterSpacing: "0.03em" }}
                 >
                   Register Your Team
                 </MagneticButton>
               </div>
 
               {/* Quote */}
-              <p className="text-purple-400/70 text-xs sm:text-sm font-display-italic tracking-wide mt-1 text-center">
+              <p className="text-purple-400/80 text-base sm:text-sm font-display-italic tracking-wide mt-1 text-center">
                 "Legends are forged beyond the storm."
               </p>
             </div>
